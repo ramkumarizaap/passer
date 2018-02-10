@@ -1,0 +1,56 @@
+<!-- -->
+<ion-content padding class="animated fadeIn login auth-page">
+  <div class="login-content">
+
+    <!-- Logo -->
+    <div padding-horizontal text-center class="animated fadeInDown">
+      <div class="logo"></div>
+      <h2 ion-text class="text-primary logo-text">
+        <strong>Passer</strong><br><small>Password Security</small>
+      </h2>
+    </div>
+
+    <!-- Login form -->
+    <form class="list-form" [formGroup]="_loginForm" method="post" novalidate>
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+          Email
+        </ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.email.hasError('required') && _loginForm.controls.email.touched">
+        <p ion-text text-wrap>Please Enter Email-ID</p>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.email.invalid  && _loginForm.controls.email.dirty && _loginForm.controls.email.value!=''">
+        <p ion-text text-wrap>Please use correct email format, e.g.:someone@domain.com.</p>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>
+          <ion-icon name="lock" item-start class="text-primary"></ion-icon>
+          Password
+        </ion-label>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.password.hasError('required') && _loginForm.controls.password.touched">
+        <p ion-text text-wrap>Please Enter Password</p>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.password.invalid  && _loginForm.controls.password.dirty && _loginForm.controls.password.value!=''">
+        <p ion-text text-wrap>Please enter atleast 6 characters.</p>
+      </ion-item>
+    </form>
+
+    <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p>
+
+    <div>
+      <button ion-button icon-start block color="dark" [disabled]="!_loginForm.valid" tappable (click)="login()">
+        <ion-icon name="log-in"></ion-icon>
+        SIGN IN
+      </button>
+    </div>
+    <!-- Other links -->
+    <div text-center margin-top>
+      <span ion-text color="secondary" tappable (click)="register()">New here? <strong>Sign up</strong></span>
+    </div>
+  </div>
+</ion-content>
