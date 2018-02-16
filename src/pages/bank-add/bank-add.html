@@ -1,0 +1,87 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <strong>Add Bank</strong>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
+  <form [formGroup]="_bankForm" (submit)="_submitBankForm()" method="post" novalidate="">
+    <button ion-button color="dark" [disabled]="!_bankForm.valid"  type="submit">
+      <ion-icon name="checkmark"></ion-icon>&nbsp;Save
+    </button>
+    <button ion-button color="danger" (click)="_cancel()" type="button">
+      <ion-icon name="close"></ion-icon>&nbsp;Cancel
+    </button>
+    <ion-item>
+      <ion-label floating>Bank Name</ion-label>
+      <ion-select formControlName="name">
+      	<ion-option value="Axis Bank">Axis Bank</ion-option>
+      	<ion-option value="Canara Bank">Canara Bank</ion-option>
+      	<ion-option value="City Union Bank">City Union Bank</ion-option>
+      	<ion-option value="Dhanalaxmi Bank">Dhanalaxmi Bank</ion-option>
+      	<ion-option value="Federal Bank">Federal Bank</ion-option>
+      	<ion-option value="HDFC Bank">HDFC Bank</ion-option>
+      	<ion-option value="ICICI Bank">ICICI Bank</ion-option>
+      	<ion-option value="IDBI Bank">IDBI Bank</ion-option>
+      	<ion-option value="Indian Bank">Indian Bank</ion-option>
+      	<ion-option value="IndusInd Bank">IndusInd Bank</ion-option>
+      	<ion-option value="IOB Bank">IOB Bank</ion-option>
+      	<ion-option value="Karnataka Bank">Karnataka Bank</ion-option>
+      	<ion-option value="Karur Vysya Bank">Karur Vysya Bank</ion-option>
+      	<ion-option value="Laxmi Vilas Bank">Laxmi Vilas Bank</ion-option>
+      	<ion-option value="Punjab Bank">Punjab Bank</ion-option>
+      	<ion-option value="State Bank of India">State Bank of India</ion-option>
+      	<ion-option value="South Indian Bank">South Indian Bank</ion-option>
+      	<ion-option value="TMB Bank">Tamilnadu Mercantile Bank</ion-option>
+      	<ion-option value="Yes Bank">Yes Bank</ion-option>
+      	<ion-option value="Other">Other Bank</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.name.hasError('required') && _bankForm.controls.name.touched">
+        <p ion-text text-wrap>Please Select Bank Name</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Account Number</ion-label>
+      <ion-input formControlName="account_number" type="text"></ion-input>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.hasError('required') && _bankForm.controls.account_number.touched">
+        <p ion-text text-wrap>Please Enter Account Number</p>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.hasError('pattern')  && _bankForm.controls.account_number.dirty && _bankForm.controls.account_number.value!=''">
+        <p ion-text text-wrap>Please Enter valid Account Number.</p>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.invalid  && _bankForm.controls.account_number.dirty && _bankForm.controls.account_number.value!=''">
+        <p ion-text text-wrap>Please enter atleast 6 characters.</p>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Account Type</ion-label>
+      <ion-select formControlName="account_type">
+      	<ion-option value="Savings">Savings</ion-option>
+      	<ion-option value="Fixed">Fixed</ion-option>
+      	<ion-option value="Current">Current</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_type.hasError('required') && _bankForm.controls.account_type.touched">
+        <p ion-text text-wrap>Please Select Account Type</p>
+    </ion-item>
+    <ion-item>
+    <ion-label floating>Branch</ion-label>
+      <ion-input formControlName="branch" type="text"></ion-input>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.branch.hasError('required') && _bankForm.controls.branch.touched">
+        <p ion-text text-wrap>Please Enter Branch</p>
+    </ion-item>
+    <ion-item>
+    	<ion-label floating>IFSC Code</ion-label>
+      <ion-input formControlName="ifsc" type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+    	<ion-label floating>MICR Code</ion-label>
+      <ion-input formControlName="micr" type="text"></ion-input>
+    </ion-item>
+  </form>
+</ion-content>

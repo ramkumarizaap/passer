@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <strong>Bank</strong>
+    </ion-title>
+    <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button tappable (click)="_showSearchInput()">
+        <ion-icon name="ios-search"></ion-icon>
+      </button>
+      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">
+        <ion-icon name="ios-close-circle"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+<ion-content class="card-background-page">
+  <ion-card>
+    <div class="bg-image karur"></div>
+    <div class="card-title">São Paulo</div>
+    <div class="card-subtitle">41 Listings</div>
+  </ion-card>
+
+  <ion-card>
+    <div class="bg-image punjab"></div>
+    <div class="card-title">Amsterdam</div>
+    <div class="card-subtitle">64 Listings</div>
+  </ion-card>
+
+  <ion-card>
+    <div class="bg-image south-indian"></div>
+    <div class="card-title">San Francisco</div>
+    <div class="card-subtitle">72 Listings</div>
+  </ion-card>
+
+  <ion-card>
+    <div class="bg-image tmb"></div>
+    <div class="card-title">Madison</div>
+    <div class="card-subtitle">28 Listings</div>
+  </ion-card>
+
+  <ion-card>
+    <div class="bg-image laxmi-vilas"></div>
+    <div class="card-title">Madison</div>
+    <div class="card-subtitle">28 Listings</div>
+  </ion-card>
+  <ion-fab right bottom>
+    <button (click)="_addBank()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

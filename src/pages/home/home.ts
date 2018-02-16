@@ -18,7 +18,7 @@ export class HomePage {
   public search = {
     name: "Rio de Janeiro, Brazil",
     date: new Date().toISOString()
-  }
+  };
 
   constructor(private storage: Storage, public nav: NavController, public popoverCtrl: PopoverController) {
   }

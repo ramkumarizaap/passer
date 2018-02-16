@@ -1,0 +1,123 @@
+page-bank
+{
+	.card-background-page {
+
+  ion-card {
+    position: relative;
+    text-align: center;
+    height:200px;
+    background:#000 !important;
+  }
+  ion-card .bg-image
+  {
+		background-size: 290px 200px;
+		background-position: center;
+		background-repeat: no-repeat;
+		height: 200px;
+		width: 290px;
+		opacity: 0.3;
+  }
+  .bg-image.sbi
+  {
+  	background-image: url('../../assets/icon/bank/axis.jpg');
+  }
+  .bg-image.federal
+  {
+  	background-image: url('../../assets/icon/bank/federal.jpg');
+  }
+  .bg-image.icici
+  {
+  	background-image: url('../../assets/icon/bank/icici.jpg');
+  }
+  .bg-image.yes
+  {
+  	background-image: url('../../assets/icon/bank/yes.jpg');
+  }
+
+  .bg-image.canara
+  {
+  	background-image: url('../../assets/icon/bank/canara.jpeg');
+  }
+  .bg-image.city-union
+  {
+  	background-image: url('../../assets/icon/bank/city-union.jpg');
+  }
+  .bg-image.dhanalaxmi
+  {
+  	background-image: url('../../assets/icon/bank/dhanalaxmi.jpg');
+  }
+  .bg-image.hdfc
+  {
+  	background-image: url('../../assets/icon/bank/hdfc.jfif');
+  }
+
+   .bg-image.idbi
+  {
+  	background-image: url('../../assets/icon/bank/idbi.jpg');
+  }
+
+ .bg-image.indian
+  {
+  	background-image: url('../../assets/icon/bank/indian.jpg');
+  }
+
+   .bg-image.iob
+  {
+  	background-image: url('../../assets/icon/bank/iob.jpg');
+  }
+
+ .bg-image.karnataka
+  {
+  	background-image: url('../../assets/icon/bank/karnataka.png');
+  }
+
+   .bg-image.karnataka
+  {
+  	background-image: url('../../assets/icon/bank/karnataka.png');
+  }
+   .bg-image.karur
+  {
+  	background-image: url('../../assets/icon/bank/karur.jpg');
+  }
+   .bg-image.punjab
+  {
+  	background-image: url('../../assets/icon/bank/punjab.jpg');
+  }
+   .bg-image.south-indian
+  {
+  	background-image: url('../../assets/icon/bank/south-indian.jpg');
+  }
+   .bg-image.tmb
+  {
+  	background-image: url('../../assets/icon/bank/tmb.jpg');
+  }
+   .bg-image.laxmi-vilas
+  {
+  	background-image: url('../../assets/icon/bank/laxmi-vilas.png');
+  }
+
+
+
+
+  .card-title {
+    position: absolute;
+    top: 36%;
+    font-size: 2.0em;
+    width: 100%;
+    font-weight: bold;
+    color: #fff;
+  }
+
+  .card-subtitle {
+    font-size: 1.0em;
+    position: absolute;
+    top: 52%;
+    width: 100%;
+    color: #fff;
+  }
+  ion-card img
+  {
+  	opacity:0.3;
+  }
+	}
+}

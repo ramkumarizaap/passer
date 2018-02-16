@@ -1,0 +1,35 @@
+page-website-add
+{
+	ion-item.item-md
+	{
+		background-color: transparent !important;
+	}
+	.repeat-list
+	{
+		margin-bottom: 40px;
+		padding-left: 10px;
+		padding-right: 10px;
+		box-shadow: 3px 1px 8px 6px #000;
+		padding-bottom: 5px;
+	}
+	.btn
+	{
+		margin-bottom: 40px;
+	}
+	.close-btn
+	{
+		position: relative;
+		top: -20px;
+		right: 0;
+	}
+	.error{
+		padding-left: 15px;
+	}
+	.error p{
+		font-size: 13px;
+	}
+	ion-item.help .item-inner
+	{
+		border:none !important;
+	}
+}

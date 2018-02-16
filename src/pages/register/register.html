@@ -11,34 +11,50 @@
     </div>
 
     <!-- Login form -->
-    <form class="list-form">
+    <form class="list-form" [formGroup]="_signupForm" method="post" novalidate>
       <ion-item>
         <ion-label floating>
           <ion-icon name="person" item-start class="text-primary"></ion-icon>
           Full Name
         </ion-label>
-        <ion-input type="text"></ion-input>
+        <ion-input formControlName="fullname" type="text"></ion-input>
       </ion-item>
-
+      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.fullname.hasError('required') && _signupForm.controls.fullname.touched">
+        <p ion-text text-wrap>Please Enter Full Name</p>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.fullname.invalid  && _signupForm.controls.fullname.dirty && _signupForm.controls.fullname.value!=''">
+        <p ion-text text-wrap>Please enter atleast 4 characters.</p>
+      </ion-item>
       <ion-item>
         <ion-label floating>
-          <ion-icon name="mail" item-start class="text-primary"></ion-icon>
+          <ion-icon name="mail" item-start  class="text-primary"></ion-icon>
           Email
         </ion-label>
-        <ion-input type="email"></ion-input>
+        <ion-input formControlName="email" type="email"></ion-input>
       </ion-item>
-
+      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.email.hasError('required') && _signupForm.controls.email.touched">
+        <p ion-text text-wrap>Please Enter Email-ID</p>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.email.invalid  && _signupForm.controls.email.dirty && _signupForm.controls.email.value!=''">
+        <p ion-text text-wrap>Please use correct email format, e.g.:someone@domain.com.</p>
+      </ion-item>
       <ion-item>
         <ion-label floating>
           <ion-icon name="lock" item-start class="text-primary"></ion-icon>
           Password
         </ion-label>
-        <ion-input type="password"></ion-input>
+        <ion-input formControlName="password" type="password"></ion-input>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.password.hasError('required') && _signupForm.controls.password.touched">
+        <p ion-text text-wrap>Please Enter Password</p>
+      </ion-item>
+      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.password.invalid  && _signupForm.controls.password.dirty && _signupForm.controls.password.value!=''">
+        <p ion-text text-wrap>Please enter atleast 6 characters.</p>
       </ion-item>
     </form>
 
     <div margin-top>
-      <button ion-button block color="dark" tappable (click)="register()">
+      <button ion-button block color="dark" tappable [disabled]="!_signupForm.valid" (click)="register()">
         SIGN UP
       </button>
     </div>

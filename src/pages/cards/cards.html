@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <strong>Cards</strong>
+    </ion-title>
+    <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button tappable (click)="_showSearchInput()">
+        <ion-icon name="ios-search"></ion-icon>
+      </button>
+      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">
+        <ion-icon name="ios-close-circle"></ion-icon>
+      </button>
+    </ion-buttons> -->
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
+  <ion-card  class="full-width">
+    <ion-item class="blue">
+      <div class="top-header">
+        <div class="card-type" float-left>
+            Debit Card
+        </div>
+        <div class="bank-name" float-right>
+          IndusInd Bank
+        </div>
+      </div>
+      <div class="acc-number">
+          {{convertStr(cno)}}
+      </div>
+      <div class="detail-div">
+          <div class="expire-div" float-left>
+            Valid Through 19/20
+          </div>
+          <div class="pin-div" float-right text-right>
+            <p>PIN ****</p>
+            <p>CVV ***</p>
+          </div>
+      </div>
+      <div class="bottom-div">
+          <div class="holder-name" float-left>
+            Ramkumar S
+          </div>
+          <div class="card-type" float-right>
+            <img src="assets/icon/cards/discover.png">
+          </div>
+      </div>
+    </ion-item>
+  </ion-card>
+  <ion-card  class="full-width">
+    <ion-item class="gold">
+      <div class="top-header">
+        <div class="card-type" float-left>
+            Debit Card
+        </div>
+        <div class="bank-name" float-right>
+          IndusInd Bank
+        </div>
+      </div>
+      <div class="acc-number">
+          {{convertStr(cno)}}
+      </div>
+      <div class="detail-div">
+          <div class="expire-div" float-left>
+            Valid Through 19/20
+          </div>
+          <div class="pin-div" float-right text-right>
+            <p>PIN ****</p>
+            <p>CVV ***</p>
+          </div>
+      </div>
+      <div class="bottom-div">
+          <div class="holder-name" float-left>
+            Ramkumar S
+          </div>
+          <div class="card-type" float-right>
+            <img src="assets/icon/cards/maestro.png">
+          </div>
+      </div>
+    </ion-item>
+  </ion-card>
+  <ion-fab right bottom>
+    <button (click)="_addWebsite()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>

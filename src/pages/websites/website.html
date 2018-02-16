@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title  *ngIf="!_searchField">
+      <strong>Websites</strong>
+    </ion-title>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>
+    <ion-buttons end>
+      <button ion-button tappable (click)="_showSearchInput()">
+        <ion-icon name="ios-search"></ion-icon>
+      </button>
+      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">
+        <ion-icon name="ios-close-circle"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
+  <ion-list  class="full-width">
+    <ion-item-sliding *ngFor="let s of _items" (click)="_addWebsite(s)">
+    <ion-item>
+      <ion-avatar item-start>
+        <ion-icon name="globe"></ion-icon>
+      </ion-avatar>
+      <h2>{{s.title}}</h2>
+      <p>{{s.url}}</p>
+    </ion-item>
+    <ion-item-options side="right">
+      <button ion-button color="primary">
+        <ion-icon name="create"></ion-icon>
+        Edit
+      </button>
+      <button ion-button color="danger">
+        <ion-icon name="trash"></ion-icon>
+        Delete
+      </button>
+    </ion-item-options>
+  </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngIf="_items==''">
+    <ion-item text-center>No Records Found.</ion-item>
+  </ion-list>
+  <ion-fab right bottom>
+    <button (click)="_addWebsite()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+</ion-content>
