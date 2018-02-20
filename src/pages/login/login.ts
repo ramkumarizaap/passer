@@ -1,5 +1,5 @@
 import {Component} from "@angular/core";
-import {NavController, AlertController,LoadingController, ToastController, MenuController} from "ionic-angular";
+import {NavController, AlertController,LoadingController,  MenuController} from "ionic-angular";
 import {HomePage} from "../home/home";
 import {RegisterPage} from "../register/register";
 import {WebsitePage} from "../websites/website";
@@ -14,7 +14,11 @@ import { DatabaseComponent } from '../../components/database/database';
 export class LoginPage {
   private _loginForm: FormGroup;
   private formdata;
-  private user:any;
+  public _items;
+  public _details;
+  private users:any;
+  private _passwordInputType: string = "password";
+  private _passwordIcon : string = "eye-off";
   constructor(
     private globalvars:GlobalVars,
     public db:DatabaseComponent,
@@ -22,8 +26,7 @@ export class LoginPage {
     public nav: NavController, 
     private alertCtrl: AlertController,
     public menu: MenuController,
-    private loader:LoadingController,
-    public toastCtrl: ToastController) {
+    private loader:LoadingController) {
     this.menu.swipeEnable(false);
     this._loginForm = _formBuilder.group({
       //EMAIL
@@ -40,7 +43,28 @@ export class LoginPage {
         ])
       ]
     });
+
+    this._items = [{id:'1',name:'Ram'},{id:'2',name:'Kumar'}];
+    for (var i = 0; i < this._items.length; i++)
+    {
+      this._items.push({id:this._items[i].id,username:this._items[i].name});
+    }
+    alert(JSON.stringify(this._items));
+
   }
+
+  // Password Toggle
+  private _toggleViewPassword(event: MouseEvent) {
+    event.preventDefault();
+    console.info("show password");
+    if (this._passwordInputType === "password") {
+      this._passwordInputType = "text";
+      this._passwordIcon = "eye";
+    } else {
+      this._passwordIcon = "eye-off";
+      this._passwordInputType = "password";
+    };
+  };
 
   // go to register page
   register() {
@@ -50,100 +74,56 @@ export class LoginPage {
   // login and go to home page
   login()
   {
-    // if(this._loginForm.valid)
-    // {
-    //   let loading = this.loader.create({
-    //     content: 'Loading...'
-    //   });
-    //   loading.present();
-    //   this.formdata = this._loginForm.value;
-    //   this.sqlite.create({
-    //     name: 'pwdmgr.db',
-    //     location: 'default'
-    //   }).then((db: SQLiteObject) => {
-    //     loading.dismiss();
-    //      db.executeSql('SELECT * FROM users where email=? and password=?',[this.formdata.email,this.formdata.password])
-    //        .then(res => {
-    //          alert("Success: "+ JSON.stringify(res));
-    //           if(res.rows.length>0)
-    //           {
-    //             this.user = res.rows.item(0);
-    //             this.globalvars.setUserdata(JSON.stringify(this.user));
-    //             alert("Data: "+ JSON.stringify(this.user));
-    //             this.nav.setRoot(WebsitePage);
-    //           }
-    //           else
-    //           {
-    //             let alert = this.alertCtrl.create({
-    //               title: 'Error',
-    //               message: 'Login Failed!',
-    //               buttons: ['Ok'],
-    //             });
-    //             alert.present();
-    //             return false;
-    //           }
-    //      });
-
-    //   },(err)=>{
-    //     loading.dismiss();
-    //     this.nav.setRoot(HomePage);
-    //       let alert = this.alertCtrl.create({
-    //         title: 'Error',
-    //         message: 'Login Failed!',
-    //         buttons: ['Ok'],
-    //       });
-    //       alert.present();
-    //       // return false;
-    //   });
-    // }
     if(this._loginForm.valid)
     {
-      let fields:Array<any> = ['email','password'];
-      this.db.insertData('',this._loginForm.value,'users').then(res=>{
-         alert("Success Insert: "+JSON.stringify(res));
-      }).catch(e=>{
-        alert("Error Insert: "+JSON.stringify(e));
+      let logload = this.loader.create({
+          content: "Loading..."
+        });
+      logload.present();
+      let formdata = this._loginForm.value;
+      let query = "select * from users where email='"+formdata.email+"' and password='"+formdata.password+"'";
+      this.db.exeQuery(query).then(res=>{
+          if(res.rows.length)
+          {
+            let user=[];
+            user.push({
+                id:res.rows.item(0).id,
+                fullname:res.rows.item(0).fullname,
+                email:res.rows.item(0).email,
+                password:res.rows.item(0).password,
+            });
+            this.globalvars.setUserdata(JSON.stringify(user));
+            setTimeout(()=>{            
+             logload.dismiss();
+             this.nav.setRoot(WebsitePage);
+           },4000);
+          }
+          else
+          {
+            logload.dismiss();
+            let alert = this.alertCtrl.create({
+              title: 'Failed!',
+              message: 'Invalid Username or Password',
+              buttons: ['Ok'],
+            });
+            alert.present();
+            return false;
+          }
+     }).catch(e=>{
+       logload.dismiss();
+          let alert = this.alertCtrl.create({
+            title: 'Failed!',
+            message: 'Invalid Username or Password',
+            buttons: ['Ok'],
+          });
+          alert.present();
+          return false;
       });
     }
   }
 
   forgotPass()
   {
-    let forgot = this.alertCtrl.create({
-      title: 'Forgot Password?',
-      message: "Enter you email address to send a reset link password.",
-      inputs: [
-        {
-          name: 'email',
-          placeholder: 'Email',
-          type: 'email'
-        },
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Send',
-          handler: data => {
-            console.log('Send clicked');
-            let toast = this.toastCtrl.create({
-              message: 'Email was sended successfully',
-              duration: 3000,
-              position: 'top',
-              cssClass: 'dark-trans',
-              closeButtonText: 'OK',
-              showCloseButton: true
-            });
-            toast.present();
-          }
-        }
-      ]
-    });
-    forgot.present();
+   
   }
-
 }

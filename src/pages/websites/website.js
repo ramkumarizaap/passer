@@ -109,9 +109,9 @@ var WebsitePage = /** @class */ (function () {
     };
     WebsitePage.prototype._addWebsite = function (s) {
         var field = ['name', 'password', 'comments'];
-        this.db.insertData(field).then(function (res) {
-            console.log(res);
-        });
+        // this.db.insertData(field).then(res => {
+        // 	console.log(res);
+        // });
         // this.nav.push(AddWebsitePage,{id:s});
     };
     WebsitePage = __decorate([

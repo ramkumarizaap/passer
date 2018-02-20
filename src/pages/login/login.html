@@ -30,8 +30,9 @@
           <ion-icon name="lock" item-start class="text-primary"></ion-icon>
           Password
         </ion-label>
-        <ion-input formControlName="password" type="password"></ion-input>
+        <ion-input formControlName="password" [type]="_passwordInputType"></ion-input>
       </ion-item>
+      <ion-icon float-right name="{{_passwordIcon}}" (click)="_toggleViewPassword($event)" class="password-icon"></ion-icon>
       <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.password.hasError('required') && _loginForm.controls.password.touched">
         <p ion-text text-wrap>Please Enter Password</p>
       </ion-item>

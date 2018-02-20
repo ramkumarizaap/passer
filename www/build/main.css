@@ -22129,6 +22129,14 @@ page-home ion-list ion-datetime,
   padding-left: 0;
 }
 
+page-login .password-icon,
+.login .password-icon {
+  position: relative;
+  font-size: 24px;
+  margin-top: -30px;
+  margin-right: 10px;
+}
+
 page-mobile-app ion-searchbar {
   background: transparent;
 }
@@ -22223,6 +22231,14 @@ page-mobile-app-add ion-item.help .item-inner {
 
 page-mobile-app-add .clearfix {
   height: 30px;
+}
+
+page-register .password-icon,
+.register .password-icon {
+  position: relative;
+  font-size: 24px;
+  margin-top: -30px;
+  margin-right: 10px;
 }
 
 page-search-location ion-input,
@@ -22381,4 +22397,8 @@ page-website ion-item-sliding .item-inner, page-website ion-item-options {
 
 page-website ion-label.label-md {
   margin: 20px 8px 13px 0 !important;
+}
+
+page-website ion-item h2 {
+  padding-top: 5px;
 }

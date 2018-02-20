@@ -9,17 +9,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from "@angular/core";
 import { NavController, AlertController, LoadingController, ToastController, MenuController } from "ionic-angular";
-import { HomePage } from "../home/home";
 import { RegisterPage } from "../register/register";
-import { WebsitePage } from "../websites/website";
 import { FormBuilder, Validators } from '@angular/forms';
 import { GlobalVars } from '../../providers/globalVars';
 import { regexPatterns } from '../../providers/regexPatterns';
-import { SQLite } from '@ionic-native/sqlite';
+import { DatabaseComponent } from '../../components/database/database';
 var LoginPage = /** @class */ (function () {
-    function LoginPage(globalvars, sqlite, _formBuilder, nav, alertCtrl, menu, loader, toastCtrl) {
+    function LoginPage(globalvars, db, _formBuilder, nav, alertCtrl, menu, loader, toastCtrl) {
         this.globalvars = globalvars;
-        this.sqlite = sqlite;
+        this.db = db;
         this._formBuilder = _formBuilder;
         this.nav = nav;
         this.alertCtrl = alertCtrl;
@@ -49,47 +47,57 @@ var LoginPage = /** @class */ (function () {
     };
     // login and go to home page
     LoginPage.prototype.login = function () {
-        var _this = this;
+        // if(this._loginForm.valid)
+        // {
+        //   let loading = this.loader.create({
+        //     content: 'Loading...'
+        //   });
+        //   loading.present();
+        //   this.formdata = this._loginForm.value;
+        //   this.sqlite.create({
+        //     name: 'pwdmgr.db',
+        //     location: 'default'
+        //   }).then((db: SQLiteObject) => {
+        //     loading.dismiss();
+        //      db.executeSql('SELECT * FROM users where email=? and password=?',[this.formdata.email,this.formdata.password])
+        //        .then(res => {
+        //          alert("Success: "+ JSON.stringify(res));
+        //           if(res.rows.length>0)
+        //           {
+        //             this.user = res.rows.item(0);
+        //             this.globalvars.setUserdata(JSON.stringify(this.user));
+        //             alert("Data: "+ JSON.stringify(this.user));
+        //             this.nav.setRoot(WebsitePage);
+        //           }
+        //           else
+        //           {
+        //             let alert = this.alertCtrl.create({
+        //               title: 'Error',
+        //               message: 'Login Failed!',
+        //               buttons: ['Ok'],
+        //             });
+        //             alert.present();
+        //             return false;
+        //           }
+        //      });
+        //   },(err)=>{
+        //     loading.dismiss();
+        //     this.nav.setRoot(HomePage);
+        //       let alert = this.alertCtrl.create({
+        //         title: 'Error',
+        //         message: 'Login Failed!',
+        //         buttons: ['Ok'],
+        //       });
+        //       alert.present();
+        //       // return false;
+        //   });
+        // }
         if (this._loginForm.valid) {
-            var loading_1 = this.loader.create({
-                content: 'Loading...'
-            });
-            loading_1.present();
-            this.formdata = this._loginForm.value;
-            this.sqlite.create({
-                name: 'pwdmgr.db',
-                location: 'default'
-            }).then(function (db) {
-                loading_1.dismiss();
-                db.executeSql('SELECT * FROM users where email=? and password=?', [_this.formdata.email, _this.formdata.password])
-                    .then(function (res) {
-                    alert("Success: " + JSON.stringify(res));
-                    if (res.rows.length > 0) {
-                        _this.user = res.rows.item(0);
-                        _this.globalvars.setUserdata(JSON.stringify(_this.user));
-                        alert("Data: " + JSON.stringify(_this.user));
-                        _this.nav.setRoot(WebsitePage);
-                    }
-                    else {
-                        var alert_1 = _this.alertCtrl.create({
-                            title: 'Error',
-                            message: 'Login Failed!',
-                            buttons: ['Ok'],
-                        });
-                        alert_1.present();
-                        return false;
-                    }
-                });
-            }, function (err) {
-                loading_1.dismiss();
-                _this.nav.setRoot(HomePage);
-                var alert = _this.alertCtrl.create({
-                    title: 'Error',
-                    message: 'Login Failed!',
-                    buttons: ['Ok'],
-                });
-                alert.present();
-                // return false;
+            var fields = ['email', 'password'];
+            this.db.insertData('', this._loginForm.value, 'users').then(function (res) {
+                alert("Success Insert: " + JSON.stringify(res));
+            }).catch(function (e) {
+                alert("Error Insert: " + JSON.stringify(e));
             });
         }
     };
@@ -137,7 +145,7 @@ var LoginPage = /** @class */ (function () {
             templateUrl: 'login.html'
         }),
         __metadata("design:paramtypes", [GlobalVars,
-            SQLite,
+            DatabaseComponent,
             FormBuilder,
             NavController,
             AlertController,

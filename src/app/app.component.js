@@ -16,7 +16,7 @@ import { HomePage } from "../pages/home/home";
 import { LoginPage } from "../pages/login/login";
 import { WebsitePage } from "../pages/websites/website";
 import { MobileAppPage } from "../pages/mobile-app/mobile-app";
-import { CardsPage } from "../pages/cards/cards";
+import { BankPage } from "../pages/bank/bank";
 import { SQLite } from '@ionic-native/sqlite';
 import { DatabaseComponent } from "../components/database/database";
 var MyApp = /** @class */ (function () {
@@ -27,14 +27,14 @@ var MyApp = /** @class */ (function () {
         this.statusBar = statusBar;
         this.splashScreen = splashScreen;
         this.keyboard = keyboard;
-        this.rootPage = CardsPage;
+        this.rootPage = LoginPage;
         this.initializeApp();
         this.db.createTables();
         this.appMenuItems = [
             { title: 'Websites', component: WebsitePage, icon: 'ios-globe' },
             { title: 'Apps', component: MobileAppPage, icon: 'ios-appstore' },
             { title: 'Cards', component: HomePage, icon: 'ios-card' },
-            { title: 'Bank', component: HomePage, icon: 'logo-usd' },
+            { title: 'Bank', component: BankPage, icon: 'logo-usd' },
             { title: 'Notes', component: HomePage, icon: 'ios-document' },
         ];
     }

@@ -33,6 +33,7 @@ import { MobileAppPage } from "../pages/mobile-app/mobile-app";
 import { MobileAppAddPage } from "../pages/mobile-app-add/mobile-app-add";
 import { CardsPage } from "../pages/cards/cards";
 import { BankPage } from "../pages/bank/bank";
+import { BankAddPage } from "../pages/bank-add/bank-add";
 import { AddWebsitePage } from "../pages/add-website/add-website";
 // import services
 // end import services
@@ -60,7 +61,8 @@ var AppModule = /** @class */ (function () {
                 TripsPage,
                 MobileAppAddPage,
                 CardsPage,
-                BankPage
+                BankPage,
+                BankAddPage
             ],
             imports: [
                 BrowserModule,
@@ -92,7 +94,8 @@ var AppModule = /** @class */ (function () {
                 TripsPage,
                 MobileAppAddPage,
                 CardsPage,
-                BankPage
+                BankPage,
+                BankAddPage
             ],
             providers: [
                 StatusBar,

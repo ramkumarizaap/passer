@@ -10,8 +10,8 @@ webpackJsonp([0],{
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__notifications_notifications__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__settings_settings__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__trips_trips__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__search_location_search_location__ = __webpack_require__(211);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__trips_trips__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__search_location_search_location__ = __webpack_require__(212);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -117,149 +117,7 @@ Start : Any
 
 /***/ }),
 
-/***/ 110:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebsitePage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_database_database__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_globalVars__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_sqlite__ = __webpack_require__(32);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-var WebsitePage = (function () {
-    function WebsitePage(nav, sqlite, globalvars, loader, alertCtrl, _formBuilder, db) {
-        this.nav = nav;
-        this.sqlite = sqlite;
-        this.globalvars = globalvars;
-        this.loader = loader;
-        this.alertCtrl = alertCtrl;
-        this._formBuilder = _formBuilder;
-        this.db = db;
-        this._searchField = false;
-        // this.user = this.globalvars.getUserdata();
-        alert("Website Page: " + JSON.stringify(this.user));
-        // alert("User Id: "+this.user.id);
-        this.clearFilter();
-    }
-    WebsitePage.prototype._showSearchInput = function () {
-        this._searchField = true;
-    };
-    WebsitePage.prototype._hideSearchInput = function () {
-        this._searchField = false;
-    };
-    WebsitePage.prototype.clearFilter = function () {
-        // let loading = this.loader.create({
-        //      content: 'Loading...'
-        //    });
-        //    loading.present();
-        // this.sqlite.create({
-        //      name: 'pwdmgr.db',
-        //      location: 'default'
-        //    }).then((db: SQLiteObject) => {
-        //    		db.executeSql('SELECT * FROM websites where userid=?',[this.user.id])
-        //         .then(res => {
-        //         	alert("Success: "+ JSON.stringify(res));
-        //         	loading.dismiss();
-        //         	alert("Length1: "+res.rows.length);
-        //            if(res.rows.length>0)
-        //            {
-        //            	this.items = [];
-        //            	alert("Length2: "+res.rows.length);
-        //              for (var i = 0; i < res.rows.length; i++)
-        //              {
-        //              	alert("Title: "+res.rows.item(i).title);
-        //              	this.items.push({
-        //              		id:res.rows.item(i).id,
-        //              		name:res.rows.item(i).title,
-        //              		url:res.rows.item(i).url
-        //              	});
-        //              }
-        //              alert("Success: "+JSON.stringify(this.items));
-        //            }
-        //            else
-        //            {
-        //              let alert = this.alertCtrl.create({
-        //                title: 'Error',
-        //                message: 'No Records Found!',
-        //                buttons: ['Ok'],
-        //              });
-        //              alert.present();
-        //              return false;
-        //            }
-        //         },(err)=>{
-        //         loading.dismiss();
-        //           let alert = this.alertCtrl.create({
-        //             title: 'Error',
-        //             message: JSON.stringify(err),
-        //             buttons: ['Ok'],
-        //           });
-        //           alert.present();
-        //        });
-        //    });
-        this._items = [
-            {
-                id: '1', title: 'Ram', url: "http://www.google.com",
-                details: [
-                    { name: '1', password: '123', comments: 'comments' },
-                    { name: '2', password: '456', comments: 'Login' }
-                ]
-            },
-            {
-                id: '2', title: 'Kumar', url: "http://www.google.com",
-            },
-        ];
-        console.log(this._items);
-    };
-    WebsitePage.prototype.setFilteredItems = function (e) {
-        this.clearFilter();
-        var val = e.target.value;
-        // if the value is an empty string don't filter the items
-        if (val && val.trim() != '') {
-            this._items = this._items.filter(function (item) {
-                return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
-            });
-        }
-    };
-    WebsitePage.prototype._addWebsite = function (s) {
-        var field = ['name', 'password', 'comments'];
-        // this.db.insertData(field).then(res => {
-        // 	console.log(res);
-        // });
-        // this.nav.push(AddWebsitePage,{id:s});
-    };
-    return WebsitePage;
-}());
-WebsitePage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-website',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\websites\website.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title  *ngIf="!_searchField">\n\n      <strong>Websites</strong>\n\n    </ion-title>\n\n    <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>\n\n    <ion-buttons end>\n\n      <button ion-button tappable (click)="_showSearchInput()">\n\n        <ion-icon name="ios-search"></ion-icon>\n\n      </button>\n\n      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">\n\n        <ion-icon name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <ion-list  class="full-width">\n\n    <ion-item-sliding *ngFor="let s of _items" (click)="_addWebsite(s)">\n\n    <ion-item>\n\n      <ion-avatar item-start>\n\n        <ion-icon name="globe"></ion-icon>\n\n      </ion-avatar>\n\n      <h2>{{s.title}}</h2>\n\n      <p>{{s.url}}</p>\n\n    </ion-item>\n\n    <ion-item-options side="right">\n\n      <button ion-button color="primary">\n\n        <ion-icon name="create"></ion-icon>\n\n        Edit\n\n      </button>\n\n      <button ion-button color="danger">\n\n        <ion-icon name="trash"></ion-icon>\n\n        Delete\n\n      </button>\n\n    </ion-item-options>\n\n  </ion-item-sliding>\n\n  </ion-list>\n\n  <ion-list *ngIf="_items==\'\'">\n\n    <ion-item text-center>No Records Found.</ion-item>\n\n  </ion-list>\n\n  <ion-fab right bottom>\n\n    <button (click)="_addWebsite()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>\n\n  </ion-fab>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\websites\website.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_5__ionic_native_sqlite__["a" /* SQLite */], __WEBPACK_IMPORTED_MODULE_4__providers_globalVars__["a" /* GlobalVars */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_2__components_database_database__["a" /* DatabaseComponent */]])
-], WebsitePage);
-
-//# sourceMappingURL=website.js.map
-
-/***/ }),
-
-/***/ 119:
+/***/ 118:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -272,11 +130,11 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 119;
+webpackEmptyAsyncContext.id = 118;
 
 /***/ }),
 
-/***/ 160:
+/***/ 159:
 /***/ (function(module, exports) {
 
 function webpackEmptyAsyncContext(req) {
@@ -289,7 +147,7 @@ function webpackEmptyAsyncContext(req) {
 webpackEmptyAsyncContext.keys = function() { return []; };
 webpackEmptyAsyncContext.resolve = webpackEmptyAsyncContext;
 module.exports = webpackEmptyAsyncContext;
-webpackEmptyAsyncContext.id = 160;
+webpackEmptyAsyncContext.id = 159;
 
 /***/ }),
 
@@ -382,7 +240,8 @@ SettingsPage = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__login_login__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_regexPatterns__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_sqlite__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_database_database__ = __webpack_require__(32);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -398,11 +257,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RegisterPage = (function () {
-    function RegisterPage(sqlite, _formBuilder, nav) {
-        this.sqlite = sqlite;
+    function RegisterPage(db, _formBuilder, nav, globalVars, alertCtrl, loader) {
+        this.db = db;
         this._formBuilder = _formBuilder;
         this.nav = nav;
+        this.globalVars = globalVars;
+        this.alertCtrl = alertCtrl;
+        this.loader = loader;
+        this._passwordInputType = "password";
+        this._passwordIcon = "eye-off";
         this._signupForm = this._formBuilder.group({
             //FULLNAME
             fullname: ["",
@@ -425,36 +290,58 @@ var RegisterPage = (function () {
             ]
         });
     }
+    //Toggle Password
+    RegisterPage.prototype._toggleViewPassword = function (event) {
+        event.preventDefault();
+        console.info("show password");
+        if (this._passwordInputType === "password") {
+            this._passwordInputType = "text";
+            this._passwordIcon = "eye";
+        }
+        else {
+            this._passwordIcon = "eye-off";
+            this._passwordInputType = "password";
+        }
+        ;
+    };
+    ;
     // register and go to home page
     RegisterPage.prototype.register = function () {
         var _this = this;
         if (this._signupForm.valid) {
+            var signload_1 = this.loader.create({
+                content: "Loading..."
+            });
+            signload_1.present();
             this.formdata = this._signupForm.value;
-            this.sqlite.create({
-                name: 'pwdmgr.db',
-                location: 'default'
-            })
-                .then(function (db) {
-                db.executeSql('INSERT INTO users (name,email,password) values(?,?,?)', [_this.formdata.fullname, _this.formdata.email, _this.formdata.password])
-                    .then(function () { return alert('Account created successfully.'); })
-                    .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-                db.executeSql('SELECT * FROM users', {}).then(function (res) {
-                    alert("Success: " + JSON.stringify(res));
-                    // this.user = [];
-                    // for(var i=0; i<res.rows.length; i++) {
-                    //   this.user.push({
-                    //       id:res.rows.item(i).id,
-                    //       name:res.rows.item(i).name,
-                    //       email:res.rows.item(i).email,
-                    //       password:res.rows.item(i).password
-                    //     });
-                    //   alert("Data: "+ JSON.stringify(this.user));
-                    // }
-                    _this.login();
-                })
-                    .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-            })
-                .catch(function (e) { return alert("Error:" + JSON.stringify(e)); });
+            var query = "insert into users(fullname,email,password)" +
+                "values('" + this.formdata.fullname + "','" + this.formdata.email + "','" + this.formdata.password + "')";
+            this.db.exeQuery(query).then(function (res) {
+                var signup = _this.alertCtrl.create({
+                    title: 'Success',
+                    message: "Registration done successfully.",
+                    buttons: [
+                        {
+                            text: 'Ok',
+                            handler: function (data) {
+                                _this.login();
+                            }
+                        }
+                    ]
+                });
+                setTimeout(function () {
+                    signload_1.dismiss();
+                    signup.present();
+                }, 3000);
+            }).catch(function (e) {
+                signload_1.dismiss();
+                var errsignup = _this.alertCtrl.create({
+                    title: 'Error',
+                    message: "Registration has not successfull.",
+                    buttons: ['Ok']
+                });
+                errsignup.present();
+            });
         }
     };
     // go to login page
@@ -465,9 +352,14 @@ var RegisterPage = (function () {
 }());
 RegisterPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-register',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\register\register.html"*/'<!-- -->\n<ion-content class="auth-page">\n  <div class="login-content">\n\n    <!-- Logo -->\n    <div padding text-center class="animated fadeInDown">\n      <div class="logo"></div>\n      <h2 ion-text class="text-primary logo-text">\n        <strong>Passer</strong><br><small>Password Security</small>\n      </h2>\n    </div>\n\n    <!-- Login form -->\n    <form class="list-form" [formGroup]="_signupForm" method="post" novalidate>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="person" item-start class="text-primary"></ion-icon>\n          Full Name\n        </ion-label>\n        <ion-input formControlName="fullname" type="text"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.fullname.hasError(\'required\') && _signupForm.controls.fullname.touched">\n        <p ion-text text-wrap>Please Enter Full Name</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.fullname.invalid  && _signupForm.controls.fullname.dirty && _signupForm.controls.fullname.value!=\'\'">\n        <p ion-text text-wrap>Please enter atleast 4 characters.</p>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="mail" item-start  class="text-primary"></ion-icon>\n          Email\n        </ion-label>\n        <ion-input formControlName="email" type="email"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.email.hasError(\'required\') && _signupForm.controls.email.touched">\n        <p ion-text text-wrap>Please Enter Email-ID</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.email.invalid  && _signupForm.controls.email.dirty && _signupForm.controls.email.value!=\'\'">\n        <p ion-text text-wrap>Please use correct email format, e.g.:someone@domain.com.</p>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="lock" item-start class="text-primary"></ion-icon>\n          Password\n        </ion-label>\n        <ion-input formControlName="password" type="password"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.password.hasError(\'required\') && _signupForm.controls.password.touched">\n        <p ion-text text-wrap>Please Enter Password</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.password.invalid  && _signupForm.controls.password.dirty && _signupForm.controls.password.value!=\'\'">\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n      </ion-item>\n    </form>\n\n    <div margin-top>\n      <button ion-button block color="dark" tappable [disabled]="!_signupForm.valid" (click)="register()">\n        SIGN UP\n      </button>\n    </div>\n\n    <!-- Other links -->\n    <div text-center margin-top>\n      <span ion-text color="primary" tappable (click)="login()">Already have an account?</span>\n    </div>\n\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\register\register.html"*/
+        selector: 'page-register',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\register\register.html"*/'<!-- -->\n<ion-content class="auth-page">\n  <div class="login-content">\n\n    <!-- Logo -->\n    <div padding text-center class="animated fadeInDown">\n      <div class="logo"></div>\n      <h2 ion-text class="text-primary logo-text">\n        <strong>Passer</strong><br><small>Password Security</small>\n      </h2>\n    </div>\n\n    <!-- Login form -->\n    <form class="list-form" [formGroup]="_signupForm" method="post" novalidate>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="person" item-start class="text-primary"></ion-icon>\n          Full Name\n        </ion-label>\n        <ion-input formControlName="fullname" type="text"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.fullname.hasError(\'required\') && _signupForm.controls.fullname.touched">\n        <p ion-text text-wrap>Please Enter Full Name</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.fullname.invalid  && _signupForm.controls.fullname.dirty && _signupForm.controls.fullname.value!=\'\'">\n        <p ion-text text-wrap>Please enter atleast 4 characters.</p>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="mail" item-start  class="text-primary"></ion-icon>\n          Email\n        </ion-label>\n        <ion-input formControlName="email" type="email"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.email.hasError(\'required\') && _signupForm.controls.email.touched">\n        <p ion-text text-wrap>Please Enter Email-ID</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.email.invalid  && _signupForm.controls.email.dirty && _signupForm.controls.email.value!=\'\'">\n        <p ion-text text-wrap>Please use correct email format, e.g.:someone@domain.com.</p>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="lock" item-start class="text-primary"></ion-icon>\n          Password\n        </ion-label>\n        <ion-input formControlName="password" [type]="_passwordInputType"></ion-input>\n      </ion-item>\n      <ion-icon float-right name="{{_passwordIcon}}" (click)="_toggleViewPassword($event)" class="password-icon"></ion-icon>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.password.hasError(\'required\') && _signupForm.controls.password.touched">\n        <p ion-text text-wrap>Please Enter Password</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_signupForm.controls.password.invalid  && _signupForm.controls.password.dirty && _signupForm.controls.password.value!=\'\'">\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n      </ion-item>\n    </form>\n\n    <div margin-top>\n      <button ion-button block color="dark" tappable [disabled]="!_signupForm.valid" (click)="register()">\n        SIGN UP\n      </button>\n    </div>\n\n    <!-- Other links -->\n    <div text-center margin-top>\n      <span ion-text color="primary" tappable (click)="login()">Already have an account?</span>\n    </div>\n\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\register\register.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__ionic_native_sqlite__["a" /* SQLite */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */]])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__components_database_database__["a" /* DatabaseComponent */],
+        __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__["a" /* GlobalVars */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
 ], RegisterPage);
 
 //# sourceMappingURL=register.js.map
@@ -478,11 +370,190 @@ RegisterPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddWebsitePage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__websites_website__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_regexPatterns__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_database_database__ = __webpack_require__(32);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+// import {RegisterPage} from "../register/register";
+
+
+
+
+var AddWebsitePage = (function () {
+    function AddWebsitePage(db, globalvars, nav, _formBuilder, alertCtrl, loader, params) {
+        this.db = db;
+        this.globalvars = globalvars;
+        this.nav = nav;
+        this._formBuilder = _formBuilder;
+        this.alertCtrl = alertCtrl;
+        this.loader = loader;
+        this.params = params;
+        this.website = this.params.get('id');
+        this.user = this.globalvars.getUserdata()[0];
+        alert("User:" + JSON.stringify(this.user));
+        alert("User Id: " + this.user.id);
+        this._websiteForm = this._formBuilder.group({
+            id: [""],
+            title: ["",
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(6)
+                ])
+            ],
+            url: ["",
+                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].pattern(__WEBPACK_IMPORTED_MODULE_4__providers_regexPatterns__["a" /* regexPatterns */].url)
+                ])
+            ],
+            details: this._formBuilder.array([this.createItem()])
+        });
+        if (this.website) {
+            var wdetails = [];
+            for (var i in this.website.details) {
+                wdetails.push(this._formBuilder.group(this.website.details[i]));
+            }
+            this._websiteForm = this._formBuilder.group({
+                id: [this.website.id],
+                title: [this.website.title], url: [this.website.url],
+                details: this._formBuilder.array(wdetails)
+            });
+            console.log(this._websiteForm);
+        }
+        this.len = this._websiteForm.get('details');
+        console.log("Length: " + this.len.length);
+    }
+    AddWebsitePage.prototype.createItem = function () {
+        return this._formBuilder.group({
+            name: '',
+            password: '',
+            comments: ''
+        });
+    };
+    AddWebsitePage.prototype._addNew = function () {
+        this.details = this._websiteForm.get('details');
+        console.log(this.details);
+        this.details.push(this.createItem());
+    };
+    AddWebsitePage.prototype._cancel = function () {
+        this.nav.pop();
+    };
+    AddWebsitePage.prototype._removeItem = function (i) {
+        this.details = this._websiteForm.get('details');
+        console.log(i);
+        // let index = this.items.indexOf(i);
+        // console.log(index);
+        //   if(index > -1){
+        this.details.removeAt(i);
+        // }
+    };
+    AddWebsitePage.prototype._submitWebsiteForm = function () {
+        var _this = this;
+        console.log(this._websiteForm.value);
+        if (this._websiteForm.valid) {
+            var load_1 = this.loader.create({
+                content: 'Please Wait...'
+            });
+            load_1.present();
+            var formdata_1 = this._websiteForm.value;
+            var query = "insert into websites(userid,title,url)" +
+                "values ('" + this.user.id + "','" + formdata_1.title + "','" + formdata_1.url + "')";
+            this.db.exeQuery(query).then(function (res) {
+                alert("Add Success: " + JSON.stringify(res));
+                _this._lastId = res.insertId;
+                alert("insert Id: " + _this._lastId);
+                /*Insertion For Wesbite Details*/
+                for (var i = 0; i < formdata_1.details.length; i++) {
+                    var detailform = formdata_1.details[i];
+                    alert("Det:" + JSON.stringify(detailform));
+                    alert("Last Idd:" + _this._lastId);
+                    var query1 = "insert into website_details(websiteid,username,password,comments)" +
+                        "values ('" + _this._lastId + "','" + detailform.name + "','" + detailform.password + "','" + detailform.comments + "')";
+                    _this.db.exeQuery(query1).then(function (wdetails) {
+                        alert("Success Details: " + JSON.stringify(wdetails));
+                    })
+                        .catch(function (err) {
+                        alert("Error Details: " + JSON.stringify(err));
+                    });
+                }
+                var websuccess = _this.alertCtrl.create({
+                    title: 'Success',
+                    message: "Website created successfully.",
+                    buttons: [
+                        {
+                            text: 'Ok',
+                            handler: function (data) {
+                                //this.nav.setRoot(WebsitePage);
+                            }
+                        }
+                    ]
+                });
+                setTimeout(function () {
+                    load_1.dismiss();
+                    websuccess.present();
+                }, 5000);
+            })
+                .catch(function (err) {
+                load_1.dismiss();
+                var webfail = _this.alertCtrl.create({
+                    title: 'Failed!',
+                    message: "Website failed to create.",
+                    buttons: [
+                        {
+                            text: 'Ok',
+                            handler: function (data) {
+                                _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_2__websites_website__["a" /* WebsitePage */]);
+                            }
+                        }
+                    ]
+                });
+                webfail.present();
+            });
+        }
+    };
+    return AddWebsitePage;
+}());
+AddWebsitePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-website-add',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\add-website\add-website.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Add Website</strong>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <form [formGroup]="_websiteForm" (submit)="_submitWebsiteForm()" method="post" novalidate="">\n\n    <button ion-button color="dark" [disabled]="!_websiteForm.valid" type="submit">\n\n      <ion-icon name="checkmark"></ion-icon>&nbsp;Save\n\n    </button>\n\n    <button ion-button color="danger" (click)="_cancel()" type="button">\n\n      <ion-icon name="close"></ion-icon>&nbsp;Cancel\n\n    </button>\n\n    <ion-input formControlName="id" type="text"></ion-input>\n\n    <ion-item>\n\n      <ion-label floating>Title</ion-label>\n\n      <ion-input formControlName="title" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.title.hasError(\'required\') && _websiteForm.controls.title.touched">\n\n        <p ion-text text-wrap>Please Enter Title</p>\n\n    </ion-item>\n\n     <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.title.invalid  && _websiteForm.controls.title.dirty && _websiteForm.controls.title.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n\n      </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>URL</ion-label>\n\n      <ion-input formControlName="url" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.url.hasError(\'required\') && _websiteForm.controls.url.touched">\n\n        <p ion-text text-wrap>Please Enter URL</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.url.hasError(\'pattern\')  && _websiteForm.controls.url.dirty && _websiteForm.controls.url.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter valid URL.</p>\n\n    </ion-item>\n\n    <ion-item class="help"><p style="color:#8f8f8f;">Ex: http://www.example.com</p></ion-item>\n\n    <div formArrayName="details">\n\n      <div class="repeat-list" *ngFor="let item of _websiteForm.get(\'details\').controls;let i = index;">\n\n        <div [formGroupName]="i">\n\n          <button *ngIf="len.length > 1" type="button" (click)="_removeItem(i)" color="danger" class="close-btn" small float-right ion-button item-end>\n\n            <ion-icon name="close"></ion-icon>\n\n          </button>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-input type="text" formControlName="name" placeholder="Username"></ion-input>\n\n            </ion-item>\n\n          </ion-list>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>\n\n            </ion-item>\n\n          </ion-list>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-input type="text" formControlName="comments" placeholder="Comments"></ion-input>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </div>\n\n    </div>\n\n    <button class="btn" type="button" (click)="_addNew()" ion-button color="light">\n\n      <ion-icon name="add"></ion-icon>&nbsp;Add New\n\n    </button>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\add-website\add-website.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__components_database_database__["a" /* DatabaseComponent */],
+        __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__["a" /* GlobalVars */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
+        __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
+], AddWebsitePage);
+
+//# sourceMappingURL=add-website.js.map
+
+/***/ }),
+
+/***/ 209:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripsPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_trip_service__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__trip_detail_trip_detail__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_trip_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__trip_detail_trip_detail__ = __webpack_require__(210);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -520,15 +591,15 @@ TripsPage = __decorate([
 
 /***/ }),
 
-/***/ 209:
+/***/ 210:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripDetailPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_trip_service__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__checkout_trip_checkout_trip__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_trip_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__checkout_trip_checkout_trip__ = __webpack_require__(211);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -586,14 +657,14 @@ TripDetailPage = __decorate([
 
 /***/ }),
 
-/***/ 210:
+/***/ 211:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CheckoutTripPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_trip_service__ = __webpack_require__(54);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_trip_service__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__home_home__ = __webpack_require__(108);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -658,7 +729,7 @@ CheckoutTripPage = __decorate([
 
 /***/ }),
 
-/***/ 211:
+/***/ 212:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -745,14 +816,14 @@ SearchLocationPage = __decorate([
 
 /***/ }),
 
-/***/ 212:
+/***/ 213:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MobileAppPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mobile_app_add_mobile_app_add__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mobile_app_add_mobile_app_add__ = __webpack_require__(214);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -832,7 +903,7 @@ MobileAppPage = __decorate([
 
 /***/ }),
 
-/***/ 213:
+/***/ 214:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -919,14 +990,58 @@ MobileAppAddPage = __decorate([
 
 /***/ }),
 
-/***/ 214:
+/***/ 215:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CardsPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+// import {WebsitePage} from "../websites/website";
+// import {RegisterPage} from "../register/register";
+// import { FormBuilder, FormGroup,FormArray, Validators } from '@angular/forms';
+// import { regexPatterns } from '../../providers/regexPatterns';
+// import { GlobalVars } from '../../providers/globalVars';
+// import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+var CardsPage = (function () {
+    function CardsPage() {
+        this.cno = "4111897865921234";
+    }
+    CardsPage.prototype.convertStr = function (string) {
+        var str = string.substr(4, 10);
+        console.log(str);
+        return string.substr(0, 4) + str.replace(str, " **** **** ") + string.substr(12, 15);
+    };
+    return CardsPage;
+}());
+CardsPage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-cards',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\cards\cards.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Cards</strong>\n\n    </ion-title>\n\n    <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>\n\n    <ion-buttons end>\n\n      <button ion-button tappable (click)="_showSearchInput()">\n\n        <ion-icon name="ios-search"></ion-icon>\n\n      </button>\n\n      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">\n\n        <ion-icon name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons> -->\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <ion-card  class="full-width">\n\n    <ion-item class="blue">\n\n      <div class="top-header">\n\n        <div class="card-type" float-left>\n\n            Debit Card\n\n        </div>\n\n        <div class="bank-name" float-right>\n\n          IndusInd Bank\n\n        </div>\n\n      </div>\n\n      <div class="acc-number">\n\n          {{convertStr(cno)}}\n\n      </div>\n\n      <div class="detail-div">\n\n          <div class="expire-div" float-left>\n\n            Valid Through 19/20\n\n          </div>\n\n          <div class="pin-div" float-right text-right>\n\n            <p>PIN ****</p>\n\n            <p>CVV ***</p>\n\n          </div>\n\n      </div>\n\n      <div class="bottom-div">\n\n          <div class="holder-name" float-left>\n\n            Ramkumar S\n\n          </div>\n\n          <div class="card-type" float-right>\n\n            <img src="assets/icon/cards/discover.png">\n\n          </div>\n\n      </div>\n\n    </ion-item>\n\n  </ion-card>\n\n  <ion-card  class="full-width">\n\n    <ion-item class="gold">\n\n      <div class="top-header">\n\n        <div class="card-type" float-left>\n\n            Debit Card\n\n        </div>\n\n        <div class="bank-name" float-right>\n\n          IndusInd Bank\n\n        </div>\n\n      </div>\n\n      <div class="acc-number">\n\n          {{convertStr(cno)}}\n\n      </div>\n\n      <div class="detail-div">\n\n          <div class="expire-div" float-left>\n\n            Valid Through 19/20\n\n          </div>\n\n          <div class="pin-div" float-right text-right>\n\n            <p>PIN ****</p>\n\n            <p>CVV ***</p>\n\n          </div>\n\n      </div>\n\n      <div class="bottom-div">\n\n          <div class="holder-name" float-left>\n\n            Ramkumar S\n\n          </div>\n\n          <div class="card-type" float-right>\n\n            <img src="assets/icon/cards/maestro.png">\n\n          </div>\n\n      </div>\n\n    </ion-item>\n\n  </ion-card>\n\n  <ion-fab right bottom>\n\n    <button (click)="_addWebsite()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>\n\n  </ion-fab>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\cards\cards.html"*/
+    }),
+    __metadata("design:paramtypes", [])
+], CardsPage);
+
+//# sourceMappingURL=cards.js.map
+
+/***/ }),
+
+/***/ 216:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return BankPage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bank_add_bank_add__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__bank_add_bank_add__ = __webpack_require__(217);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -964,7 +1079,7 @@ BankPage = __decorate([
 
 /***/ }),
 
-/***/ 215:
+/***/ 217:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1037,14 +1152,14 @@ BankAddPage = __decorate([
 
 /***/ }),
 
-/***/ 216:
+/***/ 218:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(219);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_module__ = __webpack_require__(236);
 
 
 
@@ -1055,7 +1170,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 234:
+/***/ 236:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1063,34 +1178,34 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_platform_browser__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_common_http__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_storage__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_sqlite__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_native_sqlite__ = __webpack_require__(200);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_status_bar__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ionic_native_splash_screen__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_keyboard__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_activity_service__ = __webpack_require__(289);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trip_service__ = __webpack_require__(54);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_weather__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_globalVars__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__app_component__ = __webpack_require__(294);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_database_database__ = __webpack_require__(57);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_websites_website__ = __webpack_require__(110);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__services_activity_service__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__services_trip_service__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_weather__ = __webpack_require__(294);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__providers_globalVars__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__app_component__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_database_database__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pages_websites_website__ = __webpack_require__(57);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pages_settings_settings__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_checkout_trip_checkout_trip__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pages_checkout_trip_checkout_trip__ = __webpack_require__(211);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pages_home_home__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pages_login_login__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pages_notifications_notifications__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pages_register_register__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_search_location_search_location__ = __webpack_require__(211);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_trip_detail_trip_detail__ = __webpack_require__(209);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_trips_trips__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_mobile_app_mobile_app__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_mobile_app_add_mobile_app_add__ = __webpack_require__(213);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_cards_cards__ = __webpack_require__(295);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_bank_bank__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_bank_add_bank_add__ = __webpack_require__(215);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_add_website_add_website__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pages_search_location_search_location__ = __webpack_require__(212);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pages_trip_detail_trip_detail__ = __webpack_require__(210);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__pages_trips_trips__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__pages_mobile_app_mobile_app__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__pages_mobile_app_add_mobile_app_add__ = __webpack_require__(214);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__pages_cards_cards__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__pages_bank_bank__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__pages_bank_add_bank_add__ = __webpack_require__(217);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__pages_add_website_add_website__ = __webpack_require__(208);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1212,13 +1327,13 @@ AppModule = __decorate([
 
 /***/ }),
 
-/***/ 289:
+/***/ 291:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActivityService; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mock_activities__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mock_activities__ = __webpack_require__(292);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1259,7 +1374,7 @@ ActivityService = __decorate([
 
 /***/ }),
 
-/***/ 290:
+/***/ 292:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1269,7 +1384,7 @@ var ACTIVITIES = [];
 
 /***/ }),
 
-/***/ 291:
+/***/ 293:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1351,14 +1466,14 @@ var TRIPS = [
 
 /***/ }),
 
-/***/ 292:
+/***/ 294:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WeatherProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(293);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_map__);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1393,7 +1508,7 @@ WeatherProvider = __decorate([
 
 /***/ }),
 
-/***/ 294:
+/***/ 296:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1405,11 +1520,11 @@ WeatherProvider = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__ = __webpack_require__(204);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_home_home__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_login_login__ = __webpack_require__(56);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_websites_website__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_mobile_app_mobile_app__ = __webpack_require__(212);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_bank_bank__ = __webpack_require__(214);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__ionic_native_sqlite__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_database_database__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_websites_website__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_mobile_app_mobile_app__ = __webpack_require__(213);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_cards_cards__ = __webpack_require__(215);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_bank_bank__ = __webpack_require__(216);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_database_database__ = __webpack_require__(32);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1427,32 +1542,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+// import { AddWebsitePage } from "../pages/add-website/add-website";
+
+// import { MobileAppAddPage } from "../pages/mobile-app-add/mobile-app-add";
 
 
-
+// import { BankAddPage } from "../pages/bank-add/bank-add";
 
 var MyApp = (function () {
-    function MyApp(db, sqlite, platform, statusBar, splashScreen, keyboard) {
+    function MyApp(db, platform, statusBar, splashScreen, keyboard) {
         this.db = db;
-        this.sqlite = sqlite;
         this.platform = platform;
         this.statusBar = statusBar;
         this.splashScreen = splashScreen;
         this.keyboard = keyboard;
         this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
         this.initializeApp();
-        this.db.createTables();
         this.appMenuItems = [
             { title: 'Websites', component: __WEBPACK_IMPORTED_MODULE_7__pages_websites_website__["a" /* WebsitePage */], icon: 'ios-globe' },
             { title: 'Apps', component: __WEBPACK_IMPORTED_MODULE_8__pages_mobile_app_mobile_app__["a" /* MobileAppPage */], icon: 'ios-appstore' },
-            { title: 'Cards', component: __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */], icon: 'ios-card' },
-            { title: 'Bank', component: __WEBPACK_IMPORTED_MODULE_9__pages_bank_bank__["a" /* BankPage */], icon: 'logo-usd' },
+            { title: 'Cards', component: __WEBPACK_IMPORTED_MODULE_9__pages_cards_cards__["a" /* CardsPage */], icon: 'ios-card' },
+            { title: 'Bank', component: __WEBPACK_IMPORTED_MODULE_10__pages_bank_bank__["a" /* BankPage */], icon: 'logo-usd' },
             { title: 'Notes', component: __WEBPACK_IMPORTED_MODULE_5__pages_home_home__["a" /* HomePage */], icon: 'ios-document' },
         ];
     }
     MyApp.prototype.initializeApp = function () {
         var _this = this;
         this.platform.ready().then(function () {
+            _this.db.createDb();
             // Okay, so the platform is ready and our plugins are available.
             //*** Control Splash Screen
             // this.splashScreen.show();
@@ -1501,7 +1618,6 @@ MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\app\app.html"*/'<ion-menu side="left" id="authenticated" [content]="content">\n  <ion-header>\n    <ion-toolbar class="user-profile">\n\n      <ion-grid>\n        <ion-row>\n          <ion-col col-4>\n              <div class="user-avatar">\n                <img src="../assets/img/avatar.jpeg">\n              </div>\n          </ion-col>\n          <ion-col padding-top col-8>\n            <h2 ion-text class="no-margin bold text-white">\n              João Firmino\n            </h2>\n            <span ion-text color="light">Customer</span>\n          </ion-col>\n        </ion-row>\n\n        <ion-row no-padding class="other-data">\n          <ion-col no-padding class="column">\n            <button ion-button icon-left small full color="light" menuClose disabled>\n              <ion-icon name="contact"></ion-icon>\n              Edit Profile\n            </button>\n          </ion-col>\n          <ion-col no-padding class="column">\n            <button ion-button icon-left small full color="light" menuClose (click)="logout()">\n              <ion-icon name="log-out"></ion-icon>\n              Log Out\n            </button>\n          </ion-col>\n        </ion-row>\n\n      </ion-grid>\n\n    </ion-toolbar>\n  </ion-header>\n\n  <ion-content color="primary">\n\n    <ion-list class="user-list">\n      <button ion-item menuClose class="text-1x" *ngFor="let menuItem of appMenuItems" (click)="openPage(menuItem)">\n        <ion-icon item-left [name]="menuItem.icon" color="primary"></ion-icon>\n        <span ion-text color="primary">{{menuItem.title}}</span>\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\app\app.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_11__components_database_database__["a" /* DatabaseComponent */],
-        __WEBPACK_IMPORTED_MODULE_10__ionic_native_sqlite__["a" /* SQLite */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Platform */],
         __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
         __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
@@ -1512,62 +1628,14 @@ MyApp = __decorate([
 
 /***/ }),
 
-/***/ 295:
+/***/ 32:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CardsPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-// import {WebsitePage} from "../websites/website";
-// import {RegisterPage} from "../register/register";
-// import { FormBuilder, FormGroup,FormArray, Validators } from '@angular/forms';
-// import { regexPatterns } from '../../providers/regexPatterns';
-// import { GlobalVars } from '../../providers/globalVars';
-// import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-var CardsPage = (function () {
-    function CardsPage() {
-        this.cno = "4111897865921234";
-    }
-    CardsPage.prototype.convertStr = function (string) {
-        var str = string.substr(4, 10);
-        console.log(str);
-        return string.substr(0, 4) + str.replace(str, " **** **** ") + string.substr(12, 15);
-    };
-    return CardsPage;
-}());
-CardsPage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-cards',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\cards\cards.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Cards</strong>\n\n    </ion-title>\n\n    <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>\n\n    <ion-buttons end>\n\n      <button ion-button tappable (click)="_showSearchInput()">\n\n        <ion-icon name="ios-search"></ion-icon>\n\n      </button>\n\n      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">\n\n        <ion-icon name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons> -->\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <ion-card  class="full-width">\n\n    <ion-item class="blue">\n\n      <div class="top-header">\n\n        <div class="card-type" float-left>\n\n            Debit Card\n\n        </div>\n\n        <div class="bank-name" float-right>\n\n          IndusInd Bank\n\n        </div>\n\n      </div>\n\n      <div class="acc-number">\n\n          {{convertStr(cno)}}\n\n      </div>\n\n      <div class="detail-div">\n\n          <div class="expire-div" float-left>\n\n            Valid Through 19/20\n\n          </div>\n\n          <div class="pin-div" float-right text-right>\n\n            <p>PIN ****</p>\n\n            <p>CVV ***</p>\n\n          </div>\n\n      </div>\n\n      <div class="bottom-div">\n\n          <div class="holder-name" float-left>\n\n            Ramkumar S\n\n          </div>\n\n          <div class="card-type" float-right>\n\n            <img src="assets/icon/cards/discover.png">\n\n          </div>\n\n      </div>\n\n    </ion-item>\n\n  </ion-card>\n\n  <ion-card  class="full-width">\n\n    <ion-item class="gold">\n\n      <div class="top-header">\n\n        <div class="card-type" float-left>\n\n            Debit Card\n\n        </div>\n\n        <div class="bank-name" float-right>\n\n          IndusInd Bank\n\n        </div>\n\n      </div>\n\n      <div class="acc-number">\n\n          {{convertStr(cno)}}\n\n      </div>\n\n      <div class="detail-div">\n\n          <div class="expire-div" float-left>\n\n            Valid Through 19/20\n\n          </div>\n\n          <div class="pin-div" float-right text-right>\n\n            <p>PIN ****</p>\n\n            <p>CVV ***</p>\n\n          </div>\n\n      </div>\n\n      <div class="bottom-div">\n\n          <div class="holder-name" float-left>\n\n            Ramkumar S\n\n          </div>\n\n          <div class="card-type" float-right>\n\n            <img src="assets/icon/cards/maestro.png">\n\n          </div>\n\n      </div>\n\n    </ion-item>\n\n  </ion-card>\n\n  <ion-fab right bottom>\n\n    <button (click)="_addWebsite()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>\n\n  </ion-fab>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\cards\cards.html"*/
-    }),
-    __metadata("design:paramtypes", [])
-], CardsPage);
-
-//# sourceMappingURL=cards.js.map
-
-/***/ }),
-
-/***/ 296:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AddWebsitePage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DatabaseComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__websites_website__ = __webpack_require__(110);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_regexPatterns__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ionic_native_sqlite__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_sqlite__ = __webpack_require__(200);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1580,229 +1648,102 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-// import {RegisterPage} from "../register/register";
-
-
-
-
-var AddWebsitePage = (function () {
-    function AddWebsitePage(sqlite, globalvars, nav, _formBuilder, alertCtrl, loader, params) {
+var DatabaseComponent = (function () {
+    function DatabaseComponent(sqlite, load, alertCtrl) {
         this.sqlite = sqlite;
-        this.globalvars = globalvars;
-        this.nav = nav;
-        this._formBuilder = _formBuilder;
+        this.load = load;
         this.alertCtrl = alertCtrl;
-        this.loader = loader;
-        this.params = params;
-        this.website = this.params.get('id');
-        // this.user = this.globalvars.getUserdata();
-        // alert(JSON.stringify(this.user));
-        this._websiteForm = this._formBuilder.group({
-            id: [""],
-            title: ["",
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([
-                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(6)
-                ])
-            ],
-            url: ["",
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([
-                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].pattern(__WEBPACK_IMPORTED_MODULE_4__providers_regexPatterns__["a" /* regexPatterns */].url)
-                ])
-            ],
-            details: this._formBuilder.array([this.createItem()])
-        });
-        if (this.website) {
-            var wdetails = [];
-            for (var i in this.website.details) {
-                wdetails.push(this._formBuilder.group(this.website.details[i]));
-            }
-            this._websiteForm = this._formBuilder.group({
-                id: [this.website.id],
-                title: [this.website.title], url: [this.website.url],
-                details: this._formBuilder.array(wdetails)
-            });
-            console.log(this._websiteForm);
-        }
-        this.len = this._websiteForm.get('details');
-        console.log("Length: " + this.len.length);
     }
-    AddWebsitePage.prototype.createItem = function () {
-        return this._formBuilder.group({
-            name: '',
-            password: '',
-            comments: ''
-        });
-    };
-    AddWebsitePage.prototype._addNew = function () {
-        this.details = this._websiteForm.get('details');
-        console.log(this.details);
-        this.details.push(this.createItem());
-    };
-    AddWebsitePage.prototype._cancel = function () {
-        this.nav.pop();
-    };
-    AddWebsitePage.prototype._removeItem = function (i) {
-        this.details = this._websiteForm.get('details');
-        console.log(i);
-        // let index = this.items.indexOf(i);
-        // console.log(index);
-        //   if(index > -1){
-        this.details.removeAt(i);
-        // }
-    };
-    AddWebsitePage.prototype._submitWebsiteForm = function () {
+    DatabaseComponent.prototype.createDb = function () {
         var _this = this;
-        console.log(this._websiteForm.value);
-        if (this._websiteForm.valid) {
-            this.formdata = this._websiteForm.value;
-            var loading_1 = this.loader.create({
-                content: 'Loading...'
+        var loader1 = this.load.create({
+            content: "Loading Resources 1/3..."
+        });
+        loader1.present();
+        this.sqlite.create({
+            name: 'pwdmgr.db',
+            location: 'default'
+        }).then(function (db) {
+            _this.db = db;
+            /*User Table Creation */
+            _this.db.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,fullname VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
+                .then(function (res) {
+                setTimeout(function () {
+                    loader1.setContent('Loading Resources 2/3...');
+                }, 2000);
+            })
+                .catch(function (e) {
+                loader1.dismiss();
+                var alert = _this.alertCtrl.create({
+                    title: 'Error',
+                    message: e.message,
+                    buttons: ['Ok'],
+                });
+                alert.present();
+                return false;
             });
-            loading_1.present();
-            this.sqlite.create({
-                name: 'pwdmgr.db',
-                location: 'default'
-            }).then(function (db) {
-                loading_1.dismiss();
-                /*Start Insert Data*/
-                if (_this.formdata.id == '') {
-                    db.executeSql('insert into websites(userid,title,url) values(?,?,?)', [_this.user.id, _this.formdata.title, _this.formdata.url])
-                        .then(function (res) {
-                        _this._lastId = res.insertId;
-                        for (var i = 0; i < _this.len.length; i++) {
-                            db.executeSql('insert into website_details(websiteid,username,password,comments) values(?,?,?,?)', [_this._lastId, _this.formdata.name[i], _this.formdata.password[i], _this.formdata.comments[i]])
-                                .then(function (det) { })
-                                .catch(function (e) {
-                                var err_alert = _this.alertCtrl.create({
-                                    title: 'Error',
-                                    message: 'Failed to Create',
-                                    buttons: [
-                                        {
-                                            text: 'Ok',
-                                            handler: function (data) {
-                                                _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_2__websites_website__["a" /* WebsitePage */]);
-                                            }
-                                        },
-                                    ],
-                                });
-                                err_alert.present();
-                            });
-                        }
-                        var alert = _this.alertCtrl.create({
-                            title: 'Success',
-                            message: 'Record created successfully!',
-                            buttons: [
-                                {
-                                    text: 'Ok',
-                                    handler: function (data) {
-                                        _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_2__websites_website__["a" /* WebsitePage */]);
-                                    }
-                                },
-                            ],
-                        });
-                        alert.present();
-                    })
-                        .catch(function (e) { return alert("Error1: " + JSON.stringify(e)); });
-                }
-                else {
-                    db.executeSql('update websites set title=?,url=? where id=?', [_this.formdata.title, _this.formdata.url, _this.formdata.id])
-                        .then(function (res) {
-                        alert("Updated Website Table.");
-                        for (var i = 0; i < _this.len.length; i++) {
-                            db.executeSql('select * from website_details where id=?', [_this.formdata.wid[i]])
-                                .then(function (res1) {
-                                if (res1.rows.length > 0) {
-                                    db.executeSql('update website_details set name=?,password=?,comments=? where id=?', [_this.formdata.name[i], _this.formdata.passowrd[i], _this.formdata.comments[i], _this.formdata.wid[i]])
-                                        .then(function (res2) {
-                                        alert(_this.formdata.wid[i] + " Details Updated");
-                                    })
-                                        .catch(function (e) { return alert("Update Website Table Error: " + JSON.stringify(e)); });
-                                }
-                                else {
-                                    db.executeSql('insert into website_details(name,password,comments) values(?,?,?)', [_this.formdata.name[i], _this.formdata.passowrd[i], _this.formdata.comments[i]])
-                                        .then(function (res3) {
-                                        alert(res3.insertId + " Details Inserted");
-                                    })
-                                        .catch(function (e) { return alert("Insert Website Table Error: " + JSON.stringify(e)); });
-                                }
-                            })
-                                .catch(function (e) { return alert("Update Select Error: " + JSON.stringify(e)); });
-                        }
-                    })
-                        .catch(function (e) { return alert("Update Error1: " + JSON.stringify(e)); });
-                }
-                /*End Update Data*/
+            /*Website Table Creation*/
+            _this.db.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
+                .then(function (res) {
+                setTimeout(function () {
+                    loader1.setContent('Loading Resources 3/3...');
+                }, 4000);
+            })
+                .catch(function (e) {
+                loader1.dismiss();
+                var alert = _this.alertCtrl.create({
+                    title: 'Error',
+                    message: e.message,
+                    buttons: ['Ok'],
+                });
+                alert.present();
+                return false;
             });
-        }
+            /*Wesite Details Table Creation*/
+            _this.db.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
+                .then(function (res) {
+                setTimeout(function () {
+                    loader1.dismiss();
+                }, 6000);
+            })
+                .catch(function (e) {
+                loader1.dismiss();
+                var alert = _this.alertCtrl.create({
+                    title: 'Error',
+                    message: e.message,
+                    buttons: ['Ok'],
+                });
+                alert.present();
+                return false;
+            });
+        }).catch(function (err) {
+            loader1.dismiss();
+            var alert = _this.alertCtrl.create({
+                title: 'Error',
+                message: err,
+                buttons: ['Ok'],
+            });
+            alert.present();
+            return false;
+        });
     };
-    return AddWebsitePage;
+    DatabaseComponent.prototype.exeQuery = function (query) {
+        // alert(query);
+        return this.db.executeSql(query, {}).then(function (data) { return data; }).catch(function (err) { return err; });
+    };
+    return DatabaseComponent;
 }());
-AddWebsitePage = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-website-add',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\add-website\add-website.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Add Website</strong>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <form [formGroup]="_websiteForm" (submit)="_submitWebsiteForm()" method="post" novalidate="">\n\n    <button ion-button color="dark" [disabled]="!_websiteForm.valid" type="submit">\n\n      <ion-icon name="checkmark"></ion-icon>&nbsp;Save\n\n    </button>\n\n    <button ion-button color="danger" (click)="_cancel()" type="button">\n\n      <ion-icon name="close"></ion-icon>&nbsp;Cancel\n\n    </button>\n\n    <ion-input formControlName="id" type="text"></ion-input>\n\n    <ion-item>\n\n      <ion-label floating>Title</ion-label>\n\n      <ion-input formControlName="title" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.title.hasError(\'required\') && _websiteForm.controls.title.touched">\n\n        <p ion-text text-wrap>Please Enter Title</p>\n\n    </ion-item>\n\n     <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.title.invalid  && _websiteForm.controls.title.dirty && _websiteForm.controls.title.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n\n      </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>URL</ion-label>\n\n      <ion-input formControlName="url" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.url.hasError(\'required\') && _websiteForm.controls.url.touched">\n\n        <p ion-text text-wrap>Please Enter URL</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_websiteForm.controls.url.hasError(\'pattern\')  && _websiteForm.controls.url.dirty && _websiteForm.controls.url.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter valid URL.</p>\n\n    </ion-item>\n\n    <ion-item class="help"><p style="color:#8f8f8f;">Ex: http://www.example.com</p></ion-item>\n\n    <div formArrayName="details">\n\n      <div class="repeat-list" *ngFor="let item of _websiteForm.get(\'details\').controls;let i = index;">\n\n        <div [formGroupName]="i">\n\n          <button *ngIf="len.length > 1" type="button" (click)="_removeItem(i)" color="danger" class="close-btn" small float-right ion-button item-end>\n\n            <ion-icon name="close"></ion-icon>\n\n          </button>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-input type="text" formControlName="name" placeholder="Username"></ion-input>\n\n            </ion-item>\n\n          </ion-list>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>\n\n            </ion-item>\n\n          </ion-list>\n\n          <ion-list>\n\n            <ion-item>\n\n              <ion-input type="text" formControlName="comments" placeholder="Comments"></ion-input>\n\n            </ion-item>\n\n          </ion-list>\n\n        </div>\n\n      </div>\n\n    </div>\n\n    <button class="btn" type="button" (click)="_addNew()" ion-button color="light">\n\n      <ion-icon name="add"></ion-icon>&nbsp;Add New\n\n    </button>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\add-website\add-website.html"*/
-    }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_6__ionic_native_sqlite__["a" /* SQLite */],
-        __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__["a" /* GlobalVars */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
-        __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavParams */]])
-], AddWebsitePage);
+DatabaseComponent = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({ selector: 'database' }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_2__ionic_native_sqlite__["a" /* SQLite */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+], DatabaseComponent);
 
-//# sourceMappingURL=add-website.js.map
+//# sourceMappingURL=database.js.map
 
 /***/ }),
 
-/***/ 54:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripService; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mock_trips__ = __webpack_require__(291);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-var TripService = (function () {
-    function TripService() {
-        this.trips = __WEBPACK_IMPORTED_MODULE_1__mock_trips__["a" /* TRIPS */];
-    }
-    TripService.prototype.getAll = function () {
-        return this.trips;
-    };
-    TripService.prototype.getItem = function (id) {
-        for (var i = 0; i < this.trips.length; i++) {
-            if (this.trips[i].id === parseInt(id)) {
-                return this.trips[i];
-            }
-        }
-        return null;
-    };
-    TripService.prototype.remove = function (item) {
-        this.trips.splice(this.trips.indexOf(item), 1);
-    };
-    return TripService;
-}());
-TripService = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
-    __metadata("design:paramtypes", [])
-], TripService);
-
-//# sourceMappingURL=trip-service.js.map
-
-/***/ }),
-
-/***/ 55:
+/***/ 42:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1846,6 +1787,53 @@ GlobalVars = __decorate([
 
 /***/ }),
 
+/***/ 55:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return TripService; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mock_trips__ = __webpack_require__(293);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var TripService = (function () {
+    function TripService() {
+        this.trips = __WEBPACK_IMPORTED_MODULE_1__mock_trips__["a" /* TRIPS */];
+    }
+    TripService.prototype.getAll = function () {
+        return this.trips;
+    };
+    TripService.prototype.getItem = function (id) {
+        for (var i = 0; i < this.trips.length; i++) {
+            if (this.trips[i].id === parseInt(id)) {
+                return this.trips[i];
+            }
+        }
+        return null;
+    };
+    TripService.prototype.remove = function (item) {
+        this.trips.splice(this.trips.indexOf(item), 1);
+    };
+    return TripService;
+}());
+TripService = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["B" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], TripService);
+
+//# sourceMappingURL=trip-service.js.map
+
+/***/ }),
+
 /***/ 56:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1854,10 +1842,11 @@ GlobalVars = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__register_register__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_forms__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_globalVars__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_regexPatterns__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_database_database__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__websites_website__ = __webpack_require__(57);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_regexPatterns__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_database_database__ = __webpack_require__(32);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1874,8 +1863,9 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var LoginPage = (function () {
-    function LoginPage(globalvars, db, _formBuilder, nav, alertCtrl, menu, loader, toastCtrl) {
+    function LoginPage(globalvars, db, _formBuilder, nav, alertCtrl, menu, loader) {
         this.globalvars = globalvars;
         this.db = db;
         this._formBuilder = _formBuilder;
@@ -1883,136 +1873,111 @@ var LoginPage = (function () {
         this.alertCtrl = alertCtrl;
         this.menu = menu;
         this.loader = loader;
-        this.toastCtrl = toastCtrl;
+        this._passwordInputType = "password";
+        this._passwordIcon = "eye-off";
         this.menu.swipeEnable(false);
         this._loginForm = _formBuilder.group({
             //EMAIL
             email: ["",
-                __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([
-                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].pattern(__WEBPACK_IMPORTED_MODULE_5__providers_regexPatterns__["a" /* regexPatterns */].email)
+                __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([
+                    __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required, __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].pattern(__WEBPACK_IMPORTED_MODULE_6__providers_regexPatterns__["a" /* regexPatterns */].email)
                 ])
             ],
             //PASSWORD
-            password: ["", __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([
+            password: ["", __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].compose([
                     // ,Validators.pattern(regexPatterns.password),
-                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required,
-                    __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].minLength(6)
+                    __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].required,
+                    __WEBPACK_IMPORTED_MODULE_4__angular_forms__["f" /* Validators */].minLength(6)
                 ])
             ]
         });
+        this._items = [{ id: '1', name: 'Ram' }, { id: '2', name: 'Kumar' }];
+        for (var i = 0; i < this._items.length; i++) {
+            this._items.push({ id: this._items[i].id, username: this._items[i].name });
+        }
+        alert(JSON.stringify(this._items));
     }
+    // Password Toggle
+    LoginPage.prototype._toggleViewPassword = function (event) {
+        event.preventDefault();
+        console.info("show password");
+        if (this._passwordInputType === "password") {
+            this._passwordInputType = "text";
+            this._passwordIcon = "eye";
+        }
+        else {
+            this._passwordIcon = "eye-off";
+            this._passwordInputType = "password";
+        }
+        ;
+    };
+    ;
     // go to register page
     LoginPage.prototype.register = function () {
         this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_2__register_register__["a" /* RegisterPage */]);
     };
     // login and go to home page
     LoginPage.prototype.login = function () {
-        // if(this._loginForm.valid)
-        // {
-        //   let loading = this.loader.create({
-        //     content: 'Loading...'
-        //   });
-        //   loading.present();
-        //   this.formdata = this._loginForm.value;
-        //   this.sqlite.create({
-        //     name: 'pwdmgr.db',
-        //     location: 'default'
-        //   }).then((db: SQLiteObject) => {
-        //     loading.dismiss();
-        //      db.executeSql('SELECT * FROM users where email=? and password=?',[this.formdata.email,this.formdata.password])
-        //        .then(res => {
-        //          alert("Success: "+ JSON.stringify(res));
-        //           if(res.rows.length>0)
-        //           {
-        //             this.user = res.rows.item(0);
-        //             this.globalvars.setUserdata(JSON.stringify(this.user));
-        //             alert("Data: "+ JSON.stringify(this.user));
-        //             this.nav.setRoot(WebsitePage);
-        //           }
-        //           else
-        //           {
-        //             let alert = this.alertCtrl.create({
-        //               title: 'Error',
-        //               message: 'Login Failed!',
-        //               buttons: ['Ok'],
-        //             });
-        //             alert.present();
-        //             return false;
-        //           }
-        //      });
-        //   },(err)=>{
-        //     loading.dismiss();
-        //     this.nav.setRoot(HomePage);
-        //       let alert = this.alertCtrl.create({
-        //         title: 'Error',
-        //         message: 'Login Failed!',
-        //         buttons: ['Ok'],
-        //       });
-        //       alert.present();
-        //       // return false;
-        //   });
-        // }
+        var _this = this;
         if (this._loginForm.valid) {
-            var fields = ['email', 'password'];
-            this.db.insertData('', this._loginForm.value, 'users').then(function (res) {
-                alert("Success Insert: " + JSON.stringify(res));
+            var logload_1 = this.loader.create({
+                content: "Loading..."
+            });
+            logload_1.present();
+            var formdata = this._loginForm.value;
+            var query = "select * from users where email='" + formdata.email + "' and password='" + formdata.password + "'";
+            this.db.exeQuery(query).then(function (res) {
+                if (res.rows.length) {
+                    var user = [];
+                    user.push({
+                        id: res.rows.item(0).id,
+                        fullname: res.rows.item(0).fullname,
+                        email: res.rows.item(0).email,
+                        password: res.rows.item(0).password,
+                    });
+                    _this.globalvars.setUserdata(JSON.stringify(user));
+                    setTimeout(function () {
+                        logload_1.dismiss();
+                        _this.nav.setRoot(__WEBPACK_IMPORTED_MODULE_3__websites_website__["a" /* WebsitePage */]);
+                    }, 4000);
+                }
+                else {
+                    logload_1.dismiss();
+                    var alert_1 = _this.alertCtrl.create({
+                        title: 'Failed!',
+                        message: 'Invalid Username or Password',
+                        buttons: ['Ok'],
+                    });
+                    alert_1.present();
+                    return false;
+                }
             }).catch(function (e) {
-                alert("Error Insert: " + JSON.stringify(e));
+                logload_1.dismiss();
+                var alert = _this.alertCtrl.create({
+                    title: 'Failed!',
+                    message: 'Invalid Username or Password',
+                    buttons: ['Ok'],
+                });
+                alert.present();
+                return false;
             });
         }
     };
     LoginPage.prototype.forgotPass = function () {
-        var _this = this;
-        var forgot = this.alertCtrl.create({
-            title: 'Forgot Password?',
-            message: "Enter you email address to send a reset link password.",
-            inputs: [
-                {
-                    name: 'email',
-                    placeholder: 'Email',
-                    type: 'email'
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    handler: function (data) {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Send',
-                    handler: function (data) {
-                        console.log('Send clicked');
-                        var toast = _this.toastCtrl.create({
-                            message: 'Email was sended successfully',
-                            duration: 3000,
-                            position: 'top',
-                            cssClass: 'dark-trans',
-                            closeButtonText: 'OK',
-                            showCloseButton: true
-                        });
-                        toast.present();
-                    }
-                }
-            ]
-        });
-        forgot.present();
     };
     return LoginPage;
 }());
 LoginPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-login',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\login\login.html"*/'<!-- -->\n<ion-content padding class="animated fadeIn login auth-page">\n  <div class="login-content">\n\n    <!-- Logo -->\n    <div padding-horizontal text-center class="animated fadeInDown">\n      <div class="logo"></div>\n      <h2 ion-text class="text-primary logo-text">\n        <strong>Passer</strong><br><small>Password Security</small>\n      </h2>\n    </div>\n\n    <!-- Login form -->\n    <form class="list-form" [formGroup]="_loginForm" method="post" novalidate>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="mail" item-start class="text-primary"></ion-icon>\n          Email\n        </ion-label>\n        <ion-input formControlName="email" type="email"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.email.hasError(\'required\') && _loginForm.controls.email.touched">\n        <p ion-text text-wrap>Please Enter Email-ID</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.email.invalid  && _loginForm.controls.email.dirty && _loginForm.controls.email.value!=\'\'">\n        <p ion-text text-wrap>Please use correct email format, e.g.:someone@domain.com.</p>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="lock" item-start class="text-primary"></ion-icon>\n          Password\n        </ion-label>\n        <ion-input formControlName="password" type="password"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.password.hasError(\'required\') && _loginForm.controls.password.touched">\n        <p ion-text text-wrap>Please Enter Password</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.password.invalid  && _loginForm.controls.password.dirty && _loginForm.controls.password.value!=\'\'">\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n      </ion-item>\n    </form>\n\n    <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p>\n\n    <div>\n      <button ion-button icon-start block color="dark" [disabled]="!_loginForm.valid" tappable (click)="login()">\n        <ion-icon name="log-in"></ion-icon>\n        SIGN IN\n      </button>\n    </div>\n    <!-- Other links -->\n    <div text-center margin-top>\n      <span ion-text color="secondary" tappable (click)="register()">New here? <strong>Sign up</strong></span>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\login\login.html"*/
+        selector: 'page-login',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\login\login.html"*/'<!-- -->\n<ion-content padding class="animated fadeIn login auth-page">\n  <div class="login-content">\n\n    <!-- Logo -->\n    <div padding-horizontal text-center class="animated fadeInDown">\n      <div class="logo"></div>\n      <h2 ion-text class="text-primary logo-text">\n        <strong>Passer</strong><br><small>Password Security</small>\n      </h2>\n    </div>\n\n    <!-- Login form -->\n    <form class="list-form" [formGroup]="_loginForm" method="post" novalidate>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="mail" item-start class="text-primary"></ion-icon>\n          Email\n        </ion-label>\n        <ion-input formControlName="email" type="email"></ion-input>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.email.hasError(\'required\') && _loginForm.controls.email.touched">\n        <p ion-text text-wrap>Please Enter Email-ID</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.email.invalid  && _loginForm.controls.email.dirty && _loginForm.controls.email.value!=\'\'">\n        <p ion-text text-wrap>Please use correct email format, e.g.:someone@domain.com.</p>\n      </ion-item>\n      <ion-item>\n        <ion-label floating>\n          <ion-icon name="lock" item-start class="text-primary"></ion-icon>\n          Password\n        </ion-label>\n        <ion-input formControlName="password" [type]="_passwordInputType"></ion-input>\n      </ion-item>\n      <ion-icon float-right name="{{_passwordIcon}}" (click)="_toggleViewPassword($event)" class="password-icon"></ion-icon>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.password.hasError(\'required\') && _loginForm.controls.password.touched">\n        <p ion-text text-wrap>Please Enter Password</p>\n      </ion-item>\n      <ion-item class="error" no-lines no-padding *ngIf="_loginForm.controls.password.invalid  && _loginForm.controls.password.dirty && _loginForm.controls.password.value!=\'\'">\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n      </ion-item>\n    </form>\n\n    <p text-right ion-text color="secondary" tappable (click)="forgotPass()"><strong>Forgot Password?</strong></p>\n\n    <div>\n      <button ion-button icon-start block color="dark" [disabled]="!_loginForm.valid" tappable (click)="login()">\n        <ion-icon name="log-in"></ion-icon>\n        SIGN IN\n      </button>\n    </div>\n    <!-- Other links -->\n    <div text-center margin-top>\n      <span ion-text color="secondary" tappable (click)="register()">New here? <strong>Sign up</strong></span>\n    </div>\n  </div>\n</ion-content>\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\login\login.html"*/
     }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__providers_globalVars__["a" /* GlobalVars */],
-        __WEBPACK_IMPORTED_MODULE_6__components_database_database__["a" /* DatabaseComponent */],
-        __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_5__providers_globalVars__["a" /* GlobalVars */],
+        __WEBPACK_IMPORTED_MODULE_7__components_database_database__["a" /* DatabaseComponent */],
+        __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* MenuController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */],
-        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["k" /* ToastController */]])
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */]])
 ], LoginPage);
 
 //# sourceMappingURL=login.js.map
@@ -2023,9 +1988,13 @@ LoginPage = __decorate([
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DatabaseComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WebsitePage; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ionic_native_sqlite__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__add_website_add_website__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_database_database__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__angular_forms__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__ = __webpack_require__(42);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2036,83 +2005,114 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-// import {NavController, AlertController,LoadingController, ToastController, MenuController} from "ionic-angular";
 
-var DatabaseComponent = (function () {
-    function DatabaseComponent(sqlite) {
-        this.sqlite = sqlite;
+
+
+
+
+var WebsitePage = (function () {
+    function WebsitePage(nav, db, globalvars, loader, alertCtrl, _formBuilder) {
+        this.nav = nav;
+        this.db = db;
+        this.globalvars = globalvars;
+        this.loader = loader;
+        this.alertCtrl = alertCtrl;
+        this._formBuilder = _formBuilder;
+        this._items = [];
+        this._searchField = false;
+        this.user = this.globalvars.getUserdata()[0];
+        alert("Website Page: " + JSON.stringify(this.user));
+        alert("User Id: " + this.user.id);
+        this.clearFilter();
     }
-    DatabaseComponent.prototype.createDb = function () {
-        /*this.sqlite.create({
-      name: 'pwdmgr.db',
-      location: 'default'
-    })
-      .then((db: SQLiteObject) => {
-        db.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
-          .then(() => alert('Users Table Created'))
-          .catch(e => alert("Error: "+ JSON.stringify(e)));
-        db.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
-          .then(() => alert('Websites Table Created'))
-          .catch(e => alert("Error: "+JSON.stringify(e)));
-        db.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
-          .then(() => alert('Website Details Table Created'))
-          .catch(e => alert("Error: "+JSON.stringify(e)));
-      })
-      .catch(e =>{ alert("Error NO:"+e);});*/
-        this.db = this.sqlite.create({
-            name: 'pwdmgr.db',
-            location: 'default'
-        });
+    WebsitePage.prototype._showSearchInput = function () {
+        this._searchField = true;
     };
-    DatabaseComponent.prototype.createTables = function () {
-        this.createDb();
-        return this.db.then(function (obj) {
-            alert("Table: " + JSON.stringify(obj));
-            obj.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
-                .then(function () { return alert('Users Table Created'); })
-                .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-            obj.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
-                .then(function () { return alert('Websites Table Created'); })
-                .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-            obj.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
-                .then(function () { return alert('Website Details Table Created'); })
-                .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-        }).catch(function (err) {
-            alert("Plugin Error: " + err);
-        });
+    WebsitePage.prototype._hideSearchInput = function () {
+        this._searchField = false;
     };
-    DatabaseComponent.prototype.insertData = function (fields, data, table) {
-        var values = "?";
-        for (var i = 0; i < fields.length - 1; i++) {
-            values += ",?";
-        }
-        var output = { 'status': 'success', 'msg': '' };
-        var query = "insert into " + table + " (" + fields + ") values(" + values + ")";
-        return this.db.then(function (obj) {
-            alert("Success :" + JSON.stringify(obj));
-            obj.executeSql(query, data).then(function (res) { return alert("Insert Data: " + JSON.stringify(res)); })
-                .catch(function (error) { return alert("Insert Data Error: " + JSON.stringify(error)); });
-            output.msg = "Created";
-            return output;
+    WebsitePage.prototype.clearFilter = function () {
+        var _this = this;
+        var load = this.loader.create({
+            content: 'Please Wait...'
+        });
+        load.present();
+        var query = "select * from websites where userid='" + this.user.id + "'";
+        this.db.exeQuery(query).then(function (res) {
+            alert("Success Website: " + JSON.stringify(res));
+            if (res.rows.length) {
+                for (var i = 0; i < res.rows.length; i++) {
+                    _this._items.push({
+                        id: res.rows.item(i).id,
+                        title: res.rows.item(i).title,
+                        url: res.rows.item(i).url,
+                    });
+                    var query1 = "select * from website_details where websiteid='" + res.rows.item(i).id + "'";
+                    _this.db.exeQuery(query1).then(function (sdetails) {
+                        alert("Success Website Details: " + JSON.stringify(sdetails));
+                        if (sdetails.rows.length) {
+                            alert("Details Length: " + sdetails.rows.length);
+                            _this.details = [];
+                            for (var j = 0; j < sdetails.rows.length; j++) {
+                                _this._items.push({
+                                    details: {
+                                        id: sdetails.rows.item(j).id,
+                                        websiteid: sdetails.rows.item(j).websiteid,
+                                        username: sdetails.rows.item(j).username,
+                                        password: sdetails.rows.item(j).password,
+                                        comments: sdetails.rows.item(j).comments
+                                    }
+                                });
+                            }
+                        }
+                        alert("Success Items: " + JSON.stringify(_this._items));
+                    })
+                        .catch(function (err) {
+                        alert("Error Website Details: " + JSON.stringify(err));
+                    });
+                }
+            }
+            setTimeout(function () {
+                load.dismiss();
+            }, 4000);
         })
-            .catch(function (e) {
-            alert(e);
-            output.status = "error";
-            output.msg = e;
-            return output;
+            .catch(function (err) {
+            load.dismiss();
+            var detfail = _this.alertCtrl.create({
+                title: 'Failed!',
+                message: "No Records Found.",
+                buttons: ['Ok']
+            });
+            detfail.present();
         });
-        // console.log(query);
     };
-    return DatabaseComponent;
+    WebsitePage.prototype.setFilteredItems = function (e) {
+        this.clearFilter();
+        var val = e.target.value;
+        // if the value is an empty string don't filter the items
+        if (val && val.trim() != '') {
+            this._items = this._items.filter(function (item) {
+                return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
+            });
+        }
+    };
+    WebsitePage.prototype._addWebsite = function (s) {
+        if (s === void 0) { s = ""; }
+        this.nav.push(__WEBPACK_IMPORTED_MODULE_2__add_website_add_website__["a" /* AddWebsitePage */]);
+    };
+    return WebsitePage;
 }());
-DatabaseComponent = __decorate([
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({ selector: 'database' }),
-    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__ionic_native_sqlite__["a" /* SQLite */]])
-], DatabaseComponent);
+WebsitePage = __decorate([
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+        selector: 'page-website',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\websites\website.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title  *ngIf="!_searchField">\n\n      <strong>Websites</strong>\n\n    </ion-title>\n\n    <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>\n\n    <ion-buttons end>\n\n      <button ion-button tappable (click)="_showSearchInput()">\n\n        <ion-icon name="ios-search"></ion-icon>\n\n      </button>\n\n      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">\n\n        <ion-icon name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <ion-list  class="full-width">\n\n    <ion-item-sliding *ngFor="let s of _items" (click)="_addWebsite(s)">\n\n    <ion-item>\n\n      <ion-avatar item-start>\n\n        <ion-icon name="globe"></ion-icon>\n\n      </ion-avatar>\n\n      <h2>{{s.title}}</h2>\n\n      <p>{{s.url}}</p>\n\n    </ion-item>\n\n    <ion-item-options side="right">\n\n      <button ion-button color="primary">\n\n        <ion-icon name="create"></ion-icon>\n\n        Edit\n\n      </button>\n\n      <button ion-button color="danger">\n\n        <ion-icon name="trash"></ion-icon>\n\n        Delete\n\n      </button>\n\n    </ion-item-options>\n\n  </ion-item-sliding>\n\n  </ion-list>\n\n  <ion-list *ngIf="_items==\'\'">\n\n    <ion-item text-center>No Records Found.</ion-item>\n\n  </ion-list>\n\n  <ion-fab right bottom>\n\n    <button (click)="_addWebsite()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>\n\n  </ion-fab>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\websites\website.html"*/
+    }),
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__components_database_database__["a" /* DatabaseComponent */], __WEBPACK_IMPORTED_MODULE_5__providers_globalVars__["a" /* GlobalVars */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["d" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */]])
+], WebsitePage);
 
-//# sourceMappingURL=database.js.map
+//# sourceMappingURL=website.js.map
 
 /***/ })
 
-},[216]);
+},[218]);
 //# sourceMappingURL=main.js.map

@@ -8,21 +8,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from "@angular/core";
+import { NavController, } from "ionic-angular";
 // import {WebsitePage} from "../websites/website";
-// import {RegisterPage} from "../register/register";
+import { BankAddPage } from "../bank-add/bank-add";
 // import { FormBuilder, FormGroup,FormArray, Validators } from '@angular/forms';
 // import { regexPatterns } from '../../providers/regexPatterns';
 // import { GlobalVars } from '../../providers/globalVars';
 // import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 var BankPage = /** @class */ (function () {
-    function BankPage() {
+    function BankPage(nav) {
+        this.nav = nav;
     }
+    BankPage.prototype._addBank = function () {
+        this.nav.push(BankAddPage);
+    };
     BankPage = __decorate([
         Component({
             selector: 'page-bank',
             templateUrl: 'bank.html'
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [NavController])
     ], BankPage);
     return BankPage;
 }());

@@ -8,13 +8,12 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { HomePage } from "../pages/home/home";
 import { LoginPage } from "../pages/login/login";
 import { WebsitePage } from "../pages/websites/website";
-import { AddWebsitePage } from "../pages/add-website/add-website";
+// import { AddWebsitePage } from "../pages/add-website/add-website";
 import { MobileAppPage } from "../pages/mobile-app/mobile-app";
-import { MobileAppAddPage } from "../pages/mobile-app-add/mobile-app-add";
+// import { MobileAppAddPage } from "../pages/mobile-app-add/mobile-app-add";
 import { CardsPage } from "../pages/cards/cards";
 import { BankPage } from "../pages/bank/bank";
-import { BankAddPage } from "../pages/bank-add/bank-add";
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+// import { BankAddPage } from "../pages/bank-add/bank-add";
 import { DatabaseComponent } from "../components/database/database";
 export interface MenuItem {
     title: string;
@@ -35,18 +34,16 @@ export class MyApp {
 
   constructor(
     public db:DatabaseComponent,
-    private sqlite: SQLite,
     public platform: Platform,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public keyboard: Keyboard
   ) {
     this.initializeApp();
-    this.db.createTables();
     this.appMenuItems = [
       {title: 'Websites', component: WebsitePage, icon: 'ios-globe'},
       {title: 'Apps', component: MobileAppPage, icon: 'ios-appstore'},
-      {title: 'Cards', component: HomePage, icon: 'ios-card'},
+      {title: 'Cards', component: CardsPage, icon: 'ios-card'},
       {title: 'Bank', component: BankPage, icon: 'logo-usd'},
       {title: 'Notes', component: HomePage, icon: 'ios-document'},
     ];
@@ -54,6 +51,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.db.createDb();
       // Okay, so the platform is ready and our plugins are available.
 
       //*** Control Splash Screen

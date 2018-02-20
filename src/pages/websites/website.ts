@@ -4,7 +4,6 @@ import {AddWebsitePage} from "../add-website/add-website";
 import { DatabaseComponent } from "../../components/database/database";
 import { FormBuilder, FormGroup, FormArray,Validators } from '@angular/forms';
 import { GlobalVars } from '../../providers/globalVars';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 @Component({
   selector: 'page-website',
   templateUrl: 'website.html'
@@ -15,15 +14,14 @@ export class WebsitePage
 	private search:any;
 	private user:any;
 	private details:any;
-	private _items:any;
+	private _items:Array<any> = [];
 	private _searchField:boolean = false;
-	constructor(public nav:NavController,private sqlite: SQLite,private globalvars: GlobalVars,
-		public loader:LoadingController,public alertCtrl:AlertController,public _formBuilder:FormBuilder,
-		public db:DatabaseComponent)
+	constructor(public nav:NavController,public db: DatabaseComponent,private globalvars: GlobalVars,
+		public loader:LoadingController,public alertCtrl:AlertController,public _formBuilder:FormBuilder)
 	{
-		// this.user = this.globalvars.getUserdata();
+		this.user = this.globalvars.getUserdata()[0];
 		alert("Website Page: "+JSON.stringify(this.user));
-		// alert("User Id: "+this.user.id);
+		alert("User Id: "+this.user.id);
 		this.clearFilter();
 	}
 		_showSearchInput():void
@@ -36,69 +34,62 @@ export class WebsitePage
 		}
 		clearFilter()
 		{
-			// let loading = this.loader.create({
-   //      content: 'Loading...'
-   //    });
-   //    loading.present();
-			// this.sqlite.create({
-   //      name: 'pwdmgr.db',
-   //      location: 'default'
-   //    }).then((db: SQLiteObject) => {
-   //    		db.executeSql('SELECT * FROM websites where userid=?',[this.user.id])
-   //         .then(res => {
-   //         	alert("Success: "+ JSON.stringify(res));
-   //         	loading.dismiss();
-   //         	alert("Length1: "+res.rows.length);
-   //            if(res.rows.length>0)
-   //            {
-   //            	this.items = [];
-   //            	alert("Length2: "+res.rows.length);
-   //              for (var i = 0; i < res.rows.length; i++)
-   //              {
-   //              	alert("Title: "+res.rows.item(i).title);
-   //              	this.items.push({
-   //              		id:res.rows.item(i).id,
-   //              		name:res.rows.item(i).title,
-   //              		url:res.rows.item(i).url
-   //              	});
-   //              }
-   //              alert("Success: "+JSON.stringify(this.items));
-   //            }
-   //            else
-   //            {
-   //              let alert = this.alertCtrl.create({
-   //                title: 'Error',
-   //                message: 'No Records Found!',
-   //                buttons: ['Ok'],
-   //              });
-   //              alert.present();
-   //              return false;
-   //            }
-
-   //         },(err)=>{
-			//         loading.dismiss();
-			//           let alert = this.alertCtrl.create({
-			//             title: 'Error',
-			//             message: JSON.stringify(err),
-			//             buttons: ['Ok'],
-			//           });
-			//           alert.present();
-			//        });
-   //    });
-			this._items = [
+			let load = this.loader.create({
+				content:'Please Wait...'
+			});
+			load.present();
+			let query = "select * from websites where userid='"+this.user.id+"'";
+			this.db.exeQuery(query).then((res)=>{
+				alert("Success Website: "+JSON.stringify(res));
+				if(res.rows.length)
+				{
+					for (var i = 0; i < res.rows.length; i++)
 					{
-						id:'1',title:'Ram',url:"http://www.google.com",
-						details:[
-						{name:'1',password:'123',comments:'comments'},
-						{name:'2',password:'456',comments:'Login'}
-						]
-					},
-					{
-						id:'2',title:'Kumar',url:"http://www.google.com",
-					},
-					];
-
-				console.log(this._items);
+						this._items.push({
+								id:res.rows.item(i).id,
+								title:res.rows.item(i).title,
+								url:res.rows.item(i).url,
+							});
+						let query1 = "select * from website_details where websiteid='"+res.rows.item(i).id+"'";
+						this.db.exeQuery(query1).then((sdetails)=>{
+							alert("Success Website Details: "+JSON.stringify(sdetails));
+							if(sdetails.rows.length)
+							{
+								alert("Details Length: "+sdetails.rows.length);
+								this.details = [];
+								for (var j = 0; j < sdetails.rows.length; j++)
+								{
+									this._items.push({
+										details:{
+											id:sdetails.rows.item(j).id,
+											websiteid:sdetails.rows.item(j).websiteid,
+											username:sdetails.rows.item(j).username,
+											password:sdetails.rows.item(j).password,
+											comments:sdetails.rows.item(j).comments
+										}
+									});
+								}
+							}							
+							alert("Success Items: "+JSON.stringify(this._items));
+						})
+						.catch(err=>{
+							alert("Error Website Details: "+JSON.stringify(err));
+						});
+					}
+				}
+				setTimeout(()=>{
+					load.dismiss();
+				},4000);
+			})
+			.catch(err=>{
+				load.dismiss();
+				let detfail = this.alertCtrl.create({
+          title: 'Failed!',
+          message: "No Records Found.",
+           buttons: ['Ok']
+        });
+        detfail.present();
+			});
 		}
 		setFilteredItems(e)
 		{
@@ -113,13 +104,8 @@ export class WebsitePage
 	    } 
     }
 
-    _addWebsite(s):void
+    _addWebsite(s:any=""):void
     {
-    	let field:Array<any> = ['name','password','comments'];
-    	// this.db.insertData(field).then(res => {
-    	// 	console.log(res);
-    	// });
-
-    	// this.nav.push(AddWebsitePage,{id:s});
+    	this.nav.push(AddWebsitePage);
     }
 }

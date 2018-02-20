@@ -5,7 +5,7 @@ import {WebsitePage} from "../websites/website";
 import { FormBuilder, FormGroup,FormArray, Validators } from '@angular/forms';
 import { regexPatterns } from '../../providers/regexPatterns';
 import { GlobalVars } from '../../providers/globalVars';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { DatabaseComponent } from '../../components/database/database';
 @Component({
   selector: 'page-website-add',
   templateUrl: 'add-website.html'
@@ -22,7 +22,7 @@ export class AddWebsitePage
 	private len;
 	private website;
 	constructor(
-			private sqlite: SQLite,
+			private db: DatabaseComponent,
 			private globalvars: GlobalVars,
 			public nav:NavController,
 			public _formBuilder:FormBuilder,
@@ -32,8 +32,9 @@ export class AddWebsitePage
 			)
 	{
 		this.website = this.params.get('id');
-		// this.user = this.globalvars.getUserdata();
-		// alert(JSON.stringify(this.user));
+		this.user = this.globalvars.getUserdata()[0];
+		alert("User:"+JSON.stringify(this.user));
+		alert("User Id: "+this.user.id);
 		this._websiteForm = this._formBuilder.group({
 			id:[""],
 			title: ["",
@@ -103,96 +104,66 @@ export class AddWebsitePage
 		console.log(this._websiteForm.value);
 		if(this._websiteForm.valid)
 		{
-			this.formdata = this._websiteForm.value;
-			let loading = this.loader.create({
-        content: 'Loading...'
-      });
-      loading.present();
-       this.sqlite.create({
-        name: 'pwdmgr.db',
-        location: 'default'
-      }).then((db: SQLiteObject) => {
-      	loading.dismiss();
-      	/*Start Insert Data*/
-      	if(this.formdata.id=='')
-      	{
-	        db.executeSql('insert into websites(userid,title,url) values(?,?,?)',[this.user.id,this.formdata.title,this.formdata.url])
-	        .then(res => {
-	        	this._lastId = res.insertId;
-	        	for (var i = 0; i < this.len.length; i++)
-		        {
-		        	db.executeSql('insert into website_details(websiteid,username,password,comments) values(?,?,?,?)',
-		        		[this._lastId,this.formdata.name[i],this.formdata.password[i],this.formdata.comments[i]])
-			        .then(det =>{})
-			        .catch(e => {
-			        		 let err_alert = this.alertCtrl.create({
-				            title: 'Error',
-				            message: 'Failed to Create',
-				            buttons: [
-				            	{
-							          text: 'Ok',
-							          handler: data => {
-							            this.nav.setRoot(WebsitePage);
-							          }
-							        },
-				            ],
-					          });
-					          err_alert.present();
-			        });
-		        }
-		         let alert = this.alertCtrl.create({
-	            title: 'Success',
-	            message: 'Record created successfully!',
-	            buttons: [
-		            	{
-					          text: 'Ok',
-					          handler: data => {
-					            this.nav.setRoot(WebsitePage);
-					          }
-					        },
-		            ],
-		          });
-		          alert.present();
-	        })
-	        .catch(e => alert("Error1: "+JSON.stringify(e)));
-	       }
-	       /*End Insert Data*/
-	       /*Start Update Data*/
-	       else
-	       {
-	       		db.executeSql('update websites set title=?,url=? where id=?',[this.formdata.title,this.formdata.url,this.formdata.id])
-	        	.then(res => {
-	        		alert("Updated Website Table.");
-	        		for (var i = 0; i < this.len.length; i++)
-	        		{
-	        			db.executeSql('select * from website_details where id=?',[this.formdata.wid[i]])
-	        			.then(res1 => {
-	        				if(res1.rows.length > 0)
-	        				{
-	        					db.executeSql('update website_details set name=?,password=?,comments=? where id=?',
-	        						[this.formdata.name[i],this.formdata.passowrd[i],this.formdata.comments[i],this.formdata.wid[i]])
-	        					.then(res2 => {
-	        						alert(this.formdata.wid[i]+" Details Updated");
-	        					})
-	        					.catch(e => alert("Update Website Table Error: "+JSON.stringify(e)));
-	        				}
-	        				else
-	        				{
-	        					db.executeSql('insert into website_details(name,password,comments) values(?,?,?)',
-	        						[this.formdata.name[i],this.formdata.passowrd[i],this.formdata.comments[i]])
-	        					.then(res3 => {
-	        						alert(res3.insertId+" Details Inserted");
-	        					})
-	        					.catch(e => alert("Insert Website Table Error: "+JSON.stringify(e)));
-	        				}
-	        			})
-	        			.catch(e => alert("Update Select Error: "+JSON.stringify(e)));
-	        		}
-	        	})
-	        	.catch(e => alert("Update Error1: "+JSON.stringify(e)));
-	       }
-	       /*End Update Data*/
-      });
+			let load = this.loader.create({
+				content:'Please Wait...'
+			});
+			load.present();
+			let formdata = this._websiteForm.value;
+			let query:string = "insert into websites(userid,title,url)"+
+					"values ('"+this.user.id+"','"+formdata.title+"','"+formdata.url+"')";
+			this.db.exeQuery(query).then((res)=>{
+				alert("Add Success: "+JSON.stringify(res));
+				this._lastId = res.insertId;
+				alert("insert Id: "+this._lastId);
+
+				/*Insertion For Wesbite Details*/
+			for (var i = 0; i < formdata.details.length; i++)
+			{
+
+				let detailform = formdata.details[i];
+				alert("Det:"+JSON.stringify(detailform));
+				alert("Last Idd:"+this._lastId);
+				let query1 = "insert into website_details(websiteid,username,password,comments)"+
+					"values ('"+this._lastId+"','"+detailform.name+"','"+detailform.password+"','"+detailform.comments+"')";
+				this.db.exeQuery(query1).then((wdetails)=>{
+					alert("Success Details: "+JSON.stringify(wdetails));
+				})
+				.catch(err=>{
+					alert("Error Details: "+JSON.stringify(err));
+				});
+			}
+
+				 let websuccess = this.alertCtrl.create({
+          title: 'Success',
+          message: "Website created successfully.",
+           buttons: [
+              {
+                text: 'Ok',
+                handler: data => {
+                  //this.nav.setRoot(WebsitePage);
+                }
+              }]
+        });
+				 setTimeout(()=>{
+				 	load.dismiss();
+				 	websuccess.present();
+				 },5000);
+			})
+			.catch(err=>{
+				load.dismiss();
+				let webfail = this.alertCtrl.create({
+          title: 'Failed!',
+          message: "Website failed to create.",
+           buttons: [
+              {
+                text: 'Ok',
+                handler: data => {
+                  this.nav.setRoot(WebsitePage);
+                }
+              }]
+        });
+        webfail.present();
+			});
 		}
 	}
 }
