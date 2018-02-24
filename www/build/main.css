@@ -22014,25 +22014,33 @@ page-bank-add ion-item.item-md {
   background-color: transparent !important;
 }
 
-page-cards ion-card ion-item.silver {
+page-cards ion-list ion-item-sliding {
+  margin-bottom: 20px;
+}
+
+page-cards ion-list ion-item {
+  border-radius: 5px !important;
+}
+
+page-cards ion-item-sliding.Silver ion-item {
   background: grey !important;
   color: #fff !important;
   font-size: 14px !important;
 }
 
-page-cards ion-card ion-item.gold {
+page-cards ion-item-sliding.Gold ion-item {
   background: #c8b923 !important;
   color: #000 !important;
   font-size: 14px !important;
 }
 
-page-cards ion-card ion-item.platinum {
+page-cards ion-item-sliding.Platinum ion-item {
   background: #c2c2c2  !important;
   color: #000 !important;
   font-size: 14px !important;
 }
 
-page-cards ion-card ion-item.blue {
+page-cards ion-item-sliding.Blue ion-item {
   background: #0093ff !important;
   color: #fff !important;
   font-size: 14px !important;
@@ -22082,6 +22090,85 @@ page-cards .bottom-div .holder-name {
 page-cards .bottom-div .card-type img {
   width: 40px;
   height: 40px;
+}
+
+page-cards-add .card {
+  margin-top: 20px;
+}
+
+page-cards-add .card .Silver {
+  background: grey !important;
+  color: #fff !important;
+  font-size: 14px !important;
+}
+
+page-cards-add .card .Gold {
+  background: #c8b923 !important;
+  color: #000 !important;
+  font-size: 14px !important;
+}
+
+page-cards-add .card .Platinum {
+  background: #c2c2c2  !important;
+  color: #000 !important;
+  font-size: 14px !important;
+}
+
+page-cards-add .card .Blue {
+  background: #0093ff !important;
+  color: #fff !important;
+  font-size: 14px !important;
+}
+
+page-cards-add .detail-div ion-input {
+  max-width: 50% !important;
+}
+
+page-cards-add ion-select, page-cards-add ion-input {
+  max-width: 100% !important;
+}
+
+page-cards-add ::-webkit-input-placeholder {
+  color: #000 !important;
+}
+
+page-cards-add :-ms-input-placeholder {
+  color: #000 !important;
+}
+
+page-cards-add ::placeholder {
+  color: #000 !important;
+}
+
+page-cards-add .Silver ::-webkit-input-placeholder, page-cards-add .Blue ::-webkit-input-placeholder {
+  color: #fff !important;
+}
+
+page-cards-add .Silver :-ms-input-placeholder, page-cards-add .Blue :-ms-input-placeholder {
+  color: #fff !important;
+}
+
+page-cards-add .Silver ::placeholder, page-cards-add .Blue ::placeholder {
+  color: #fff !important;
+}
+
+page-cards-add ion-input input {
+  border-bottom: 1px solid black !important;
+}
+
+page-cards-add .Silver ion-input input, page-cards-add .Blue ion-input input {
+  border-bottom: 1px solid white !important;
+}
+
+page-cards-add p.error {
+  color: #953a3a;
+  font-size: 12px;
+  font-weight: 600;
+  margin: 0;
+}
+
+page-cards-add .Blue p.error {
+  color: #9b3535 !important;
 }
 
 page-checkout-trip .trip-info .trip-image,
