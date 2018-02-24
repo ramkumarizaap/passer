@@ -14,7 +14,7 @@ import { MobileAppPage } from "../pages/mobile-app/mobile-app";
 import { CardsPage } from "../pages/cards/cards";
 import { BankPage } from "../pages/bank/bank";
 // import { BankAddPage } from "../pages/bank-add/bank-add";
-import { CardsAddPage } from "../pages/cards-add/cards-add";
+// import { CardsAddPage } from "../pages/cards-add/cards-add";
 import { DatabaseComponent } from "../components/database/database";
 import { GlobalVars } from "../providers/globalVars";
 export interface MenuItem {
@@ -29,7 +29,7 @@ export interface MenuItem {
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage: any = BankPage;
+  rootPage: any = LoginPage;
   appMenuItems: Array<MenuItem>;
 
   constructor(
@@ -52,7 +52,7 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-        this.db.createDb();
+      this.db.createDb();
       let ins = this.globalvars.getAppdata();
       if( ins == null )
       {
@@ -82,6 +82,7 @@ export class MyApp {
   }
 
   logout() {
+    this.globalvars.deleteUserdata();
     this.nav.setRoot(LoginPage);
   }
 

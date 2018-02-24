@@ -3,18 +3,18 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>
+    <ion-title *ngIf="!_searchField">
       <strong>Cards</strong>
     </ion-title>
-    <!-- <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>
+    <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>
     <ion-buttons end>
-      <button ion-button tappable (click)="_showSearchInput()">
+      <button ion-button *ngIf="!_searchField" tappable (click)="_showSearchInput()">
         <ion-icon name="ios-search"></ion-icon>
       </button>
       <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">
         <ion-icon name="ios-close-circle"></ion-icon>
       </button>
-    </ion-buttons> -->
+    </ion-buttons>
   </ion-navbar>
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">

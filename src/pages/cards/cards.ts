@@ -15,6 +15,8 @@ export class CardsPage
 {
 	public user;
 	public alert;
+	public _items;
+	public _searchField;
 	public cards:Array<any> = [];
 	private cno:string="4111897865921234";
 	constructor(public nav:NavController,public globalvars:GlobalVars,public db:DatabaseComponent,
@@ -22,6 +24,39 @@ export class CardsPage
 	{
 		this.user = this.globalvars.getUserdata()[0];
 		this.getCards();
+	}
+
+	_showSearchInput():void
+	{
+		this._searchField = true;
+	}
+	_hideSearchInput():void
+	{
+		this._searchField = false;	
+	}
+	getFilteredItems()
+	{
+		this.cards = this._items;
+	}
+
+	setFilteredItems(e)
+	{
+		this.getFilteredItems();
+		let val = e.target.value;
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '')
+    {
+      this.cards = this.cards.filter((item) => {
+        return ( 
+        	(item.card_type.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
+       	  (item.bank.toLowerCase().indexOf(val.toLowerCase()) > -1) || 
+       	  (item.acc_no.toLowerCase().indexOf(val.toLowerCase()) > -1) || 
+       	  (item.color.toLowerCase().indexOf(val.toLowerCase()) > -1) ||
+	        (item.holder_name.toLowerCase().indexOf(val.toLowerCase()) > -1) || 
+	        (item.card_pay.toLowerCase().indexOf(val.toLowerCase()) > -1)
+        );
+      })
+    } 
 	}
 
 	getCards()
@@ -38,6 +73,7 @@ export class CardsPage
 				{
 					this.cards.push(res.rows.item(i));
 				}
+				this.cards = this._items;
 			}
 			else
 			{

@@ -21904,93 +21904,14 @@ page-website-add ion-item.help .item-inner {
 page-bank .card-background-page ion-card {
   position: relative;
   text-align: center;
-  height: 200px;
+  height: 200px !important;
+  max-height: 200px !important;
   background: #000 !important;
 }
 
-page-bank .card-background-page ion-card .bg-image {
-  background-size: 290px 200px;
-  background-position: center;
-  background-repeat: no-repeat;
-  height: 200px;
-  width: 290px;
-  opacity: 0.3;
-}
-
-page-bank .card-background-page .bg-image.sbi {
-  background-image: url("assets/icon/bank/sbi.jpg");
-}
-
-page-bank .card-background-page .bg-image.axis {
-  background-image: url("assets/icon/bank/axis.jpg");
-}
-
-page-bank .card-background-page .bg-image.federal {
-  background-image: url("assets/icon/bank/federal.jpg");
-}
-
-page-bank .card-background-page .bg-image.icici {
-  background-image: url("assets/icon/bank/icici.jpg");
-}
-
-page-bank .card-background-page .bg-image.yes {
-  background-image: url("assets/icon/bank/yes.jpg");
-}
-
-page-bank .card-background-page .bg-image.canara {
-  background-image: url("assets/icon/bank/canara.jpeg");
-}
-
-page-bank .card-background-page .bg-image.city-union {
-  background-image: url("assets/icon/bank/city-union.jpg");
-}
-
-page-bank .card-background-page .bg-image.dhanalaxmi {
-  background-image: url("assets/icon/bank/dhanalaxmi.jpg");
-}
-
-page-bank .card-background-page .bg-image.hdfc {
-  background-image: url("assets/icon/bank/hdfc.jfif");
-}
-
-page-bank .card-background-page .bg-image.idbi {
-  background-image: url("assets/icon/bank/idbi.jpg");
-}
-
-page-bank .card-background-page .bg-image.indian {
-  background-image: url("assets/icon/bank/indian.jpg");
-}
-
-page-bank .card-background-page .bg-image.iob {
-  background-image: url("assets/icon/bank/iob.jpg");
-}
-
-page-bank .card-background-page .bg-image.karnataka {
-  background-image: url("assets/icon/bank/karnataka.png");
-}
-
-page-bank .card-background-page .bg-image.karnataka {
-  background-image: url("assets/icon/bank/karnataka.png");
-}
-
-page-bank .card-background-page .bg-image.karur {
-  background-image: url("assets/icon/bank/karur.jpg");
-}
-
-page-bank .card-background-page .bg-image.punjab {
-  background-image: url("assets/icon/bank/punjab.jpg");
-}
-
-page-bank .card-background-page .bg-image.south-indian {
-  background-image: url("assets/icon/bank/south-indian.jpg");
-}
-
-page-bank .card-background-page .bg-image.tmb {
-  background-image: url("assets/icon/bank/tmb.jpg");
-}
-
-page-bank .card-background-page .bg-image.laxmi-vilas {
-  background-image: url("assets/icon/bank/laxmi-vilas.png");
+page-bank .card-background-page ion-card img {
+  height: 100%;
+  width: 100%;
 }
 
 page-bank .card-background-page .card-title {
@@ -22014,8 +21935,72 @@ page-bank .card-background-page ion-card img {
   opacity: 0.3;
 }
 
+page-bank ion-searchbar {
+  background: transparent;
+}
+
+page-bank ion-searchbar input {
+  background: transparent !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #fff !important;
+  color: #fff !important;
+}
+
+page-bank .searchbar-search-icon {
+  display: none;
+}
+
+page-bank ion-searchbar input::-webkit-input-placeholder {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+page-bank ion-searchbar input:-ms-input-placeholder {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+page-bank ion-searchbar input::placeholder {
+  color: #fff !important;
+  font-weight: bold;
+}
+
 page-bank-add ion-item.item-md {
   background-color: transparent !important;
+}
+
+page-cards ion-searchbar {
+  background: transparent;
+}
+
+page-cards ion-searchbar input {
+  background: transparent !important;
+  -webkit-box-shadow: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+  border-bottom: 1px solid #fff !important;
+  color: #fff !important;
+}
+
+page-cards .searchbar-search-icon {
+  display: none;
+}
+
+page-cards ion-searchbar input::-webkit-input-placeholder {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+page-cards ion-searchbar input:-ms-input-placeholder {
+  color: #fff !important;
+  font-weight: bold;
+}
+
+page-cards ion-searchbar input::placeholder {
+  color: #fff !important;
+  font-weight: bold;
 }
 
 page-cards ion-list ion-item-sliding {

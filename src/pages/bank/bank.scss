@@ -5,99 +5,106 @@ page-bank
   ion-card {
     position: relative;
     text-align: center;
-    height:200px;
+    height:200px !important;
+    max-height:200px !important;
     background:#000 !important;
   }
-  ion-card .bg-image
-  {
-		background-size: 290px 200px;
-		background-position: center;
-		background-repeat: no-repeat;
-		height: 200px;
-		width: 290px;
-		opacity: 0.3;
-  }
-  .bg-image.sbi
-  {
-  	background-image: url('assets/icon/bank/sbi.jpg');
-  }
-  .bg-image.axis
-  {
-    background-image: url('assets/icon/bank/axis.jpg');
-  }
-  .bg-image.federal
-  {
-  	background-image: url('assets/icon/bank/federal.jpg');
-  }
-  .bg-image.icici
-  {
-  	background-image: url('assets/icon/bank/icici.jpg');
-  }
-  .bg-image.yes
-  {
-  	background-image: url('assets/icon/bank/yes.jpg');
-  }
 
-  .bg-image.canara
-  {
-  	background-image: url('assets/icon/bank/canara.jpeg');
-  }
-  .bg-image.city-union
-  {
-  	background-image: url('assets/icon/bank/city-union.jpg');
-  }
-  .bg-image.dhanalaxmi
-  {
-  	background-image: url('assets/icon/bank/dhanalaxmi.jpg');
-  }
-  .bg-image.hdfc
-  {
-  	background-image: url('assets/icon/bank/hdfc.jfif');
-  }
+ //  ion-card .bg-image
+ //  {
+	// 	background-size: 290px 200px;
+	// 	background-position: center;
+	// 	background-repeat: no-repeat;
+	// 	height: 200px;
+	// 	width: 290px;
+	// 	opacity: 0.3;
+ //  }
+ //  .bg-image.sbi
+ //  {
+ //  	background-image: url('assets/icon/bank/sbi.jpg');
+ //  }
+ //  .bg-image.axis
+ //  {
+ //    background-image: url('assets/icon/bank/axis.jpg');
+ //  }
+ //  .bg-image.federal
+ //  {
+ //  	background-image: url('assets/icon/bank/federal.jpg');
+ //  }
+ //  .bg-image.icici
+ //  {
+ //  	background-image: url('assets/icon/bank/icici.jpg');
+ //  }
+ //  .bg-image.yes
+ //  {
+ //  	background-image: url('assets/icon/bank/yes.jpg');
+ //  }
 
-   .bg-image.idbi
-  {
-  	background-image: url('assets/icon/bank/idbi.jpg');
-  }
+ //  .bg-image.canara
+ //  {
+ //  	background-image: url('assets/icon/bank/canara.jpeg');
+ //  }
+ //  .bg-image.city-union
+ //  {
+ //  	background-image: url('assets/icon/bank/city-union.jpg');
+ //  }
+ //  .bg-image.dhanalaxmi
+ //  {
+ //  	background-image: url('assets/icon/bank/dhanalaxmi.jpg');
+ //  }
+ //  .bg-image.hdfc
+ //  {
+ //  	background-image: url('assets/icon/bank/hdfc.jfif');
+ //  }
 
- .bg-image.indian
-  {
-  	background-image: url('assets/icon/bank/indian.jpg');
-  }
+ //   .bg-image.idbi
+ //  {
+ //  	background-image: url('assets/icon/bank/idbi.jpg');
+ //  }
 
-   .bg-image.iob
-  {
-  	background-image: url('assets/icon/bank/iob.jpg');
-  }
+ // .bg-image.indian
+ //  {
+ //  	background-image: url('assets/icon/bank/indian.jpg');
+ //  }
 
- .bg-image.karnataka
-  {
-  	background-image: url('assets/icon/bank/karnataka.png');
-  }
+ //   .bg-image.iob
+ //  {
+ //  	background-image: url('assets/icon/bank/iob.jpg');
+ //  }
 
-   .bg-image.karnataka
+ // .bg-image.karnataka
+ //  {
+ //  	background-image: url('assets/icon/bank/karnataka.png');
+ //  }
+
+ //   .bg-image.karnataka
+ //  {
+ //  	background-image: url('assets/icon/bank/karnataka.png');
+ //  }
+ //   .bg-image.karur
+ //  {
+ //  	background-image: url('assets/icon/bank/karur.jpg');
+ //  }
+ //   .bg-image.punjab
+ //  {
+ //  	background-image: url('assets/icon/bank/punjab.jpg');
+ //  }
+ //   .bg-image.south-indian
+ //  {
+ //  	background-image: url('assets/icon/bank/south-indian.jpg');
+ //  }
+ //   .bg-image.tmb
+ //  {
+ //  	background-image: url('assets/icon/bank/tmb.jpg');
+ //  }
+ //   .bg-image.laxmi-vilas
+ //  {
+ //  	background-image: url('assets/icon/bank/laxmi-vilas.png');
+ //  }
+  ion-card img
   {
-  	background-image: url('assets/icon/bank/karnataka.png');
-  }
-   .bg-image.karur
-  {
-  	background-image: url('assets/icon/bank/karur.jpg');
-  }
-   .bg-image.punjab
-  {
-  	background-image: url('assets/icon/bank/punjab.jpg');
-  }
-   .bg-image.south-indian
-  {
-  	background-image: url('assets/icon/bank/south-indian.jpg');
-  }
-   .bg-image.tmb
-  {
-  	background-image: url('assets/icon/bank/tmb.jpg');
-  }
-   .bg-image.laxmi-vilas
-  {
-  	background-image: url('assets/icon/bank/laxmi-vilas.png');
+    height:100%;
+    width:100%;
   }
 
 
@@ -122,4 +129,23 @@ page-bank
   	opacity:0.3;
   }
 	}
+
+  ion-searchbar
+  {
+    background:transparent;
+  }
+  ion-searchbar input
+  {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    border-bottom: 1px solid #fff !important;
+    color: #fff !important;
+  }
+  .searchbar-search-icon{display: none;}
+  ion-searchbar input::placeholder
+  {
+    color:#fff !important;
+    font-weight: bold;
+  }
 }

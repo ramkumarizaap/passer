@@ -30,7 +30,7 @@ export class LoginPage {
     public menu: MenuController,
     private loader:LoadingController) {
     this.menu.swipeEnable(false);
-
+    this.globalvars.deleteUserdata();
     this._loginForm = _formBuilder.group({
       //EMAIL
       email: ["",

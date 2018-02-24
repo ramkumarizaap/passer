@@ -10,6 +10,7 @@
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">
   <form [formGroup]="_bankForm" (submit)="_submitBankForm()" method="post" novalidate="">
+    <ion-input formControlName="id" type="text"></ion-input>
     <button ion-button color="dark" [disabled]="!_bankForm.valid"  type="submit">
       <ion-icon name="checkmark"></ion-icon>&nbsp;Save
     </button>
@@ -19,34 +20,25 @@
     <ion-item>
       <ion-label floating>Bank Name</ion-label>
       <ion-select formControlName="name">
-      	<ion-option value="Axis Bank">Axis Bank</ion-option>
-      	<ion-option value="Canara Bank">Canara Bank</ion-option>
-      	<ion-option value="City Union Bank">City Union Bank</ion-option>
-      	<ion-option value="Dhanalaxmi Bank">Dhanalaxmi Bank</ion-option>
-      	<ion-option value="Federal Bank">Federal Bank</ion-option>
-      	<ion-option value="HDFC Bank">HDFC Bank</ion-option>
-      	<ion-option value="ICICI Bank">ICICI Bank</ion-option>
-      	<ion-option value="IDBI Bank">IDBI Bank</ion-option>
-      	<ion-option value="Indian Bank">Indian Bank</ion-option>
-      	<ion-option value="IndusInd Bank">IndusInd Bank</ion-option>
-      	<ion-option value="IOB Bank">IOB Bank</ion-option>
-      	<ion-option value="Karnataka Bank">Karnataka Bank</ion-option>
-      	<ion-option value="Karur Vysya Bank">Karur Vysya Bank</ion-option>
-      	<ion-option value="Laxmi Vilas Bank">Laxmi Vilas Bank</ion-option>
-      	<ion-option value="Punjab Bank">Punjab Bank</ion-option>
-      	<ion-option value="State Bank of India">State Bank of India</ion-option>
-      	<ion-option value="South Indian Bank">South Indian Bank</ion-option>
-      	<ion-option value="TMB Bank">Tamilnadu Mercantile Bank</ion-option>
-      	<ion-option value="Yes Bank">Yes Bank</ion-option>
-      	<ion-option value="Other">Other Bank</ion-option>
+      	<ion-option *ngFor="let b of banks" [value]="b">{{b}}</ion-option>
       </ion-select>
     </ion-item>
     <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.name.hasError('required') && _bankForm.controls.name.touched">
         <p ion-text text-wrap>Please Select Bank Name</p>
     </ion-item>
     <ion-item>
+      <ion-label floating>Account Holder Name</ion-label>
+      <ion-input formControlName="holder_name" type="text"></ion-input>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.holder_name.hasError('required') && _bankForm.controls.holder_name.touched">
+        <p ion-text text-wrap>Please Enter Account Holder Name</p>
+    </ion-item>
+    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.holder_name.invalid  && _bankForm.controls.holder_name.dirty && _bankForm.controls.holder_name.value!=''">
+        <p ion-text text-wrap>Please enter atleast 4 characters.</p>
+    </ion-item>
+    <ion-item>
       <ion-label floating>Account Number</ion-label>
-      <ion-input formControlName="account_number" type="text"></ion-input>
+      <ion-input formControlName="account_number" type="number"></ion-input>
     </ion-item>
     <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.hasError('required') && _bankForm.controls.account_number.touched">
         <p ion-text text-wrap>Please Enter Account Number</p>
