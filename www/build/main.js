@@ -151,13 +151,12 @@ var CardsPage = CardsPage_1 = (function () {
         this.db = db;
         this.alertCtrl = alertCtrl;
         this.loader = loader;
+        this._items = [];
         this.cards = [];
         this.cno = "4111897865921234";
-        // this.user = this.globalvars.getUserdata()[0];
-        this._items = [
-            { card_type: "Debit Card", bank: "IndusInd Bank", acc_no: "4111111111111111", month: "01", year: "2018", pin: "1234", cvv: '123', holder_name: "Ramkumar", card_pay: "Visa", color: "Gold" }
-        ];
+        this.user = this.globalvars.getUserdata()[0];
         this.getCards();
+        // this.cards = [{id:'1',year:'2023',acc_no:'1515616515615614'}];
     }
     CardsPage.prototype._showSearchInput = function () {
         this._searchField = true;
@@ -184,35 +183,32 @@ var CardsPage = CardsPage_1 = (function () {
         }
     };
     CardsPage.prototype.getCards = function () {
-        this.cards = this._items;
-        /*let load = this.loader.create({
-            content:"Loading..."
+        var _this = this;
+        var load = this.loader.create({
+            content: "Loading..."
         });
         load.present();
-        let query = "select * from cards where userid='"+this.user.id+"'";
-        this.db.exeQuery(query).then((res)=>{
-            if(res.rows.length)
-            {
-                for (var i = 0; i < res.rows.length; i++)
-                {
-                    this.cards.push(res.rows.item(i));
+        var query = "select * from cards where userid='" + this.user.id + "'";
+        this.db.exeQuery(query).then(function (res) {
+            if (res.rows.length) {
+                for (var i = 0; i < res.rows.length; i++) {
+                    _this._items.push(res.rows.item(i));
                 }
+                _this.cards = _this._items;
             }
-            else
-            {
-                this.alert = this.alertCtrl.create({
-                    title:'Success',
-                    message:"No Records Found.",
+            else {
+                _this.alert = _this.alertCtrl.create({
+                    title: 'Success',
+                    message: "No Records Found.",
                     buttons: ['Ok']
                 });
             }
-            setTimeout(()=>{
+            setTimeout(function () {
                 load.dismiss();
-                this.alert.present();
-            },3000);
-        }).catch((err)=>{
-
-        });*/
+                _this.alert.present();
+            }, 3000);
+        }).catch(function (err) {
+        });
     };
     CardsPage.prototype.convertStr = function (string) {
         var str = string.substr(4, 10);
@@ -313,10 +309,11 @@ CardsPage = CardsPage_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-cards',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\cards\cards.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title *ngIf="!_searchField">\n\n      <strong>Cards</strong>\n\n    </ion-title>\n\n    <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>\n\n    <ion-buttons end>\n\n      <button ion-button *ngIf="!_searchField" tappable (click)="_showSearchInput()">\n\n        <ion-icon name="ios-search"></ion-icon>\n\n      </button>\n\n      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">\n\n        <ion-icon name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <ion-list>\n\n    <ion-item-sliding  *ngFor="let c of cards" [class]="c.color">\n\n      <ion-item>\n\n      <div class="top-header">\n\n        <div class="card-type" float-left>\n\n            {{c.card_type}}\n\n        </div>\n\n        <div class="bank-name" float-right>\n\n          {{c.bank}}\n\n        </div>\n\n      </div>\n\n      <div class="acc-number">\n\n          {{convertStr(c.acc_no)}}\n\n      </div>\n\n      <div class="detail-div">\n\n          <div class="expire-div" float-left>\n\n            Valid Through {{c.month}}/{{c.year}}\n\n          </div>\n\n          <div class="pin-div" float-right text-right>\n\n            <p>PIN ***</p>\n\n            <p>CVV ****</p>\n\n          </div>\n\n      </div>\n\n      <div class="bottom-div">\n\n          <div class="holder-name" float-left>\n\n            {{c.holder_name}}\n\n          </div>\n\n          <div class="card-type" float-right>\n\n            <img src="assets/icon/cards/{{getImage(c.card_pay)}}">\n\n          </div>\n\n      </div>\n\n      </ion-item>\n\n      <ion-item-options side="right">\n\n        <button ion-button color="dark"  (click)="_gotoCardsAdd(c)">\n\n          <ion-icon name="create"></ion-icon>\n\n          Edit\n\n        </button>\n\n        <button ion-button color="danger" (click)="_delCard(c.id)">\n\n          <ion-icon name="trash"></ion-icon>\n\n          Delete\n\n        </button>\n\n      </ion-item-options>\n\n    </ion-item-sliding>\n\n  </ion-list>\n\n  <ion-list *ngIf="cards==\'\'">\n\n    <ion-item text-center>No Records Found.</ion-item>\n\n  </ion-list>\n\n\n\n  <ion-fab right bottom>\n\n    <button (click)="_gotoCardsAdd()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>\n\n  </ion-fab>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\cards\cards.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_3__providers_globalVars__["a" /* GlobalVars */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_globalVars__["a" /* GlobalVars */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__components_database_database__["a" /* DatabaseComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__components_database_database__["a" /* DatabaseComponent */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_3__providers_globalVars__["a" /* GlobalVars */], __WEBPACK_IMPORTED_MODULE_4__components_database_database__["a" /* DatabaseComponent */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]])
 ], CardsPage);
 
-var CardsPage_1, _a, _b, _c, _d, _e;
+var CardsPage_1;
 //# sourceMappingURL=cards.js.map
 
 /***/ }),
@@ -371,14 +368,18 @@ var YearList = (function () {
     function YearList() {
         this.y = new Date();
         this.y1 = this.y.getFullYear();
-        this.year = [];
+        this.years = ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027', '2028', '2029', '2030', '2031',
+            '2031', '2032', '2033', '2034', '2035', '2036', '2037', '2038', '2039', '2040', '2041', '2042', '2043', '2044',
+            '2045', '2046', '2047', '2048', '2049', '2050'];
+        // public years()
+        // {
+        // 	for (var i = this.y1; i < (this.y1+30); i++)
+        // 	{
+        // 		this.year.push(i);
+        // 	}
+        // 	return this.year;
+        // }
     }
-    YearList.prototype.years = function () {
-        for (var i = this.y1; i < (this.y1 + 30); i++) {
-            this.year.push(i);
-        }
-        return this.year;
-    };
     return YearList;
 }());
 
@@ -424,7 +425,6 @@ var BankPage = BankPage_1 = (function () {
         this.bank = [];
         this._items = [];
         this.user = this.globalvars.getUserdata()[0];
-        this._items = [{ name: "IndusInd Bank", branch: "Salem" }, { name: "Axis Bank", branch: "Chennai" }];
         this.getBanks();
     }
     BankPage.prototype._addBank = function (s) {
@@ -460,7 +460,7 @@ var BankPage = BankPage_1 = (function () {
         this.db.exeQuery(query).then(function (res) {
             if (res.rows.length) {
                 for (var i = 0; i < res.rows.length; i++) {
-                    _this.bank.push(res.rows.item(i));
+                    _this._items.push(res.rows.item(i));
                 }
                 _this.bank = _this._items;
             }
@@ -639,10 +639,12 @@ BankPage = BankPage_1 = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
         selector: 'page-bank',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\bank\bank.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title  *ngIf="!_searchField">\n\n      <strong>Bank</strong>\n\n    </ion-title>\n\n    <ion-searchbar [(ngModel)]="searchTerm" (ionCancel)="clearFilter($event)" (ionInput)="setFilteredItems($event)" *ngIf="_searchField" class="searchfield" type="text" placeholder="Search..."></ion-searchbar>\n\n    <ion-buttons end>\n\n      <button ion-button *ngIf="!_searchField" tappable (click)="_showSearchInput()">\n\n        <ion-icon name="ios-search"></ion-icon>\n\n      </button>\n\n      <button *ngIf="_searchField" ion-button tappable (click)="_hideSearchInput()">\n\n        <ion-icon name="ios-close-circle"></ion-icon>\n\n      </button>\n\n    </ion-buttons>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content class="card-background-page">\n\n  <ion-card *ngFor="let b of bank" (click)="showAction(b)">\n\n    <img src="assets/icon/bank/{{getImg(b.name)}}"/>\n\n    <div class="card-title">{{b.name}}</div>\n\n    <div class="card-subtitle">{{b.branch}}</div>\n\n  </ion-card>\n\n  <ion-list *ngIf="bank==\'\'">\n\n    <ion-item text-center>No Records Found.</ion-item>\n\n  </ion-list>\n\n\n\n  <ion-fab right bottom>\n\n    <button (click)="_addBank()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>\n\n  </ion-fab>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\bank\bank.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__components_database_database__["a" /* DatabaseComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__components_database_database__["a" /* DatabaseComponent */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_3__providers_globalVars__["a" /* GlobalVars */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_globalVars__["a" /* GlobalVars */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]) === "function" && _f || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* ActionSheetController */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_4__components_database_database__["a" /* DatabaseComponent */], __WEBPACK_IMPORTED_MODULE_3__providers_globalVars__["a" /* GlobalVars */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */]])
 ], BankPage);
 
-var BankPage_1, _a, _b, _c, _d, _e, _f;
+var BankPage_1;
 //# sourceMappingURL=bank.js.map
 
 /***/ }),
@@ -1888,10 +1890,11 @@ var CardsAddPage = (function () {
         this.editdata = this.params.get('id');
         if (this.editdata.id != '') {
             this.card = this.editdata;
+            console.log(this.card);
         }
         this.user = this.globalvars.getUserdata()[0];
         this.banks = bank.list;
-        this.years = this.year.years();
+        this.years = this.year.years;
         this._cardForm = this._formBuilder.group({
             id: [this.card.id],
             card_type: [this.card.card_type, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required])],
@@ -1906,6 +1909,9 @@ var CardsAddPage = (function () {
             color: [this.card.color, __WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].compose([__WEBPACK_IMPORTED_MODULE_3__angular_forms__["f" /* Validators */].required])],
         });
     }
+    CardsAddPage.prototype._cancel = function () {
+        this.nav.pop();
+    };
     CardsAddPage.prototype._changeColor = function (value) {
         console.log(value);
         this.color = value;
@@ -1920,10 +1926,11 @@ var CardsAddPage = (function () {
             });
             load_1.present();
             var query = void 0;
-            if (formdata.id != '')
+            if (formdata.id != null)
                 query = "update cards set card_type='" + formdata.card_type + "',bank='" + formdata.bank + "',acc_no='" + formdata.acc_no + "',month='" + formdata.month + "',year='" + formdata.year + "',pin='" + formdata.pin + "',cvv='" + formdata.cvv + "',holder_name='" + formdata.holder_name + "',card_pay='" + formdata.card_pay + "',color='" + formdata.color + "' where id='" + formdata.id + "'";
             else
                 query = "insert into cards(userid,card_type,bank,acc_no,month,year,pin,cvv,holder_name,card_pay,color) values('" + this.user.id + "','" + formdata.card_type + "','" + formdata.bank + "','" + formdata.acc_no + "','" + formdata.month + "','" + formdata.year + "','" + formdata.pin + "','" + formdata.cvv + "','" + formdata.holder_name + "','" + formdata.card_pay + "','" + formdata.color + "')";
+            alert(query);
             this.db.exeQuery(query).then(function (succ) {
                 var alert = _this.alertCtrl.create({
                     title: 'Success',
@@ -1964,7 +1971,7 @@ var CardsAddPage = (function () {
 }());
 CardsAddPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-cards-add',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\cards-add\cards-add.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Add Card</strong>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <form method="post" [formGroup]="_cardForm" (submit)="_submitCardForm()" novalidate="">\n\n    <ion-input formControlName="id" type="hidden"></ion-input>\n\n    <button ion-button color="dark" type="submit" [disabled]="!_cardForm.valid">\n\n      <ion-icon name="checkmark"></ion-icon>&nbsp;Save\n\n    </button>\n\n    <button ion-button color="danger" (click)="_cancel()" type="button">\n\n      <ion-icon name="close"></ion-icon>&nbsp;Cancel\n\n    </button>\n\n    <div class="card">\n\n    <div [class]="color">\n\n      <ion-row>\n\n        <ion-col col-6>\n\n          <ion-select formControlName="card_type">\n\n            <ion-option selected value="">Select Card</ion-option>\n\n            <ion-option value="Debit Card">Debit Card</ion-option>\n\n            <ion-option value="Credit Card">Credit Card</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.card_type.hasError(\'required\') && _cardForm.controls.card_type.touched" ion-text text-wrap>Please Select Card Type</p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-select formControlName="bank">\n\n            <ion-option selected value="">Select Bank</ion-option>\n\n            <ion-option *ngFor="let b of banks" [value] = "b">{{b}}</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.bank.hasError(\'required\') && _cardForm.controls.bank.touched" ion-text text-wrap>Please Select Bank</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <ion-input formControlName="acc_no" maxlength="16" type="number" placeholder="Card Number"></ion-input>\n\n           <p class="error" *ngIf="_cardForm.controls.acc_no.hasError(\'required\') && _cardForm.controls.acc_no.touched" ion-text text-wrap>Please Enter Card Number</p>\n\n           <p class="error" *ngIf="_cardForm.controls.acc_no.invalid && _cardForm.controls.acc_no.dirty && _cardForm.controls.acc_no.value!=\'\'" ion-text text-wrap>Please Enter atleast 16 Characters</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row class="detail-div">\n\n        <ion-col col-6>\n\n          <ion-select float- formControlName="month">\n\n            <ion-option value="">Select Month</ion-option>\n\n            <ion-option selected value="01">01</ion-option><ion-option value="02">02</ion-option>\n\n            <ion-option value="03">03</ion-option><ion-option value="04">04</ion-option>\n\n            <ion-option value="05">05</ion-option><ion-option value="06">06</ion-option>\n\n            <ion-option value="07">07</ion-option><ion-option value="08">08</ion-option>\n\n            <ion-option value="09">09</ion-option><ion-option value="10">10</ion-option>\n\n            <ion-option value="11">11</ion-option><ion-option value="12">12</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.month.hasError(\'required\') && _cardForm.controls.month.touched" ion-text text-wrap>Please Select Month</p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-select float- formControlName="year">\n\n            <ion-option value="">Select Year</ion-option>\n\n            <ion-option *ngFor="let y of years;let i = index;" [value] = "y">{{y}}</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.year.hasError(\'required\') && _cardForm.controls.year.touched" ion-text text-wrap>Please Select Year</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-6>\n\n          <ion-input formControlName="pin" type="number" placeholder="PIN" float-left></ion-input>\n\n          <p class="error" *ngIf="_cardForm.controls.pin.hasError(\'required\') && _cardForm.controls.pin.touched" ion-text text-wrap>Please Enter PIN</p>\n\n          <p class="error" *ngIf="_cardForm.controls.pin.invalid  && _cardForm.controls.pin.dirty && _cardForm.controls.pin.value!=\'\'" ion-text text-wrap>Please Enter alteast 4 characters.</p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-input formControlName="cvv" type="number" placeholder="CVV" float-right></ion-input>\n\n          <p class="error" *ngIf="_cardForm.controls.cvv.hasError(\'required\') && _cardForm.controls.cvv.touched" ion-text text-wrap>Please Enter CVV</p>\n\n          <p class="error" *ngIf="_cardForm.controls.cvv.invalid  && _cardForm.controls.cvv.dirty && _cardForm.controls.cvv.value!=\'\'" ion-text text-wrap>Please Enter alteast 4 characters.</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <ion-input formControlName="holder_name" placeholder="Card Holder Name" type="" name=""></ion-input>\n\n          <p class="error" *ngIf="_cardForm.controls.holder_name.hasError(\'required\') && _cardForm.controls.holder_name.touched" ion-text text-wrap>Please Enter Card Holder Name</p>\n\n           <p class="error" *ngIf="_cardForm.controls.holder_name.invalid  && _cardForm.controls.holder_name.dirty && _cardForm.controls.holder_name.value!=\'\'" ion-text text-wrap>Please Enter alteast 4 characters.</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-7>\n\n          <ion-select formControlName="card_pay">\n\n            <ion-option value="">Select Card Type</ion-option>\n\n            <ion-option selected value="Amex">American Express</ion-option>\n\n            <ion-option value="Cirrus">Cirrus</ion-option>\n\n            <ion-option value="Discover">Discover</ion-option>\n\n            <ion-option value="Maestro">Maestro</ion-option>\n\n            <ion-option value="Mastercard">Mastercard</ion-option>\n\n            <ion-option value="Rupay">Rupay</ion-option>\n\n            <ion-option value="Visa">Visa</ion-option>\n\n            <ion-option value="Western Union">Western Union</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.card_pay.hasError(\'required\') && _cardForm.controls.card_pay.touched" ion-text text-wrap>Please Enter Card Type</p>\n\n        </ion-col>\n\n        <ion-col col-5>\n\n          <ion-select formControlName="color" (ionChange)="_changeColor($event)">\n\n            <ion-option value="">Select Card Color</ion-option>\n\n            <ion-option selected value="Silver">Silver</ion-option>\n\n            <ion-option value="Gold">Gold</ion-option>\n\n            <ion-option value="Platinum">Platinum</ion-option>\n\n            <ion-option value="Blue">Blue</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.color.hasError(\'required\') && _cardForm.controls.color.touched" ion-text text-wrap>Please Enter Card Color</p>\n\n        </ion-col>\n\n      </ion-row>\n\n    </div>\n\n    </div>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\cards-add\cards-add.html"*/
+        selector: 'page-cards-add',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\cards-add\cards-add.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Add Card</strong>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <form method="post" [formGroup]="_cardForm" (submit)="_submitCardForm()" novalidate="">\n\n    <ion-input formControlName="id" type="hidden"></ion-input>\n\n    <button ion-button color="dark" type="submit" [disabled]="!_cardForm.valid">\n\n      <ion-icon name="checkmark"></ion-icon>&nbsp;Save\n\n    </button>\n\n    <button ion-button color="danger" (click)="_cancel()" type="button">\n\n      <ion-icon name="close"></ion-icon>&nbsp;Cancel\n\n    </button>\n\n    <div class="card">\n\n    <div [class]="color">\n\n      <ion-row>\n\n        <ion-col col-6>\n\n          <ion-select formControlName="card_type">\n\n            <ion-option selected value="">Select Card</ion-option>\n\n            <ion-option value="Debit Card">Debit Card</ion-option>\n\n            <ion-option value="Credit Card">Credit Card</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.card_type.hasError(\'required\') && _cardForm.controls.card_type.touched" ion-text text-wrap>Please Select Card Type</p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-select formControlName="bank">\n\n            <ion-option selected value="">Select Bank</ion-option>\n\n            <ion-option *ngFor="let b of banks" [value] = "b">{{b}}</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.bank.hasError(\'required\') && _cardForm.controls.bank.touched" ion-text text-wrap>Please Select Bank</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <ion-input formControlName="acc_no" maxlength="16" type="number" placeholder="Card Number"></ion-input>\n\n           <p class="error" *ngIf="_cardForm.controls.acc_no.hasError(\'required\') && _cardForm.controls.acc_no.touched" ion-text text-wrap>Please Enter Card Number</p>\n\n           <p class="error" *ngIf="_cardForm.controls.acc_no.invalid && _cardForm.controls.acc_no.dirty && _cardForm.controls.acc_no.value!=\'\'" ion-text text-wrap>Please Enter atleast 16 Characters</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row class="detail-div">\n\n        <ion-col col-6>\n\n          <ion-select float- formControlName="month">\n\n            <ion-option value="">Select Month</ion-option>\n\n            <ion-option selected value="01">01</ion-option><ion-option value="02">02</ion-option>\n\n            <ion-option value="03">03</ion-option><ion-option value="04">04</ion-option>\n\n            <ion-option value="05">05</ion-option><ion-option value="06">06</ion-option>\n\n            <ion-option value="07">07</ion-option><ion-option value="08">08</ion-option>\n\n            <ion-option value="09">09</ion-option><ion-option value="10">10</ion-option>\n\n            <ion-option value="11">11</ion-option><ion-option value="12">12</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.month.hasError(\'required\') && _cardForm.controls.month.touched" ion-text text-wrap>Please Select Month</p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-select float- formControlName="year">\n\n            <ion-option value="">Select Year</ion-option>\n\n            <ion-option *ngFor="let y of years" [value] = "y">{{y}}</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.year.hasError(\'required\') && _cardForm.controls.year.touched" ion-text text-wrap>Please Select Year</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-6>\n\n          <ion-input formControlName="pin" type="number" placeholder="PIN" float-left></ion-input>\n\n          <p class="error" *ngIf="_cardForm.controls.pin.hasError(\'required\') && _cardForm.controls.pin.touched" ion-text text-wrap>Please Enter PIN</p>\n\n          <p class="error" *ngIf="_cardForm.controls.pin.invalid  && _cardForm.controls.pin.dirty && _cardForm.controls.pin.value!=\'\'" ion-text text-wrap>Please Enter alteast 4 characters.</p>\n\n        </ion-col>\n\n        <ion-col col-6>\n\n          <ion-input formControlName="cvv" type="number" placeholder="CVV" float-right></ion-input>\n\n          <p class="error" *ngIf="_cardForm.controls.cvv.hasError(\'required\') && _cardForm.controls.cvv.touched" ion-text text-wrap>Please Enter CVV</p>\n\n          <p class="error" *ngIf="_cardForm.controls.cvv.invalid  && _cardForm.controls.cvv.dirty && _cardForm.controls.cvv.value!=\'\'" ion-text text-wrap>Please Enter alteast 4 characters.</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-12>\n\n          <ion-input formControlName="holder_name" placeholder="Card Holder Name" type="" name=""></ion-input>\n\n          <p class="error" *ngIf="_cardForm.controls.holder_name.hasError(\'required\') && _cardForm.controls.holder_name.touched" ion-text text-wrap>Please Enter Card Holder Name</p>\n\n           <p class="error" *ngIf="_cardForm.controls.holder_name.invalid  && _cardForm.controls.holder_name.dirty && _cardForm.controls.holder_name.value!=\'\'" ion-text text-wrap>Please Enter alteast 4 characters.</p>\n\n        </ion-col>\n\n      </ion-row>\n\n      <ion-row>\n\n        <ion-col col-7>\n\n          <ion-select formControlName="card_pay">\n\n            <ion-option value="">Select Card Type</ion-option>\n\n            <ion-option selected value="Amex">American Express</ion-option>\n\n            <ion-option value="Cirrus">Cirrus</ion-option>\n\n            <ion-option value="Discover">Discover</ion-option>\n\n            <ion-option value="Maestro">Maestro</ion-option>\n\n            <ion-option value="Mastercard">Mastercard</ion-option>\n\n            <ion-option value="Rupay">Rupay</ion-option>\n\n            <ion-option value="Visa">Visa</ion-option>\n\n            <ion-option value="Western Union">Western Union</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.card_pay.hasError(\'required\') && _cardForm.controls.card_pay.touched" ion-text text-wrap>Please Enter Card Type</p>\n\n        </ion-col>\n\n        <ion-col col-5>\n\n          <ion-select formControlName="color" (ionChange)="_changeColor($event)">\n\n            <ion-option value="">Select Card Color</ion-option>\n\n            <ion-option selected value="Silver">Silver</ion-option>\n\n            <ion-option value="Gold">Gold</ion-option>\n\n            <ion-option value="Platinum">Platinum</ion-option>\n\n            <ion-option value="Blue">Blue</ion-option>\n\n          </ion-select>\n\n          <p class="error" *ngIf="_cardForm.controls.color.hasError(\'required\') && _cardForm.controls.color.touched" ion-text text-wrap>Please Enter Card Color</p>\n\n        </ion-col>\n\n      </ion-row>\n\n    </div>\n\n    </div>\n\n  </form>\n\n</ion-content>'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\cards-add\cards-add.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_4__providers_bankList__["a" /* BankList */], __WEBPACK_IMPORTED_MODULE_4__providers_bankList__["b" /* YearList */], __WEBPACK_IMPORTED_MODULE_3__angular_forms__["a" /* FormBuilder */],
         __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["b" /* AlertController */], __WEBPACK_IMPORTED_MODULE_5__components_database_database__["a" /* DatabaseComponent */],
@@ -2111,7 +2118,7 @@ var BankAddPage = (function () {
 }());
 BankAddPage = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
-        selector: 'page-bank-add',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\bank-add\bank-add.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Add Bank</strong>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <form [formGroup]="_bankForm" (submit)="_submitBankForm()" method="post" novalidate="">\n\n    <ion-input formControlName="id" type="text"></ion-input>\n\n    <button ion-button color="dark" [disabled]="!_bankForm.valid"  type="submit">\n\n      <ion-icon name="checkmark"></ion-icon>&nbsp;Save\n\n    </button>\n\n    <button ion-button color="danger" (click)="_cancel()" type="button">\n\n      <ion-icon name="close"></ion-icon>&nbsp;Cancel\n\n    </button>\n\n    <ion-item>\n\n      <ion-label floating>Bank Name</ion-label>\n\n      <ion-select formControlName="name">\n\n      	<ion-option *ngFor="let b of banks" [value]="b">{{b}}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.name.hasError(\'required\') && _bankForm.controls.name.touched">\n\n        <p ion-text text-wrap>Please Select Bank Name</p>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Account Holder Name</ion-label>\n\n      <ion-input formControlName="holder_name" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.holder_name.hasError(\'required\') && _bankForm.controls.holder_name.touched">\n\n        <p ion-text text-wrap>Please Enter Account Holder Name</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.holder_name.invalid  && _bankForm.controls.holder_name.dirty && _bankForm.controls.holder_name.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter atleast 4 characters.</p>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Account Number</ion-label>\n\n      <ion-input formControlName="account_number" type="number"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.hasError(\'required\') && _bankForm.controls.account_number.touched">\n\n        <p ion-text text-wrap>Please Enter Account Number</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.hasError(\'pattern\')  && _bankForm.controls.account_number.dirty && _bankForm.controls.account_number.value!=\'\'">\n\n        <p ion-text text-wrap>Please Enter valid Account Number.</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.invalid  && _bankForm.controls.account_number.dirty && _bankForm.controls.account_number.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Account Type</ion-label>\n\n      <ion-select formControlName="account_type">\n\n      	<ion-option value="Savings">Savings</ion-option>\n\n      	<ion-option value="Fixed">Fixed</ion-option>\n\n      	<ion-option value="Current">Current</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_type.hasError(\'required\') && _bankForm.controls.account_type.touched">\n\n        <p ion-text text-wrap>Please Select Account Type</p>\n\n    </ion-item>\n\n    <ion-item>\n\n    <ion-label floating>Branch</ion-label>\n\n      <ion-input formControlName="branch" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.branch.hasError(\'required\') && _bankForm.controls.branch.touched">\n\n        <p ion-text text-wrap>Please Enter Branch</p>\n\n    </ion-item>\n\n    <ion-item>\n\n    	<ion-label floating>IFSC Code</ion-label>\n\n      <ion-input formControlName="ifsc" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n    	<ion-label floating>MICR Code</ion-label>\n\n      <ion-input formControlName="micr" type="text"></ion-input>\n\n    </ion-item>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\bank-add\bank-add.html"*/
+        selector: 'page-bank-add',template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\pages\bank-add\bank-add.html"*/'<ion-header>\n\n  <ion-navbar color="primary">\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>\n\n      <strong>Add Bank</strong>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding class="animated fadeIn common-bg">\n\n  <form [formGroup]="_bankForm" (submit)="_submitBankForm()" method="post" novalidate="">\n\n    <ion-input formControlName="id" type="hidden"></ion-input>\n\n    <button ion-button color="dark" [disabled]="!_bankForm.valid"  type="submit">\n\n      <ion-icon name="checkmark"></ion-icon>&nbsp;Save\n\n    </button>\n\n    <button ion-button color="danger" (click)="_cancel()" type="button">\n\n      <ion-icon name="close"></ion-icon>&nbsp;Cancel\n\n    </button>\n\n    <ion-item>\n\n      <ion-label floating>Bank Name</ion-label>\n\n      <ion-select formControlName="name">\n\n      	<ion-option *ngFor="let b of banks" [value]="b">{{b}}</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.name.hasError(\'required\') && _bankForm.controls.name.touched">\n\n        <p ion-text text-wrap>Please Select Bank Name</p>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Account Holder Name</ion-label>\n\n      <ion-input formControlName="holder_name" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.holder_name.hasError(\'required\') && _bankForm.controls.holder_name.touched">\n\n        <p ion-text text-wrap>Please Enter Account Holder Name</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.holder_name.invalid  && _bankForm.controls.holder_name.dirty && _bankForm.controls.holder_name.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter atleast 4 characters.</p>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Account Number</ion-label>\n\n      <ion-input formControlName="account_number" type="number"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.hasError(\'required\') && _bankForm.controls.account_number.touched">\n\n        <p ion-text text-wrap>Please Enter Account Number</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.hasError(\'pattern\')  && _bankForm.controls.account_number.dirty && _bankForm.controls.account_number.value!=\'\'">\n\n        <p ion-text text-wrap>Please Enter valid Account Number.</p>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_number.invalid  && _bankForm.controls.account_number.dirty && _bankForm.controls.account_number.value!=\'\'">\n\n        <p ion-text text-wrap>Please enter atleast 6 characters.</p>\n\n    </ion-item>\n\n    <ion-item>\n\n      <ion-label floating>Account Type</ion-label>\n\n      <ion-select formControlName="account_type">\n\n      	<ion-option value="Savings">Savings</ion-option>\n\n      	<ion-option value="Fixed">Fixed</ion-option>\n\n      	<ion-option value="Current">Current</ion-option>\n\n      </ion-select>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.account_type.hasError(\'required\') && _bankForm.controls.account_type.touched">\n\n        <p ion-text text-wrap>Please Select Account Type</p>\n\n    </ion-item>\n\n    <ion-item>\n\n    <ion-label floating>Branch</ion-label>\n\n      <ion-input formControlName="branch" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item class="error" no-lines no-padding *ngIf="_bankForm.controls.branch.hasError(\'required\') && _bankForm.controls.branch.touched">\n\n        <p ion-text text-wrap>Please Enter Branch</p>\n\n    </ion-item>\n\n    <ion-item>\n\n    	<ion-label floating>IFSC Code</ion-label>\n\n      <ion-input formControlName="ifsc" type="text"></ion-input>\n\n    </ion-item>\n\n    <ion-item>\n\n    	<ion-label floating>MICR Code</ion-label>\n\n      <ion-input formControlName="micr" type="text"></ion-input>\n\n    </ion-item>\n\n  </form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\pages\bank-add\bank-add.html"*/
     }),
     __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* NavController */], __WEBPACK_IMPORTED_MODULE_4__angular_forms__["a" /* FormBuilder */], __WEBPACK_IMPORTED_MODULE_6__providers_bankList__["a" /* BankList */],
         __WEBPACK_IMPORTED_MODULE_5__components_database_database__["a" /* DatabaseComponent */], __WEBPACK_IMPORTED_MODULE_3__providers_globalVars__["a" /* GlobalVars */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* LoadingController */],
@@ -2538,7 +2545,7 @@ var MyApp = (function () {
         this.statusBar = statusBar;
         this.splashScreen = splashScreen;
         this.keyboard = keyboard;
-        this.rootPage = __WEBPACK_IMPORTED_MODULE_9__pages_cards_cards__["a" /* CardsPage */];
+        this.rootPage = __WEBPACK_IMPORTED_MODULE_6__pages_login_login__["a" /* LoginPage */];
         this.initializeApp();
         this.appMenuItems = [
             { title: 'Websites', component: __WEBPACK_IMPORTED_MODULE_7__pages_websites_website__["a" /* WebsitePage */], icon: 'ios-globe' },
@@ -2580,15 +2587,19 @@ var MyApp = (function () {
 }());
 __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */]) === "function" && _a || Object)
+    __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* Nav */])
 ], MyApp.prototype, "nav", void 0);
 MyApp = __decorate([
     Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({template:/*ion-inline-start:"C:\xampp\htdocs\passer\src\app\app.html"*/'<ion-menu side="left" id="authenticated" [content]="content">\n  <ion-header>\n    <ion-toolbar class="user-profile">\n\n      <ion-grid>\n        <ion-row>\n          <ion-col col-4>\n              <div class="user-avatar">\n                <img src="assets/img/avatar.jpeg">\n              </div>\n          </ion-col>\n          <ion-col padding-top col-8>\n            <h2 ion-text class="no-margin bold text-white">\n              Ramkumar\n            </h2>\n          </ion-col>\n        </ion-row>\n\n        <ion-row no-padding class="other-data">\n          <ion-col no-padding class="column">\n            <button ion-button icon-left small full color="light" menuClose>\n              <ion-icon name="contact"></ion-icon>\n              Edit Profile\n            </button>\n          </ion-col>\n          <ion-col no-padding class="column">\n            <button ion-button icon-left small full color="light" menuClose (click)="logout()">\n              <ion-icon name="log-out"></ion-icon>\n              Log Out\n            </button>\n          </ion-col>\n        </ion-row>\n      </ion-grid>\n    </ion-toolbar>\n  </ion-header>\n  <ion-content color="primary">\n    <ion-list class="user-list">\n      <button ion-item menuClose class="text-1x" *ngFor="let menuItem of appMenuItems" (click)="openPage(menuItem)">\n        <ion-icon item-left [name]="menuItem.icon" color="primary"></ion-icon>\n        <span ion-text color="primary">{{menuItem.title}}</span>\n      </button>\n    </ion-list>\n  </ion-content>\n\n</ion-menu>\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>\n'/*ion-inline-end:"C:\xampp\htdocs\passer\src\app\app.html"*/
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_11__components_database_database__["a" /* DatabaseComponent */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_11__components_database_database__["a" /* DatabaseComponent */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_12__providers_globalVars__["a" /* GlobalVars */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_12__providers_globalVars__["a" /* GlobalVars */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]) === "function" && _g || Object])
+    __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_11__components_database_database__["a" /* DatabaseComponent */],
+        __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["j" /* Platform */],
+        __WEBPACK_IMPORTED_MODULE_12__providers_globalVars__["a" /* GlobalVars */],
+        __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */],
+        __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */],
+        __WEBPACK_IMPORTED_MODULE_4__ionic_native_keyboard__["a" /* Keyboard */]])
 ], MyApp);
 
-var _a, _b, _c, _d, _e, _f, _g;
 //# sourceMappingURL=app.component.js.map
 
 /***/ }),
@@ -2766,6 +2777,132 @@ var LoginPage = (function () {
         }
     };
     LoginPage.prototype.forgotPass = function () {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: 'Forgot Password?',
+            message: "Enter Email-ID to reset your password",
+            inputs: [
+                {
+                    type: 'email',
+                    name: 'email',
+                    placeholder: 'Email-ID',
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: function (data) {
+                    }
+                },
+                {
+                    text: 'Next',
+                    handler: function (data) {
+                        console.log(data);
+                        _this._checkEmail(data.email);
+                    }
+                }
+            ]
+        });
+        prompt.present();
+    };
+    LoginPage.prototype._checkEmail = function (email) {
+        var _this = this;
+        if (email) {
+            var query = "select * from users where email='" + email + "'";
+            this.db.exeQuery(query).then(function (res) {
+                if (res.rows.length) {
+                    _this._showPasswordPrompt(email);
+                }
+                else {
+                    var alert_2 = _this.alertCtrl.create({
+                        title: 'Failed!',
+                        message: 'Email-ID not exists.',
+                        buttons: ['Ok'],
+                    });
+                    alert_2.present();
+                    return false;
+                }
+            })
+                .catch(function (err) {
+                var alert = _this.alertCtrl.create({
+                    title: 'Error',
+                    message: 'Email-ID not exists.',
+                    buttons: ['Ok'],
+                });
+                alert.present();
+                return false;
+            });
+        }
+        else {
+            var alert_3 = this.alertCtrl.create({
+                title: 'Failed!',
+                message: 'Invalid Email-ID',
+                buttons: ['Ok'],
+            });
+            alert_3.present();
+            return false;
+        }
+    };
+    LoginPage.prototype._showPasswordPrompt = function (email) {
+        var _this = this;
+        var prompt = this.alertCtrl.create({
+            title: 'Forgot Password?',
+            message: "Enter Password to reset your password",
+            inputs: [
+                {
+                    type: 'password',
+                    name: 'password',
+                    placeholder: 'New Password',
+                },
+                {
+                    type: 'password',
+                    name: 'cpassword',
+                    placeholder: 'Confirm Password',
+                },
+            ],
+            buttons: [
+                {
+                    text: 'Cancel',
+                    handler: function (data) {
+                    }
+                },
+                {
+                    text: 'Update',
+                    handler: function (data) {
+                        console.log(data);
+                        if (data.password == data.cpassword) {
+                            var query = "update users set password='" + data.password + "' where email='" + email + "' ";
+                            _this.db.exeQuery(query).then(function (res) {
+                                var alert = _this.alertCtrl.create({
+                                    title: 'Success!',
+                                    message: 'Password updated successfully',
+                                    buttons: ['Ok'],
+                                });
+                                alert.present();
+                            })
+                                .catch(function (err) {
+                                var alert = _this.alertCtrl.create({
+                                    title: 'Failed!',
+                                    message: 'Failed to update',
+                                    buttons: ['Ok'],
+                                });
+                                alert.present();
+                            });
+                        }
+                        else {
+                            var alert_4 = _this.alertCtrl.create({
+                                title: 'Failed!',
+                                message: 'Password Mismatch',
+                                buttons: ['Ok'],
+                            });
+                            alert_4.present();
+                            return false;
+                        }
+                    }
+                }
+            ]
+        });
+        prompt.present();
     };
     return LoginPage;
 }());

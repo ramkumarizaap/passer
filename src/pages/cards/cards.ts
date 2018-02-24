@@ -15,7 +15,7 @@ export class CardsPage
 {
 	public user;
 	public alert;
-	public _items;
+	public _items = [];
 	public _searchField;
 	public cards:Array<any> = [];
 	private cno:string="4111897865921234";
@@ -24,6 +24,7 @@ export class CardsPage
 	{
 		this.user = this.globalvars.getUserdata()[0];
 		this.getCards();
+		// this.cards = [{id:'1',year:'2023',acc_no:'1515616515615614'}];
 	}
 
 	_showSearchInput():void
@@ -71,7 +72,7 @@ export class CardsPage
 			{
 				for (var i = 0; i < res.rows.length; i++)
 				{
-					this.cards.push(res.rows.item(i));
+					this._items.push(res.rows.item(i));
 				}
 				this.cards = this._items;
 			}

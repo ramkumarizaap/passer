@@ -15,25 +15,29 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { HomePage } from "../pages/home/home";
 import { LoginPage } from "../pages/login/login";
 import { WebsitePage } from "../pages/websites/website";
+// import { AddWebsitePage } from "../pages/add-website/add-website";
 import { MobileAppPage } from "../pages/mobile-app/mobile-app";
+// import { MobileAppAddPage } from "../pages/mobile-app-add/mobile-app-add";
+import { CardsPage } from "../pages/cards/cards";
 import { BankPage } from "../pages/bank/bank";
-import { SQLite } from '@ionic-native/sqlite';
+// import { BankAddPage } from "../pages/bank-add/bank-add";
+// import { CardsAddPage } from "../pages/cards-add/cards-add";
 import { DatabaseComponent } from "../components/database/database";
+import { GlobalVars } from "../providers/globalVars";
 var MyApp = /** @class */ (function () {
-    function MyApp(db, sqlite, platform, statusBar, splashScreen, keyboard) {
+    function MyApp(db, platform, globalvars, statusBar, splashScreen, keyboard) {
         this.db = db;
-        this.sqlite = sqlite;
         this.platform = platform;
+        this.globalvars = globalvars;
         this.statusBar = statusBar;
         this.splashScreen = splashScreen;
         this.keyboard = keyboard;
-        this.rootPage = LoginPage;
+        this.rootPage = CardsPage;
         this.initializeApp();
-        this.db.createTables();
         this.appMenuItems = [
             { title: 'Websites', component: WebsitePage, icon: 'ios-globe' },
             { title: 'Apps', component: MobileAppPage, icon: 'ios-appstore' },
-            { title: 'Cards', component: HomePage, icon: 'ios-card' },
+            { title: 'Cards', component: CardsPage, icon: 'ios-card' },
             { title: 'Bank', component: BankPage, icon: 'logo-usd' },
             { title: 'Notes', component: HomePage, icon: 'ios-document' },
         ];
@@ -41,6 +45,11 @@ var MyApp = /** @class */ (function () {
     MyApp.prototype.initializeApp = function () {
         var _this = this;
         this.platform.ready().then(function () {
+            _this.db.createDb();
+            var ins = _this.globalvars.getAppdata();
+            if (ins == null) {
+                _this.globalvars.setAppdata();
+            }
             // Okay, so the platform is ready and our plugins are available.
             //*** Control Splash Screen
             // this.splashScreen.show();
@@ -50,7 +59,6 @@ var MyApp = /** @class */ (function () {
             _this.statusBar.overlaysWebView(false);
             //*** Control Keyboard
             _this.keyboard.disableScroll(true);
-            _this.createDB();
         });
     };
     MyApp.prototype.openPage = function (page) {
@@ -59,25 +67,8 @@ var MyApp = /** @class */ (function () {
         this.nav.setRoot(page.component);
     };
     MyApp.prototype.logout = function () {
+        this.globalvars.deleteUserdata();
         this.nav.setRoot(LoginPage);
-    };
-    MyApp.prototype.createDB = function () {
-        // this.sqlite.create({
-        //   name: 'pwdmgr.db',
-        //   location: 'default'
-        // })
-        //   .then((db: SQLiteObject) => {
-        //     db.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
-        //       .then(() => alert('Users Table Created'))
-        //       .catch(e => alert("Error: "+ JSON.stringify(e)));
-        //     db.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
-        //       .then(() => alert('Websites Table Created'))
-        //       .catch(e => alert("Error: "+JSON.stringify(e)));
-        //     db.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
-        //       .then(() => alert('Website Details Table Created'))
-        //       .catch(e => alert("Error: "+JSON.stringify(e)));
-        //   })
-        //   .catch(e => alert("Error NO:"+e));
     };
     __decorate([
         ViewChild(Nav),
@@ -88,8 +79,8 @@ var MyApp = /** @class */ (function () {
             templateUrl: 'app.html'
         }),
         __metadata("design:paramtypes", [DatabaseComponent,
-            SQLite,
             Platform,
+            GlobalVars,
             StatusBar,
             SplashScreen,
             Keyboard])

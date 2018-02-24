@@ -26,6 +26,14 @@ var GlobalVars = /** @class */ (function () {
         this.myGlobalVar = JSON.parse(localStorage.getItem('userData'));
         return this.myGlobalVar.role;
     };
+    GlobalVars.prototype.setAppdata = function () {
+        var key = "Installed";
+        this.myKey = localStorage.setItem('keyStore', key);
+    };
+    GlobalVars.prototype.getAppdata = function () {
+        this.myKey = localStorage.getItem('keyStore');
+        return this.myKey;
+    };
     GlobalVars = __decorate([
         Injectable()
     ], GlobalVars);

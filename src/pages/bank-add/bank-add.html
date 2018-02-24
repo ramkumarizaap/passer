@@ -10,7 +10,7 @@
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">
   <form [formGroup]="_bankForm" (submit)="_submitBankForm()" method="post" novalidate="">
-    <ion-input formControlName="id" type="text"></ion-input>
+    <ion-input formControlName="id" type="hidden"></ion-input>
     <button ion-button color="dark" [disabled]="!_bankForm.valid"  type="submit">
       <ion-icon name="checkmark"></ion-icon>&nbsp;Save
     </button>

@@ -8,95 +8,138 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from "@angular/core";
-import { /*NavController, AlertController,*/ LoadingController /*, ToastController, MenuController*/ } from "ionic-angular";
+import { AlertController, LoadingController } from "ionic-angular";
 import { SQLite } from '@ionic-native/sqlite';
+import { GlobalVars } from "../../providers/globalVars";
 var DatabaseComponent = /** @class */ (function () {
-    function DatabaseComponent(sqlite, load) {
+    function DatabaseComponent(sqlite, load, alertCtrl, globalvars) {
         this.sqlite = sqlite;
         this.load = load;
+        this.alertCtrl = alertCtrl;
+        this.globalvars = globalvars;
+        this.ins = this.globalvars.getAppdata();
     }
     DatabaseComponent.prototype.createDb = function () {
-        /*this.sqlite.create({
-      name: 'pwdmgr.db',
-      location: 'default'
-    })
-      .then((db: SQLiteObject) => {
-        db.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
-          .then(() => alert('Users Table Created'))
-          .catch(e => alert("Error: "+ JSON.stringify(e)));
-        db.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
-          .then(() => alert('Websites Table Created'))
-          .catch(e => alert("Error: "+JSON.stringify(e)));
-        db.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
-          .then(() => alert('Website Details Table Created'))
-          .catch(e => alert("Error: "+JSON.stringify(e)));
-      })
-      .catch(e =>{ alert("Error NO:"+e);});*/
-        this.db = this.sqlite.create({
+        var _this = this;
+        var loader1 = this.load.create({
+            content: "Loading Resources 1/5..."
+        });
+        loader1.present();
+        this.sqlite.create({
             name: 'pwdmgr.db',
             location: 'default'
+        }).then(function (db) {
+            _this.db = db;
+            /*User Table Creation */
+            if (_this.ins == null) {
+                _this.db.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,fullname VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
+                    .then(function (res) {
+                    setTimeout(function () {
+                        loader1.setContent('Loading Resources 2/5...');
+                    }, 2000);
+                })
+                    .catch(function (e) {
+                    loader1.dismiss();
+                    var alert = _this.alertCtrl.create({
+                        title: 'Error',
+                        message: e.message,
+                        buttons: ['Ok'],
+                    });
+                    alert.present();
+                    return false;
+                });
+                /*Website Table Creation*/
+                _this.db.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
+                    .then(function (res) {
+                    setTimeout(function () {
+                        loader1.setContent('Loading Resources 3/5...');
+                    }, 4000);
+                })
+                    .catch(function (e) {
+                    loader1.dismiss();
+                    var alert = _this.alertCtrl.create({
+                        title: 'Error',
+                        message: e.message,
+                        buttons: ['Ok'],
+                    });
+                    alert.present();
+                    return false;
+                });
+                /*Wesite Details Table Creation*/
+                _this.db.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
+                    .then(function (res) {
+                    setTimeout(function () {
+                        loader1.setContent('Loading Resources 4/5...');
+                    }, 6000);
+                })
+                    .catch(function (e) {
+                    loader1.dismiss();
+                    var alert = _this.alertCtrl.create({
+                        title: 'Error',
+                        message: e.message,
+                        buttons: ['Ok'],
+                    });
+                    alert.present();
+                    return false;
+                });
+                /*Cards Table Creation*/
+                _this.db.executeSql('create table cards(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),card_type VARCHAR(255),bank VARCHAR(255),acc_no VARCHAR(255),month VARCHAR(255),year VARCHAR(255),pin VARCHAR(255),cvv VARCHAR(255),holder_name VARCHAR(255),card_pay VARCHAR(255),color VARCHAR(255))', {})
+                    .then(function (res) {
+                    setTimeout(function () {
+                        loader1.setContent('Loading Resources 5/5...');
+                    }, 8000);
+                })
+                    .catch(function (e) {
+                    loader1.dismiss();
+                    var alert = _this.alertCtrl.create({
+                        title: 'Error',
+                        message: e.message,
+                        buttons: ['Ok'],
+                    });
+                    alert.present();
+                    // return false;
+                });
+                /*Banks Table Creation*/
+                _this.db.executeSql('create table banks(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),holder_name VARCHAR(255),name VARCHAR(255),account_number VARCHAR(255),account_type VARCHAR(255),branch VARCHAR(255),ifsc VARCHAR(255),micr VARCHAR(255))', {})
+                    .then(function (res) {
+                    setTimeout(function () {
+                        loader1.dismiss();
+                    }, 10000);
+                })
+                    .catch(function (e) {
+                    loader1.dismiss();
+                    var alert = _this.alertCtrl.create({
+                        title: 'Error',
+                        message: e.message,
+                        buttons: ['Ok'],
+                    });
+                    alert.present();
+                    // return false;
+                });
+            }
+            else
+                loader1.dismiss();
+        }).catch(function (err) {
+            loader1.dismiss();
+            var alert = _this.alertCtrl.create({
+                title: 'Error',
+                message: err,
+                buttons: ['Ok'],
+            });
+            // alert.present();
+            return false;
         });
     };
-    DatabaseComponent.prototype.createTables = function () {
-        this.createDb();
-        var loader1 = this.load.create({
-            content: 'Loading Resources 1/3...'
-        });
-        var loader2 = this.load.create({
-            content: 'Loading Resources 2/3...'
-        });
-        var loader3 = this.load.create({
-            content: 'Loading Resources 3/3...'
-        });
-        return this.db.then(function (obj) {
-            alert("Table: " + JSON.stringify(obj));
-            obj.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
-                .then(function () {
-                loader1.present();
-            })
-                .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-            obj.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
-                .then(function () { return loader1.present(); });
-        })
-            .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-        obj.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
-            .then(function () { return alert('Website Details Table Created'); })
-            .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-    };
-    DatabaseComponent.prototype.catch = function (err, _a) {
-        var alert = _a.alert;
+    DatabaseComponent.prototype.exeQuery = function (query) {
+        // alert(query);
+        return this.db.executeSql(query, {}).then(function (data) { return data; }).catch(function (err) { return err; });
     };
     DatabaseComponent = __decorate([
         Component({ selector: 'database' }),
-        __metadata("design:paramtypes", [SQLite, LoadingController])
+        __metadata("design:paramtypes", [SQLite, LoadingController, AlertController,
+            GlobalVars])
     ], DatabaseComponent);
     return DatabaseComponent;
 }());
 export { DatabaseComponent };
-("Plugin Error: " + err);
-;
-insertData(fields, data, table);
-{
-    var values = "?";
-    for (var i = 0; i < fields.length - 1; i++) {
-        values += ",?";
-    }
-    var output = { 'status': 'success', 'msg': '' };
-    var query = "insert into " + table + " (" + fields + ") values(" + values + ")";
-    return this.db.then(function (obj) {
-        alert("Success :" + JSON.stringify(obj));
-        alert("Query: " + query);
-        obj.executeSql(query, [data]).then(function (res) { return alert("Insert Data: " + JSON.stringify(res)); })
-            .catch(function (error) { return alert("Insert Data Error: " + JSON.stringify(error)); });
-        output.msg = "Created";
-        return output;
-    })
-        .catch(function (e) {
-        alert(e);
-        output.status = "error";
-        output.msg = e;
-        return output;
-    });
-    // console.log(query);
-}
 //# sourceMappingURL=database.js.map

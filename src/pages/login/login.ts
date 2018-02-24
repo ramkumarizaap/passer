@@ -123,6 +123,139 @@ export class LoginPage {
 
   forgotPass()
   {
-   
+     let prompt = this.alertCtrl.create({
+      title: 'Forgot Password?',
+      message: "Enter Email-ID to reset your password",
+      inputs: [
+        {
+          type:'email',
+          name: 'email',
+          placeholder: 'Email-ID',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            
+          }
+        },
+        {
+          text: 'Next',
+          handler: data => {
+            console.log(data);
+            this._checkEmail(data.email);
+          }
+        }
+      ]
+    });
+    prompt.present();
+  }
+  _checkEmail(email)
+  {
+    if(email)
+    {
+      let query = "select * from users where email='"+email+"'";
+      this.db.exeQuery(query).then((res)=>{
+          if(res.rows.length)
+          {
+            this._showPasswordPrompt(email);
+          }
+          else
+          {
+             let alert = this.alertCtrl.create({
+              title: 'Failed!',
+              message: 'Email-ID not exists.',
+              buttons: ['Ok'],
+            });
+            alert.present();
+            return false;
+          }
+      })
+      .catch((err)=>{
+           let alert = this.alertCtrl.create({
+            title: 'Error',
+            message: 'Email-ID not exists.',
+            buttons: ['Ok'],
+          });
+          alert.present();
+          return false;
+      });
+    }
+    else
+    {
+      let alert = this.alertCtrl.create({
+        title: 'Failed!',
+        message: 'Invalid Email-ID',
+        buttons: ['Ok'],
+      });
+      alert.present();
+      return false;
+    }
+  }
+
+  _showPasswordPrompt(email)
+  {
+      let prompt = this.alertCtrl.create({
+      title: 'Forgot Password?',
+      message: "Enter Password to reset your password",
+      inputs: [
+        {
+          type:'password',
+          name: 'password',
+          placeholder: 'New Password',
+        },
+        {
+          type:'password',
+          name: 'cpassword',
+          placeholder: 'Confirm Password',
+        },
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: data => {
+            
+          }
+        },
+        {
+          text: 'Update',
+          handler: data => {
+            console.log(data);
+            if(data.password == data.cpassword)
+            {
+              let query = "update users set password='"+data.password+"' where email='"+email+"' ";
+              this.db.exeQuery(query).then((res)=>{
+                let alert = this.alertCtrl.create({
+                  title: 'Success!',
+                  message: 'Password updated successfully',
+                  buttons: ['Ok'],
+                });
+                alert.present();
+              })
+              .catch(err=>{
+                let alert = this.alertCtrl.create({
+                  title: 'Failed!',
+                  message: 'Failed to update',
+                  buttons: ['Ok'],
+                });
+                alert.present();
+              });
+            }
+            else
+            {
+              let alert = this.alertCtrl.create({
+                title: 'Failed!',
+                message: 'Password Mismatch',
+                buttons: ['Ok'],
+              });
+              alert.present();
+              return false;
+            }
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 }

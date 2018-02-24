@@ -8,16 +8,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from "@angular/core";
-import { NavController } from "ionic-angular";
+import { NavController, AlertController, LoadingController } from "ionic-angular";
 import { LoginPage } from "../login/login";
 import { FormBuilder, Validators } from '@angular/forms';
 import { regexPatterns } from '../../providers/regexPatterns';
-import { SQLite } from '@ionic-native/sqlite';
+import { GlobalVars } from '../../providers/globalVars';
+import { DatabaseComponent } from '../../components/database/database';
 var RegisterPage = /** @class */ (function () {
-    function RegisterPage(sqlite, _formBuilder, nav) {
-        this.sqlite = sqlite;
+    function RegisterPage(db, _formBuilder, nav, globalVars, alertCtrl, loader) {
+        this.db = db;
         this._formBuilder = _formBuilder;
         this.nav = nav;
+        this.globalVars = globalVars;
+        this.alertCtrl = alertCtrl;
+        this.loader = loader;
+        this._passwordInputType = "password";
+        this._passwordIcon = "eye-off";
         this._signupForm = this._formBuilder.group({
             //FULLNAME
             fullname: ["",
@@ -40,36 +46,58 @@ var RegisterPage = /** @class */ (function () {
             ]
         });
     }
+    //Toggle Password
+    RegisterPage.prototype._toggleViewPassword = function (event) {
+        event.preventDefault();
+        console.info("show password");
+        if (this._passwordInputType === "password") {
+            this._passwordInputType = "text";
+            this._passwordIcon = "eye";
+        }
+        else {
+            this._passwordIcon = "eye-off";
+            this._passwordInputType = "password";
+        }
+        ;
+    };
+    ;
     // register and go to home page
     RegisterPage.prototype.register = function () {
         var _this = this;
         if (this._signupForm.valid) {
+            var signload_1 = this.loader.create({
+                content: "Loading..."
+            });
+            signload_1.present();
             this.formdata = this._signupForm.value;
-            this.sqlite.create({
-                name: 'pwdmgr.db',
-                location: 'default'
-            })
-                .then(function (db) {
-                db.executeSql('INSERT INTO users (name,email,password) values(?,?,?)', [_this.formdata.fullname, _this.formdata.email, _this.formdata.password])
-                    .then(function () { return alert('Account created successfully.'); })
-                    .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-                db.executeSql('SELECT * FROM users', {}).then(function (res) {
-                    alert("Success: " + JSON.stringify(res));
-                    // this.user = [];
-                    // for(var i=0; i<res.rows.length; i++) {
-                    //   this.user.push({
-                    //       id:res.rows.item(i).id,
-                    //       name:res.rows.item(i).name,
-                    //       email:res.rows.item(i).email,
-                    //       password:res.rows.item(i).password
-                    //     });
-                    //   alert("Data: "+ JSON.stringify(this.user));
-                    // }
-                    _this.login();
-                })
-                    .catch(function (e) { return alert("Error: " + JSON.stringify(e)); });
-            })
-                .catch(function (e) { return alert("Error:" + JSON.stringify(e)); });
+            var query = "insert into users(fullname,email,password)" +
+                "values('" + this.formdata.fullname + "','" + this.formdata.email + "','" + this.formdata.password + "')";
+            this.db.exeQuery(query).then(function (res) {
+                var signup = _this.alertCtrl.create({
+                    title: 'Success',
+                    message: "Registration done successfully.",
+                    buttons: [
+                        {
+                            text: 'Ok',
+                            handler: function (data) {
+                                _this.login();
+                            }
+                        }
+                    ]
+                });
+                setTimeout(function () {
+                    signload_1.dismiss();
+                    signup.present();
+                }, 3000);
+            }).catch(function (e) {
+                signload_1.dismiss();
+                var errsignup = _this.alertCtrl.create({
+                    title: 'Error',
+                    message: "Registration has not successfull.",
+                    buttons: ['Ok']
+                });
+                errsignup.present();
+            });
         }
     };
     // go to login page
@@ -81,7 +109,12 @@ var RegisterPage = /** @class */ (function () {
             selector: 'page-register',
             templateUrl: 'register.html'
         }),
-        __metadata("design:paramtypes", [SQLite, FormBuilder, NavController])
+        __metadata("design:paramtypes", [DatabaseComponent,
+            FormBuilder,
+            NavController,
+            GlobalVars,
+            AlertController,
+            LoadingController])
     ], RegisterPage);
     return RegisterPage;
 }());

@@ -9,25 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from "@angular/core";
 import { NavController, AlertController, LoadingController, } from "ionic-angular";
+import { AddWebsitePage } from "../add-website/add-website";
 import { DatabaseComponent } from "../../components/database/database";
 import { FormBuilder } from '@angular/forms';
 import { GlobalVars } from '../../providers/globalVars';
-import { SQLite } from '@ionic-native/sqlite';
 var WebsitePage = /** @class */ (function () {
-    function WebsitePage(nav, sqlite, globalvars, loader, alertCtrl, _formBuilder, db) {
+    function WebsitePage(nav, db, globalvars, loader, alertCtrl, _formBuilder) {
         this.nav = nav;
-        this.sqlite = sqlite;
+        this.db = db;
         this.globalvars = globalvars;
         this.loader = loader;
         this.alertCtrl = alertCtrl;
         this._formBuilder = _formBuilder;
-        this.db = db;
+        this._items = [];
+        this._aitems = [];
         this._searchField = false;
-        // this.user = this.globalvars.getUserdata();
-        alert("Website Page: " + JSON.stringify(this.user));
-        // alert("User Id: "+this.user.id);
+        this.user = this.globalvars.getUserdata()[0];
         this.clearFilter();
     }
+    WebsitePage_1 = WebsitePage;
     WebsitePage.prototype._showSearchInput = function () {
         this._searchField = true;
     };
@@ -35,95 +35,122 @@ var WebsitePage = /** @class */ (function () {
         this._searchField = false;
     };
     WebsitePage.prototype.clearFilter = function () {
-        // let loading = this.loader.create({
-        //      content: 'Loading...'
-        //    });
-        //    loading.present();
-        // this.sqlite.create({
-        //      name: 'pwdmgr.db',
-        //      location: 'default'
-        //    }).then((db: SQLiteObject) => {
-        //    		db.executeSql('SELECT * FROM websites where userid=?',[this.user.id])
-        //         .then(res => {
-        //         	alert("Success: "+ JSON.stringify(res));
-        //         	loading.dismiss();
-        //         	alert("Length1: "+res.rows.length);
-        //            if(res.rows.length>0)
-        //            {
-        //            	this.items = [];
-        //            	alert("Length2: "+res.rows.length);
-        //              for (var i = 0; i < res.rows.length; i++)
-        //              {
-        //              	alert("Title: "+res.rows.item(i).title);
-        //              	this.items.push({
-        //              		id:res.rows.item(i).id,
-        //              		name:res.rows.item(i).title,
-        //              		url:res.rows.item(i).url
-        //              	});
-        //              }
-        //              alert("Success: "+JSON.stringify(this.items));
-        //            }
-        //            else
-        //            {
-        //              let alert = this.alertCtrl.create({
-        //                title: 'Error',
-        //                message: 'No Records Found!',
-        //                buttons: ['Ok'],
-        //              });
-        //              alert.present();
-        //              return false;
-        //            }
-        //         },(err)=>{
-        //         loading.dismiss();
-        //           let alert = this.alertCtrl.create({
-        //             title: 'Error',
-        //             message: JSON.stringify(err),
-        //             buttons: ['Ok'],
-        //           });
-        //           alert.present();
-        //        });
-        //    });
-        this._items = [
-            {
-                id: '1', title: 'Ram', url: "http://www.google.com",
-                details: [
-                    { name: '1', password: '123', comments: 'comments' },
-                    { name: '2', password: '456', comments: 'Login' }
-                ]
-            },
-            {
-                id: '2', title: 'Kumar', url: "http://www.google.com",
-            },
-        ];
-        console.log(this._items);
+        var _this = this;
+        var load = this.loader.create({
+            content: 'Please Wait...'
+        });
+        load.present();
+        var query = "select * from websites where userid='" + this.user.id + "'";
+        this.db.exeQuery(query).then(function (res) {
+            if (res.rows.length) {
+                for (var i = 0; i < res.rows.length; i++) {
+                    _this._items.push({
+                        id: res.rows.item(i).id,
+                        title: res.rows.item(i).title,
+                        url: res.rows.item(i).url
+                    });
+                }
+                _this._aitems = _this._items;
+            }
+            setTimeout(function () {
+                load.dismiss();
+            }, 4000);
+        })
+            .catch(function (err) {
+            load.dismiss();
+            var detfail = _this.alertCtrl.create({
+                title: 'Failed!',
+                message: "No Records Found.",
+                buttons: ['Ok']
+            });
+            detfail.present();
+        });
+        // this._items = [{title:'Ram',url:'http://google.com'},{title:'Kumar',url:'yahoo.com'}];
+    };
+    WebsitePage.prototype.getFilteredItems = function () {
+        this._aitems = this._items;
     };
     WebsitePage.prototype.setFilteredItems = function (e) {
-        this.clearFilter();
+        this.getFilteredItems();
         var val = e.target.value;
         // if the value is an empty string don't filter the items
         if (val && val.trim() != '') {
-            this._items = this._items.filter(function (item) {
+            this._aitems = this._aitems.filter(function (item) {
                 return (item.title.toLowerCase().indexOf(val.toLowerCase()) > -1);
             });
         }
     };
     WebsitePage.prototype._addWebsite = function (s) {
-        var field = ['name', 'password', 'comments'];
-        // this.db.insertData(field).then(res => {
-        // 	console.log(res);
-        // });
-        // this.nav.push(AddWebsitePage,{id:s});
+        if (s === void 0) { s = ""; }
+        this.nav.push(AddWebsitePage, { id: s });
     };
-    WebsitePage = __decorate([
+    WebsitePage.prototype._delete = function (id) {
+        var _this = this;
+        var rmquery = "delete from websites where id='" + id + "'";
+        this.db.exeQuery(rmquery).then(function (res) {
+            var del = "delete from website_details where websiteid='" + id + "'";
+            _this.db.exeQuery(del).then(function (r) { return r; }).catch(function (err) { return err; });
+            var succ = _this.alertCtrl.create({
+                title: 'Success!',
+                message: "Record deleted sucessfully.",
+                buttons: [
+                    {
+                        text: 'Ok',
+                        handler: function (data) {
+                            _this.nav.setRoot(WebsitePage_1);
+                        }
+                    }
+                ]
+            });
+            succ.present();
+        }).catch(function (err) {
+            var fail = _this.alertCtrl.create({
+                title: 'Failed!',
+                message: "Record failed to delete.",
+                buttons: [
+                    {
+                        text: 'Ok',
+                        handler: function (data) {
+                            _this.nav.setRoot(WebsitePage_1);
+                        }
+                    }
+                ]
+            });
+            fail.present();
+        });
+    };
+    WebsitePage.prototype._delWebsite = function (id) {
+        var _this = this;
+        var confirm = this.alertCtrl.create({
+            title: 'Delete?',
+            message: 'Are you sure want to delete this record?',
+            buttons: [
+                {
+                    text: 'No',
+                    handler: function () {
+                        confirm.dismiss();
+                    }
+                },
+                {
+                    text: 'Yes',
+                    handler: function () {
+                        _this._delete(id);
+                    }
+                }
+            ]
+        });
+        confirm.present();
+    };
+    WebsitePage = WebsitePage_1 = __decorate([
         Component({
             selector: 'page-website',
             templateUrl: 'website.html'
         }),
-        __metadata("design:paramtypes", [NavController, SQLite, GlobalVars,
-            LoadingController, AlertController, FormBuilder,
-            DatabaseComponent])
+        __metadata("design:paramtypes", [NavController, DatabaseComponent, GlobalVars,
+            LoadingController, AlertController, FormBuilder])
     ], WebsitePage);
     return WebsitePage;
+    var WebsitePage_1;
 }());
 export { WebsitePage };
 //# sourceMappingURL=website.js.map

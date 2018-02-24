@@ -38,10 +38,10 @@ export class BankPage
 		this._searchField = false;	
 	}
 
-		getFilteredItems()
-		{
-			this.bank = this._items;
-		}
+	getFilteredItems()
+	{
+		this.bank = this._items;
+	}
 
 	setFilteredItems(e)
 	{
@@ -67,7 +67,7 @@ export class BankPage
 			{
 				for (var i = 0; i < res.rows.length; i++)
 				{
-					this.bank.push(res.rows.item(i));
+					this._items.push(res.rows.item(i));
 				}
 				this.bank = this._items;
 			}

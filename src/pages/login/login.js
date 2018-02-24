@@ -8,14 +8,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from "@angular/core";
-import { NavController, AlertController, LoadingController, ToastController, MenuController } from "ionic-angular";
+import { NavController, AlertController, LoadingController, MenuController } from "ionic-angular";
 import { RegisterPage } from "../register/register";
+import { WebsitePage } from "../websites/website";
 import { FormBuilder, Validators } from '@angular/forms';
 import { GlobalVars } from '../../providers/globalVars';
 import { regexPatterns } from '../../providers/regexPatterns';
 import { DatabaseComponent } from '../../components/database/database';
 var LoginPage = /** @class */ (function () {
-    function LoginPage(globalvars, db, _formBuilder, nav, alertCtrl, menu, loader, toastCtrl) {
+    function LoginPage(globalvars, db, _formBuilder, nav, alertCtrl, menu, loader) {
         this.globalvars = globalvars;
         this.db = db;
         this._formBuilder = _formBuilder;
@@ -23,8 +24,10 @@ var LoginPage = /** @class */ (function () {
         this.alertCtrl = alertCtrl;
         this.menu = menu;
         this.loader = loader;
-        this.toastCtrl = toastCtrl;
+        this._passwordInputType = "password";
+        this._passwordIcon = "eye-off";
         this.menu.swipeEnable(false);
+        this.globalvars.deleteUserdata();
         this._loginForm = _formBuilder.group({
             //EMAIL
             email: ["",
@@ -41,103 +44,73 @@ var LoginPage = /** @class */ (function () {
             ]
         });
     }
+    // Password Toggle
+    LoginPage.prototype._toggleViewPassword = function (event) {
+        event.preventDefault();
+        console.info("show password");
+        if (this._passwordInputType === "password") {
+            this._passwordInputType = "text";
+            this._passwordIcon = "eye";
+        }
+        else {
+            this._passwordIcon = "eye-off";
+            this._passwordInputType = "password";
+        }
+        ;
+    };
+    ;
     // go to register page
     LoginPage.prototype.register = function () {
         this.nav.setRoot(RegisterPage);
     };
     // login and go to home page
     LoginPage.prototype.login = function () {
-        // if(this._loginForm.valid)
-        // {
-        //   let loading = this.loader.create({
-        //     content: 'Loading...'
-        //   });
-        //   loading.present();
-        //   this.formdata = this._loginForm.value;
-        //   this.sqlite.create({
-        //     name: 'pwdmgr.db',
-        //     location: 'default'
-        //   }).then((db: SQLiteObject) => {
-        //     loading.dismiss();
-        //      db.executeSql('SELECT * FROM users where email=? and password=?',[this.formdata.email,this.formdata.password])
-        //        .then(res => {
-        //          alert("Success: "+ JSON.stringify(res));
-        //           if(res.rows.length>0)
-        //           {
-        //             this.user = res.rows.item(0);
-        //             this.globalvars.setUserdata(JSON.stringify(this.user));
-        //             alert("Data: "+ JSON.stringify(this.user));
-        //             this.nav.setRoot(WebsitePage);
-        //           }
-        //           else
-        //           {
-        //             let alert = this.alertCtrl.create({
-        //               title: 'Error',
-        //               message: 'Login Failed!',
-        //               buttons: ['Ok'],
-        //             });
-        //             alert.present();
-        //             return false;
-        //           }
-        //      });
-        //   },(err)=>{
-        //     loading.dismiss();
-        //     this.nav.setRoot(HomePage);
-        //       let alert = this.alertCtrl.create({
-        //         title: 'Error',
-        //         message: 'Login Failed!',
-        //         buttons: ['Ok'],
-        //       });
-        //       alert.present();
-        //       // return false;
-        //   });
-        // }
+        var _this = this;
         if (this._loginForm.valid) {
-            var fields = ['email', 'password'];
-            this.db.insertData('', this._loginForm.value, 'users').then(function (res) {
-                alert("Success Insert: " + JSON.stringify(res));
+            var logload_1 = this.loader.create({
+                content: "Loading..."
+            });
+            logload_1.present();
+            var formdata = this._loginForm.value;
+            var query = "select * from users where email='" + formdata.email + "' and password='" + formdata.password + "'";
+            this.db.exeQuery(query).then(function (res) {
+                if (res.rows.length) {
+                    var user = [];
+                    user.push({
+                        id: res.rows.item(0).id,
+                        fullname: res.rows.item(0).fullname,
+                        email: res.rows.item(0).email,
+                        password: res.rows.item(0).password,
+                    });
+                    _this.globalvars.setUserdata(JSON.stringify(user));
+                    setTimeout(function () {
+                        logload_1.dismiss();
+                        _this.nav.setRoot(WebsitePage);
+                    }, 4000);
+                }
+                else {
+                    logload_1.dismiss();
+                    var alert_1 = _this.alertCtrl.create({
+                        title: 'Failed!',
+                        message: 'Invalid Username or Password',
+                        buttons: ['Ok'],
+                    });
+                    alert_1.present();
+                    return false;
+                }
             }).catch(function (e) {
-                alert("Error Insert: " + JSON.stringify(e));
+                logload_1.dismiss();
+                var alert = _this.alertCtrl.create({
+                    title: 'Failed!',
+                    message: 'Invalid Username or Password',
+                    buttons: ['Ok'],
+                });
+                alert.present();
+                return false;
             });
         }
     };
     LoginPage.prototype.forgotPass = function () {
-        var _this = this;
-        var forgot = this.alertCtrl.create({
-            title: 'Forgot Password?',
-            message: "Enter you email address to send a reset link password.",
-            inputs: [
-                {
-                    name: 'email',
-                    placeholder: 'Email',
-                    type: 'email'
-                },
-            ],
-            buttons: [
-                {
-                    text: 'Cancel',
-                    handler: function (data) {
-                        console.log('Cancel clicked');
-                    }
-                },
-                {
-                    text: 'Send',
-                    handler: function (data) {
-                        console.log('Send clicked');
-                        var toast = _this.toastCtrl.create({
-                            message: 'Email was sended successfully',
-                            duration: 3000,
-                            position: 'top',
-                            cssClass: 'dark-trans',
-                            closeButtonText: 'OK',
-                            showCloseButton: true
-                        });
-                        toast.present();
-                    }
-                }
-            ]
-        });
-        forgot.present();
     };
     LoginPage = __decorate([
         Component({
@@ -150,8 +123,7 @@ var LoginPage = /** @class */ (function () {
             NavController,
             AlertController,
             MenuController,
-            LoadingController,
-            ToastController])
+            LoadingController])
     ], LoginPage);
     return LoginPage;
 }());
