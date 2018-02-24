@@ -15,7 +15,9 @@ export class LoginPage {
   private _loginForm: FormGroup;
   private formdata;
   public _items;
+  public _items1;
   public _details;
+  public _details1;
   private users:any;
   private _passwordInputType: string = "password";
   private _passwordIcon : string = "eye-off";
@@ -28,6 +30,7 @@ export class LoginPage {
     public menu: MenuController,
     private loader:LoadingController) {
     this.menu.swipeEnable(false);
+
     this._loginForm = _formBuilder.group({
       //EMAIL
       email: ["",
@@ -44,14 +47,10 @@ export class LoginPage {
       ]
     });
 
-    this._items = [{id:'1',name:'Ram'},{id:'2',name:'Kumar'}];
-    for (var i = 0; i < this._items.length; i++)
-    {
-      this._items.push({id:this._items[i].id,username:this._items[i].name});
-    }
-    alert(JSON.stringify(this._items));
+   
 
   }
+
 
   // Password Toggle
   private _toggleViewPassword(event: MouseEvent) {

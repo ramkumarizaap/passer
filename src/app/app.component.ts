@@ -14,7 +14,9 @@ import { MobileAppPage } from "../pages/mobile-app/mobile-app";
 import { CardsPage } from "../pages/cards/cards";
 import { BankPage } from "../pages/bank/bank";
 // import { BankAddPage } from "../pages/bank-add/bank-add";
+import { CardsAddPage } from "../pages/cards-add/cards-add";
 import { DatabaseComponent } from "../components/database/database";
+import { GlobalVars } from "../providers/globalVars";
 export interface MenuItem {
     title: string;
     component: any;
@@ -27,14 +29,13 @@ export interface MenuItem {
 
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-
-  rootPage: any = LoginPage;
-
+  rootPage: any = BankPage;
   appMenuItems: Array<MenuItem>;
 
   constructor(
     public db:DatabaseComponent,
     public platform: Platform,
+    public globalvars:GlobalVars,
     public statusBar: StatusBar,
     public splashScreen: SplashScreen,
     public keyboard: Keyboard
@@ -51,7 +52,12 @@ export class MyApp {
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.db.createDb();
+        this.db.createDb();
+      let ins = this.globalvars.getAppdata();
+      if( ins == null )
+      {
+        this.globalvars.setAppdata();
+      }
       // Okay, so the platform is ready and our plugins are available.
 
       //*** Control Splash Screen
@@ -64,7 +70,8 @@ export class MyApp {
 
       //*** Control Keyboard
       this.keyboard.disableScroll(true);
-      this.createDB();
+
+
     });
   }
 
@@ -78,25 +85,6 @@ export class MyApp {
     this.nav.setRoot(LoginPage);
   }
 
-  createDB()
-  {
-    // this.sqlite.create({
-    //   name: 'pwdmgr.db',
-    //   location: 'default'
-    // })
-    //   .then((db: SQLiteObject) => {
-    //     db.executeSql('create table users(id INTEGER PRIMARY KEY AUTOINCREMENT,name VARCHAR(32),email VARCHAR(32),password VARCHAR(32))', {})
-    //       .then(() => alert('Users Table Created'))
-    //       .catch(e => alert("Error: "+ JSON.stringify(e)));
-    //     db.executeSql('create table websites(id INTEGER PRIMARY KEY AUTOINCREMENT,userid INTEGER(11),title VARCHAR(255),url VARCHAR(255))', {})
-    //       .then(() => alert('Websites Table Created'))
-    //       .catch(e => alert("Error: "+JSON.stringify(e)));
-    //     db.executeSql('create table website_details(id INTEGER PRIMARY KEY AUTOINCREMENT,websiteid INTEGER(11),username VARCHAR(255),password VARCHAR(255),comments VARCHAR(255))', {})
-    //       .then(() => alert('Website Details Table Created'))
-    //       .catch(e => alert("Error: "+JSON.stringify(e)));
-    //   })
-    //   .catch(e => alert("Error NO:"+e));
-  }
 
 }
 

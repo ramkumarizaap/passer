@@ -19,7 +19,7 @@
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">
   <ion-list  class="full-width">
-    <ion-item-sliding *ngFor="let s of _items" (click)="_addWebsite(s)">
+    <ion-item-sliding *ngFor="let s of _aitems">
     <ion-item>
       <ion-avatar item-start>
         <ion-icon name="globe"></ion-icon>
@@ -28,11 +28,11 @@
       <p>{{s.url}}</p>
     </ion-item>
     <ion-item-options side="right">
-      <button ion-button color="primary">
+      <button ion-button color="primary"  (click)="_addWebsite(s)">
         <ion-icon name="create"></ion-icon>
         Edit
       </button>
-      <button ion-button color="danger">
+      <button ion-button color="danger" (click)="_delWebsite(s.id)">
         <ion-icon name="trash"></ion-icon>
         Delete
       </button>

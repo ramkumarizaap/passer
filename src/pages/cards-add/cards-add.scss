@@ -1,0 +1,66 @@
+page-cards-add
+{
+	.card
+	{
+		margin-top:20px;
+	}
+	.card .Silver
+	{
+		background:grey !important;
+		color:#fff !important;
+		font-size:14px !important;
+	}
+	.card .Gold
+	{
+		background:#c8b923 !important;
+		color:#000 !important;
+		font-size:14px !important;
+	}
+	.card .Platinum
+	{
+		background:#c2c2c2  !important;
+		color:#000 !important;
+		font-size:14px !important;
+	}
+	.card .Blue
+	{
+		background:#0093ff !important;
+		color:#fff !important;
+		font-size:14px !important;
+	}
+	.detail-div ion-input
+	{
+		max-width:50% !important;
+	}
+	ion-select,ion-input
+	{
+		max-width:100% !important;
+	}
+	::placeholder
+	{
+		color:#000 !important;
+	}
+	.Silver ::placeholder,.Blue ::placeholder
+	{
+		color:#fff !important;
+	}
+	ion-input input
+	{
+		border-bottom:1px solid black !important;
+	}
+	.Silver ion-input input,.Blue ion-input input
+	{
+		border-bottom:1px solid white !important;
+	}
+	p.error
+	{
+		color: #953a3a;
+		font-size: 12px;
+  	font-weight:600;
+  	margin:0;
+	}
+	.Blue p.error
+	{
+		color:#9b3535 !important;
+	}
+}

@@ -1,0 +1,115 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      <strong>Add Card</strong>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+<ion-content padding class="animated fadeIn common-bg">
+  <form method="post" [formGroup]="_cardForm" (submit)="_submitCardForm()" novalidate="">
+    <ion-input formControlName="id" type="hidden"></ion-input>
+    <button ion-button color="dark" type="submit" [disabled]="!_cardForm.valid">
+      <ion-icon name="checkmark"></ion-icon>&nbsp;Save
+    </button>
+    <button ion-button color="danger" (click)="_cancel()" type="button">
+      <ion-icon name="close"></ion-icon>&nbsp;Cancel
+    </button>
+    <div class="card">
+    <div [class]="color">
+      <ion-row>
+        <ion-col col-6>
+          <ion-select formControlName="card_type">
+            <ion-option selected value="">Select Card</ion-option>
+            <ion-option value="Debit Card">Debit Card</ion-option>
+            <ion-option value="Credit Card">Credit Card</ion-option>
+          </ion-select>
+          <p class="error" *ngIf="_cardForm.controls.card_type.hasError('required') && _cardForm.controls.card_type.touched" ion-text text-wrap>Please Select Card Type</p>
+        </ion-col>
+        <ion-col col-6>
+          <ion-select formControlName="bank">
+            <ion-option selected value="">Select Bank</ion-option>
+            <ion-option *ngFor="let b of banks" [value] = "b">{{b}}</ion-option>
+          </ion-select>
+          <p class="error" *ngIf="_cardForm.controls.bank.hasError('required') && _cardForm.controls.bank.touched" ion-text text-wrap>Please Select Bank</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-input formControlName="acc_no" maxlength="16" type="number" placeholder="Card Number"></ion-input>
+           <p class="error" *ngIf="_cardForm.controls.acc_no.hasError('required') && _cardForm.controls.acc_no.touched" ion-text text-wrap>Please Enter Card Number</p>
+           <p class="error" *ngIf="_cardForm.controls.acc_no.invalid && _cardForm.controls.acc_no.dirty && _cardForm.controls.acc_no.value!=''" ion-text text-wrap>Please Enter atleast 16 Characters</p>
+        </ion-col>
+      </ion-row>
+      <ion-row class="detail-div">
+        <ion-col col-6>
+          <ion-select float- formControlName="month">
+            <ion-option value="">Select Month</ion-option>
+            <ion-option selected value="01">01</ion-option><ion-option value="02">02</ion-option>
+            <ion-option value="03">03</ion-option><ion-option value="04">04</ion-option>
+            <ion-option value="05">05</ion-option><ion-option value="06">06</ion-option>
+            <ion-option value="07">07</ion-option><ion-option value="08">08</ion-option>
+            <ion-option value="09">09</ion-option><ion-option value="10">10</ion-option>
+            <ion-option value="11">11</ion-option><ion-option value="12">12</ion-option>
+          </ion-select>
+          <p class="error" *ngIf="_cardForm.controls.month.hasError('required') && _cardForm.controls.month.touched" ion-text text-wrap>Please Select Month</p>
+        </ion-col>
+        <ion-col col-6>
+          <ion-select float- formControlName="year">
+            <ion-option value="">Select Year</ion-option>
+            <ion-option *ngFor="let y of years;let i = index;" [value] = "y">{{y}}</ion-option>
+          </ion-select>
+          <p class="error" *ngIf="_cardForm.controls.year.hasError('required') && _cardForm.controls.year.touched" ion-text text-wrap>Please Select Year</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-6>
+          <ion-input formControlName="pin" type="number" placeholder="PIN" float-left></ion-input>
+          <p class="error" *ngIf="_cardForm.controls.pin.hasError('required') && _cardForm.controls.pin.touched" ion-text text-wrap>Please Enter PIN</p>
+          <p class="error" *ngIf="_cardForm.controls.pin.invalid  && _cardForm.controls.pin.dirty && _cardForm.controls.pin.value!=''" ion-text text-wrap>Please Enter alteast 4 characters.</p>
+        </ion-col>
+        <ion-col col-6>
+          <ion-input formControlName="cvv" type="number" placeholder="CVV" float-right></ion-input>
+          <p class="error" *ngIf="_cardForm.controls.cvv.hasError('required') && _cardForm.controls.cvv.touched" ion-text text-wrap>Please Enter CVV</p>
+          <p class="error" *ngIf="_cardForm.controls.cvv.invalid  && _cardForm.controls.cvv.dirty && _cardForm.controls.cvv.value!=''" ion-text text-wrap>Please Enter alteast 4 characters.</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-input formControlName="holder_name" placeholder="Card Holder Name" type="" name=""></ion-input>
+          <p class="error" *ngIf="_cardForm.controls.holder_name.hasError('required') && _cardForm.controls.holder_name.touched" ion-text text-wrap>Please Enter Card Holder Name</p>
+           <p class="error" *ngIf="_cardForm.controls.holder_name.invalid  && _cardForm.controls.holder_name.dirty && _cardForm.controls.holder_name.value!=''" ion-text text-wrap>Please Enter alteast 4 characters.</p>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-7>
+          <ion-select formControlName="card_pay">
+            <ion-option value="">Select Card Type</ion-option>
+            <ion-option selected value="Amex">American Express</ion-option>
+            <ion-option value="Cirrus">Cirrus</ion-option>
+            <ion-option value="Discover">Discover</ion-option>
+            <ion-option value="Maestro">Maestro</ion-option>
+            <ion-option value="Mastercard">Mastercard</ion-option>
+            <ion-option value="Rupay">Rupay</ion-option>
+            <ion-option value="Visa">Visa</ion-option>
+            <ion-option value="Western Union">Western Union</ion-option>
+          </ion-select>
+          <p class="error" *ngIf="_cardForm.controls.card_pay.hasError('required') && _cardForm.controls.card_pay.touched" ion-text text-wrap>Please Enter Card Type</p>
+        </ion-col>
+        <ion-col col-5>
+          <ion-select formControlName="color" (ionChange)="_changeColor($event)">
+            <ion-option value="">Select Card Color</ion-option>
+            <ion-option selected value="Silver">Silver</ion-option>
+            <ion-option value="Gold">Gold</ion-option>
+            <ion-option value="Platinum">Platinum</ion-option>
+            <ion-option value="Blue">Blue</ion-option>
+          </ion-select>
+          <p class="error" *ngIf="_cardForm.controls.color.hasError('required') && _cardForm.controls.color.touched" ion-text text-wrap>Please Enter Card Color</p>
+        </ion-col>
+      </ion-row>
+    </div>
+    </div>
+  </form>
+</ion-content>

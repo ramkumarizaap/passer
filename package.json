@@ -26,6 +26,7 @@
     "@ionic-native/sqlite": "^4.5.3",
     "@ionic-native/status-bar": "3.12.1",
     "@ionic/storage": "2.0.1",
+    "cordova-browser": "~5.0.3",
     "cordova-ios": "^4.4.0",
     "cordova-plugin-console": "^1.1.0",
     "cordova-plugin-device": "^1.1.6",
@@ -43,7 +44,7 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "3.0.1",
-    "ionic": "3.19.0",
+    "ionic": "3.19.1",
     "typescript": "2.3.4"
   },
   "description": "Ionic 3 Start Theme",
@@ -61,6 +62,7 @@
     },
     "platforms": [
       "ios",
+      "browser",
       "android"
     ]
   },

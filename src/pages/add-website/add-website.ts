@@ -19,7 +19,9 @@ export class AddWebsitePage
 	private _lastId:number;
 	private user:any;
 	private formdata;
+	public lc = [];
 	private len;
+	public remDetails;
 	private website;
 	constructor(
 			private db: DatabaseComponent,
@@ -33,8 +35,6 @@ export class AddWebsitePage
 	{
 		this.website = this.params.get('id');
 		this.user = this.globalvars.getUserdata()[0];
-		alert("User:"+JSON.stringify(this.user));
-		alert("User Id: "+this.user.id);
 		this._websiteForm = this._formBuilder.group({
 			id:[""],
 			title: ["",
@@ -50,29 +50,54 @@ export class AddWebsitePage
       ],
       details: this._formBuilder.array([ this.createItem() ])
 		});
-
+		this.len = this._websiteForm.get('details') as FormArray;
 		if(this.website)
 		{
+			let load = this.loader.create({
+				content:'Loading...'
+			});
+			load.present();
 			let wdetails: Array<any> = [];
-			for(let i in this.website.details){
-
-				wdetails.push(this._formBuilder.group(this.website.details[i]));
-			}
-
-			this._websiteForm = this._formBuilder.group({
+			let query = "select * from website_details where websiteid='"+this.website.id+"'";
+			this.db.exeQuery(query).then((det)=>{
+				if(det.rows.length)
+				{
+					for (var j = 0; j < det.rows.length ; j++)
+					{
+						wdetails.push(this._formBuilder.group(det.rows.item(j)));
+					}
+				}
+				this._websiteForm = this._formBuilder.group({
 					id:[this.website.id],
-					title:[this.website.title],url:[this.website.url],
+					title:[this.website.title,Validators.compose([Validators.required,Validators.minLength(6)])],
+					url:[this.website.url,Validators.compose([Validators.required,Validators.pattern(regexPatterns.url)])],
 					details:this._formBuilder.array(wdetails)
 				});
-			console.log(this._websiteForm);
+				this.len = this._websiteForm.get('details') as FormArray;
+				setTimeout(()=>{ load.dismiss();},3000);
+			})
+			.catch(err=>{
+				let fail = this.alertCtrl.create({
+          title: 'Failed!',
+          message: "Can't able fetch record.",
+           buttons: [
+              {
+                text: 'Ok',
+                handler: data => {
+                  this.nav.setRoot(WebsitePage);
+                }
+              }]
+        });
+        fail.present();
+			});
 		}
-		this.len = this._websiteForm.get('details') as FormArray;
-		console.log("Length: "+ this.len.length);
 	}
+
 
 	createItem(): FormGroup {
 	  return this._formBuilder.group({
-	    name: '',
+	  	id:'',
+	    username: '',
 	    password: '',
 	    comments: ''
 	  });
@@ -86,12 +111,17 @@ export class AddWebsitePage
 	}
 	_cancel():void
 	{
+		localStorage.removeItem('removeDetails');
 		this.nav.pop();
 	}
 	private _removeItem(i):void
 	{
 		this.details = this._websiteForm.get('details') as FormArray;
-		console.log(i);
+		if(this._websiteForm.value.details[i].id != '')
+		{
+			this.lc.push(this._websiteForm.value.details[i]);
+			this.remDetails = localStorage.setItem('removeDetails', JSON.stringify(this.lc));
+		}
 		// let index = this.items.indexOf(i);
 		// console.log(index);
  	  //   if(index > -1){
@@ -101,46 +131,109 @@ export class AddWebsitePage
 
 	private _submitWebsiteForm():void
 	{
-		console.log(this._websiteForm.value);
+		// console.log(this._websiteForm.value);
 		if(this._websiteForm.valid)
 		{
 			let load = this.loader.create({
 				content:'Please Wait...'
 			});
 			load.present();
+			let query:string;
 			let formdata = this._websiteForm.value;
-			let query:string = "insert into websites(userid,title,url)"+
-					"values ('"+this.user.id+"','"+formdata.title+"','"+formdata.url+"')";
-			this.db.exeQuery(query).then((res)=>{
-				alert("Add Success: "+JSON.stringify(res));
-				this._lastId = res.insertId;
-				alert("insert Id: "+this._lastId);
-
-				/*Insertion For Wesbite Details*/
-			for (var i = 0; i < formdata.details.length; i++)
+			if(formdata.id=='')
 			{
-
-				let detailform = formdata.details[i];
-				alert("Det:"+JSON.stringify(detailform));
-				alert("Last Idd:"+this._lastId);
-				let query1 = "insert into website_details(websiteid,username,password,comments)"+
-					"values ('"+this._lastId+"','"+detailform.name+"','"+detailform.password+"','"+detailform.comments+"')";
-				this.db.exeQuery(query1).then((wdetails)=>{
-					alert("Success Details: "+JSON.stringify(wdetails));
-				})
-				.catch(err=>{
-					alert("Error Details: "+JSON.stringify(err));
-				});
+				query = "insert into websites(userid,title,url)"+
+					"values ('"+this.user.id+"','"+formdata.title+"','"+formdata.url+"')";
+			}
+			else
+			{
+				query = "update websites set title='"+formdata.title+"',url='"+formdata.url+"' where id='"+formdata.id+"'";
 			}
 
-				 let websuccess = this.alertCtrl.create({
+			this.db.exeQuery(query).then((res)=>{
+				if(formdata.id=='')
+					this._lastId = res.insertId;
+				/*Insertion For Wesbite Details*/
+				for (var i = 0; i < formdata.details.length; i++)
+				{
+					let query1:string;
+					let detailform = formdata.details[i];
+					if(formdata.id=='')
+					{
+						query1 = "insert into website_details(websiteid,username,password,comments)"+
+							"values ('"+this._lastId+"','"+detailform.username+"','"+detailform.password+"','"+detailform.comments+"')";
+						this.db.exeQuery(query1).then((wdetails)=>{
+								// alert("Success Details: "+JSON.stringify(wdetails));
+							})
+							.catch(err=>{
+									let fail = this.alertCtrl.create({
+					          title: 'Failed!',
+					          message: "Website failed to save.",
+					           buttons: [
+					              {
+					                text: 'Ok',
+					                handler: data => {
+					                  this.nav.setRoot(WebsitePage);
+					                }
+					              }]
+					        });
+					        fail.present();
+							});
+					}
+					else
+					{
+						let query3 = "select * from website_details where id='"+detailform.id+"'";
+						this.db.exeQuery(query3).then((rs)=>{
+							if(rs.rows.length)
+							{
+								query1 = "update website_details set username='"+detailform.username+"',password='"+detailform.password+"',comments='"+detailform.comments+"' where id='"+detailform.id+"'";
+							}
+							else
+							{
+								query1 = "insert into website_details(websiteid,username,password,comments)"+
+							"values ('"+formdata.id+"','"+detailform.username+"','"+detailform.password+"','"+detailform.comments+"')";
+							}
+							this.db.exeQuery(query1).then((wdetails)=>{
+									// alert("Success Details: "+JSON.stringify(wdetails));
+								})
+								.catch(err=>{
+										let fail = this.alertCtrl.create({
+						          title: 'Failed!',
+						          message: "Website failed to save.",
+						           buttons: [
+						              {
+						                text: 'Ok',
+						                handler: data => {
+						                  this.nav.setRoot(WebsitePage);
+						                }
+						              }]
+						        });
+						        fail.present();
+								});
+						}).catch((err)=>{
+							let fail = this.alertCtrl.create({
+			          title: 'Failed!',
+			          message: "Website failed to save.",
+			           buttons: [
+			              {
+			                text: 'Ok',
+			                handler: data => {
+			                  this.nav.setRoot(WebsitePage);
+			                }
+			              }]
+			        });
+			        fail.present();
+						});
+					}
+				}
+        let websuccess = this.alertCtrl.create({
           title: 'Success',
-          message: "Website created successfully.",
+          message: "Website saved successfully.",
            buttons: [
               {
                 text: 'Ok',
                 handler: data => {
-                  //this.nav.setRoot(WebsitePage);
+                  this.nav.setRoot(WebsitePage);
                 }
               }]
         });
@@ -153,7 +246,7 @@ export class AddWebsitePage
 				load.dismiss();
 				let webfail = this.alertCtrl.create({
           title: 'Failed!',
-          message: "Website failed to create.",
+          message: "Website failed to save.",
            buttons: [
               {
                 text: 'Ok',
@@ -165,5 +258,30 @@ export class AddWebsitePage
         webfail.present();
 			});
 		}
+		let rm =  JSON.parse(localStorage.getItem('removeDetails'));
+		if(rm != null)
+		{
+			this._removeDetailsDB(rm);
+			localStorage.removeItem('removeDetails');
+		}
 	}
+
+
+	private _removeDetailsDB(r)
+	{
+		if(r.length)
+		{
+			for (var i = 0; i < r.length;i++)
+			{
+				let rmquery = "delete from website_details where id='"+r[i].id+"'";
+				this.db.exeQuery(rmquery).then((res)=>{
+					alert("Del Det: "+JSON.stringify(res));
+				}).catch(err=>{
+					alert("Err Del Det: "+JSON.stringify(err));
+				});
+			}
+		}
+	}
+
+
 }

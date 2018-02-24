@@ -18,71 +18,55 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">
-  <ion-card  class="full-width">
-    <ion-item class="blue">
+  <ion-list>
+    <ion-item-sliding  *ngFor="let c of cards" [class]="c.color">
+      <ion-item>
       <div class="top-header">
         <div class="card-type" float-left>
-            Debit Card
+            {{c.card_type}}
         </div>
         <div class="bank-name" float-right>
-          IndusInd Bank
+          {{c.bank}}
         </div>
       </div>
       <div class="acc-number">
-          {{convertStr(cno)}}
+          {{convertStr(c.acc_no)}}
       </div>
       <div class="detail-div">
           <div class="expire-div" float-left>
-            Valid Through 19/20
+            Valid Through {{c.month}}/{{c.year}}
           </div>
           <div class="pin-div" float-right text-right>
-            <p>PIN ****</p>
-            <p>CVV ***</p>
+            <p>PIN ***</p>
+            <p>CVV ****</p>
           </div>
       </div>
       <div class="bottom-div">
           <div class="holder-name" float-left>
-            Ramkumar S
+            {{c.holder_name}}
           </div>
           <div class="card-type" float-right>
-            <img src="assets/icon/cards/discover.png">
+            <img src="assets/icon/cards/{{getImage(c.card_pay)}}">
           </div>
       </div>
-    </ion-item>
-  </ion-card>
-  <ion-card  class="full-width">
-    <ion-item class="gold">
-      <div class="top-header">
-        <div class="card-type" float-left>
-            Debit Card
-        </div>
-        <div class="bank-name" float-right>
-          IndusInd Bank
-        </div>
-      </div>
-      <div class="acc-number">
-          {{convertStr(cno)}}
-      </div>
-      <div class="detail-div">
-          <div class="expire-div" float-left>
-            Valid Through 19/20
-          </div>
-          <div class="pin-div" float-right text-right>
-            <p>PIN ****</p>
-            <p>CVV ***</p>
-          </div>
-      </div>
-      <div class="bottom-div">
-          <div class="holder-name" float-left>
-            Ramkumar S
-          </div>
-          <div class="card-type" float-right>
-            <img src="assets/icon/cards/maestro.png">
-          </div>
-      </div>
-    </ion-item>
-  </ion-card>
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="dark"  (click)="_gotoCardsAdd(c)">
+          <ion-icon name="create"></ion-icon>
+          Edit
+        </button>
+        <button ion-button color="danger" (click)="_delCard(c.id)">
+          <ion-icon name="trash"></ion-icon>
+          Delete
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+  <ion-list *ngIf="cards==''">
+    <ion-item text-center>No Records Found.</ion-item>
+  </ion-list>
+
   <ion-fab right bottom>
-    <button (click)="_addWebsite()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
+    <button (click)="_gotoCardsAdd()" ion-fab color="danger"><ion-icon name="add"></ion-icon></button>
   </ion-fab>
 </ion-content>

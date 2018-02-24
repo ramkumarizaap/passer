@@ -1,24 +1,32 @@
 page-cards
 {
-	ion-card ion-item.silver
+	ion-list ion-item-sliding
+	{
+		margin-bottom:20px;
+	}
+	ion-list ion-item
+	{
+		border-radius:5px !important;
+	}
+	ion-item-sliding.Silver ion-item
 	{
 		background:grey !important;
 		color:#fff !important;
 		font-size:14px !important;
 	}
-	ion-card ion-item.gold
+	ion-item-sliding.Gold  ion-item
 	{
 		background:#c8b923 !important;
 		color:#000 !important;
 		font-size:14px !important;
 	}
-	ion-card ion-item.platinum
+	 ion-item-sliding.Platinum ion-item
 	{
 		background:#c2c2c2  !important;
 		color:#000 !important;
 		font-size:14px !important;
 	}
-	ion-card ion-item.blue
+	ion-item-sliding.Blue ion-item
 	{
 		background:#0093ff !important;
 		color:#fff !important;

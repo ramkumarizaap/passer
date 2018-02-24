@@ -30,8 +30,10 @@ import {MobileAppAddPage} from "../pages/mobile-app-add/mobile-app-add";
 import {CardsPage} from "../pages/cards/cards";
 import {BankPage} from "../pages/bank/bank";
 import {BankAddPage} from "../pages/bank-add/bank-add";
+import {CardsAddPage} from "../pages/cards-add/cards-add";
 
 import {AddWebsitePage} from "../pages/add-website/add-website";
+import {BankList,YearList} from "../providers/bankList";
 
 // import services
 // end import services
@@ -58,7 +60,8 @@ import {AddWebsitePage} from "../pages/add-website/add-website";
     MobileAppAddPage,
     CardsPage,
     BankPage,
-    BankAddPage
+    BankAddPage,
+    CardsAddPage
   ],
   imports: [
     BrowserModule,
@@ -91,7 +94,8 @@ import {AddWebsitePage} from "../pages/add-website/add-website";
     MobileAppAddPage,
     CardsPage,
     BankPage,
-    BankAddPage
+    BankAddPage,
+    CardsAddPage
   ],
   providers: [
     StatusBar,
@@ -102,7 +106,9 @@ import {AddWebsitePage} from "../pages/add-website/add-website";
     TripService,
     DatabaseComponent,
     WeatherProvider,
-    GlobalVars
+    GlobalVars,
+    BankList,
+    YearList
   ]
 })
 
