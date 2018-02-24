@@ -21918,75 +21918,79 @@ page-bank .card-background-page ion-card .bg-image {
 }
 
 page-bank .card-background-page .bg-image.sbi {
-  background-image: url("../../assets/icon/bank/axis.jpg");
+  background-image: url("assets/icon/bank/sbi.jpg");
+}
+
+page-bank .card-background-page .bg-image.axis {
+  background-image: url("assets/icon/bank/axis.jpg");
 }
 
 page-bank .card-background-page .bg-image.federal {
-  background-image: url("../../assets/icon/bank/federal.jpg");
+  background-image: url("assets/icon/bank/federal.jpg");
 }
 
 page-bank .card-background-page .bg-image.icici {
-  background-image: url("../../assets/icon/bank/icici.jpg");
+  background-image: url("assets/icon/bank/icici.jpg");
 }
 
 page-bank .card-background-page .bg-image.yes {
-  background-image: url("../../assets/icon/bank/yes.jpg");
+  background-image: url("assets/icon/bank/yes.jpg");
 }
 
 page-bank .card-background-page .bg-image.canara {
-  background-image: url("../../assets/icon/bank/canara.jpeg");
+  background-image: url("assets/icon/bank/canara.jpeg");
 }
 
 page-bank .card-background-page .bg-image.city-union {
-  background-image: url("../../assets/icon/bank/city-union.jpg");
+  background-image: url("assets/icon/bank/city-union.jpg");
 }
 
 page-bank .card-background-page .bg-image.dhanalaxmi {
-  background-image: url("../../assets/icon/bank/dhanalaxmi.jpg");
+  background-image: url("assets/icon/bank/dhanalaxmi.jpg");
 }
 
 page-bank .card-background-page .bg-image.hdfc {
-  background-image: url("../../assets/icon/bank/hdfc.jfif");
+  background-image: url("assets/icon/bank/hdfc.jfif");
 }
 
 page-bank .card-background-page .bg-image.idbi {
-  background-image: url("../../assets/icon/bank/idbi.jpg");
+  background-image: url("assets/icon/bank/idbi.jpg");
 }
 
 page-bank .card-background-page .bg-image.indian {
-  background-image: url("../../assets/icon/bank/indian.jpg");
+  background-image: url("assets/icon/bank/indian.jpg");
 }
 
 page-bank .card-background-page .bg-image.iob {
-  background-image: url("../../assets/icon/bank/iob.jpg");
+  background-image: url("assets/icon/bank/iob.jpg");
 }
 
 page-bank .card-background-page .bg-image.karnataka {
-  background-image: url("../../assets/icon/bank/karnataka.png");
+  background-image: url("assets/icon/bank/karnataka.png");
 }
 
 page-bank .card-background-page .bg-image.karnataka {
-  background-image: url("../../assets/icon/bank/karnataka.png");
+  background-image: url("assets/icon/bank/karnataka.png");
 }
 
 page-bank .card-background-page .bg-image.karur {
-  background-image: url("../../assets/icon/bank/karur.jpg");
+  background-image: url("assets/icon/bank/karur.jpg");
 }
 
 page-bank .card-background-page .bg-image.punjab {
-  background-image: url("../../assets/icon/bank/punjab.jpg");
+  background-image: url("assets/icon/bank/punjab.jpg");
 }
 
 page-bank .card-background-page .bg-image.south-indian {
-  background-image: url("../../assets/icon/bank/south-indian.jpg");
+  background-image: url("assets/icon/bank/south-indian.jpg");
 }
 
 page-bank .card-background-page .bg-image.tmb {
-  background-image: url("../../assets/icon/bank/tmb.jpg");
+  background-image: url("assets/icon/bank/tmb.jpg");
 }
 
 page-bank .card-background-page .bg-image.laxmi-vilas {
-  background-image: url("../../assets/icon/bank/laxmi-vilas.png");
+  background-image: url("assets/icon/bank/laxmi-vilas.png");
 }
 
 page-bank .card-background-page .card-title {
