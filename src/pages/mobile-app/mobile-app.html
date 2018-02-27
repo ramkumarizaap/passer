@@ -18,24 +18,27 @@
 
 <ion-content padding class="common-bg">
   <ion-list  class="full-width">
-    <ion-item-sliding *ngFor="let a of _apps" (click)="_gotoMobileAppAdd(a)">
+    <ion-item-sliding *ngFor="let a of _aitems">
     <ion-item>
       <ion-avatar item-start>
-        <ion-icon name="{{getIcon(a.name)}}"></ion-icon>
+        <ion-icon name="{{getIcon(a.appname)}}"></ion-icon>
       </ion-avatar>
-      <h2>{{a.name}}</h2>
+      <h2>{{a.appname}}</h2>
     </ion-item>
     <ion-item-options side="right">
-      <button ion-button color="primary">
+      <button ion-button color="primary" (click)="_gotoMobileAppAdd(a)">
         <ion-icon name="create"></ion-icon>
         Edit
       </button>
-      <button ion-button color="danger">
+      <button ion-button color="danger" (click)="_delWebsite(a.id)">
         <ion-icon name="trash"></ion-icon>
         Delete
       </button>
     </ion-item-options>
   </ion-item-sliding>
+  </ion-list>
+   <ion-list *ngIf="_aitems==''">
+    <ion-item text-center>No Records Found.</ion-item>
   </ion-list>
   <ion-fab right bottom>
     <button ion-fab color="danger" (click)="_gotoMobileAppAdd()"><ion-icon name="add"></ion-icon></button>

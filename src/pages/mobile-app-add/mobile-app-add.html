@@ -7,8 +7,9 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding class="animated fadeIn common-bg">
-  <form  [formGroup]="_appForm" method="post" novalidate="">
-    <button ion-button color="dark" type="submit">
+  <form  [formGroup]="_appForm" (submit)="_submitAppForm()" method="post" novalidate="">
+    <ion-input type="hidden" formControlName="id"></ion-input>
+    <button ion-button color="dark" [disabled]="!_appForm.valid" type="submit">
       <ion-icon name="checkmark"></ion-icon>&nbsp;Save
     </button>
     <button ion-button (click)="_cancel()" color="danger" type="button">
@@ -16,7 +17,7 @@
     </button>
     <ion-item>
       <ion-label floating>App Name</ion-label>
-      <ion-select formControlName="name">
+      <ion-select formControlName="appname">
       	<ion-option value="Amazon">Amazon</ion-option><ion-option value="Dribbble">Dribbble</ion-option>
       	<ion-option value="Dropbox">Dropbox</ion-option><ion-option value="Facebook">Facebook</ion-option>
       	<ion-option value="Flipkart">Flipkart</ion-option><ion-option value="Githhub">Githhub</ion-option>
@@ -27,7 +28,7 @@
       	<ion-option value="Yahoo">Yahoo</ion-option><ion-option value="Youtube">Youtube</ion-option>
       </ion-select>
     </ion-item>
-    <ion-item class="error" no-lines no-padding *ngIf="_appForm.controls.name.hasError('required') && _appForm.controls.name.touched">
+    <ion-item class="error" no-lines no-padding *ngIf="_appForm.controls.appname.hasError('required') && _appForm.controls.appname.touched">
         <p ion-text text-wrap>Please Select App Name</p>
     </ion-item>
     <div class="clearfix"></div>
@@ -39,7 +40,7 @@
 	        </button>
 	        <ion-list>
 	          <ion-item>
-	            <ion-input type="text" formControlName="name" placeholder="Username"></ion-input>
+	            <ion-input type="text" formControlName="username" placeholder="Username"></ion-input>
 	          </ion-item>
 	        </ion-list>
 	        <ion-list>

@@ -31,7 +31,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
   rootPage: any = LoginPage;
   appMenuItems: Array<MenuItem>;
-
+  public user = {id:'',fullname:"Guest",email:'',password:''};
   constructor(
     public db:DatabaseComponent,
     public platform: Platform,
@@ -48,6 +48,9 @@ export class MyApp {
       {title: 'Bank', component: BankPage, icon: 'logo-usd'},
       {title: 'Notes', component: HomePage, icon: 'ios-document'},
     ];
+    let profile = this.globalvars.getUserdata();
+    if(profile)
+      this.user = profile[0];
   }
 
   initializeApp() {

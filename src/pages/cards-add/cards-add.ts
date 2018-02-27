@@ -75,7 +75,6 @@ export class CardsAddPage
 				query = "update cards set card_type='"+formdata.card_type+"',bank='"+formdata.bank+"',acc_no='"+formdata.acc_no+"',month='"+formdata.month+"',year='"+formdata.year+"',pin='"+formdata.pin+"',cvv='"+formdata.cvv+"',holder_name='"+formdata.holder_name+"',card_pay='"+formdata.card_pay+"',color='"+formdata.color+"' where id='"+formdata.id+"'";
 			else	
 			 query = "insert into cards(userid,card_type,bank,acc_no,month,year,pin,cvv,holder_name,card_pay,color) values('"+this.user.id+"','"+formdata.card_type+"','"+formdata.bank+"','"+formdata.acc_no+"','"+formdata.month+"','"+formdata.year+"','"+formdata.pin+"','"+formdata.cvv+"','"+formdata.holder_name+"','"+formdata.card_pay+"','"+formdata.color+"')";
-			alert(query);
 			this.db.exeQuery(query).then((succ)=>{
 				let alert = this.alertCtrl.create({
 					title:'Success',
