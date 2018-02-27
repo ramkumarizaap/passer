@@ -22213,6 +22213,10 @@ page-login .password-icon,
   margin-right: 10px;
 }
 
+page-mobile-app ion-item h2 {
+  padding-top: 5px;
+}
+
 page-mobile-app ion-searchbar {
   background: transparent;
 }
